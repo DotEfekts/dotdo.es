@@ -108,6 +108,16 @@ html, body {
                     }
                 }
 
+                &.play {
+                    .overlay {
+                        display: block;
+                        
+                        &::after {
+                            content: "\e037";
+                        }
+                    }
+                }
+
                 &.playing {
                     .top-icon {
                         animation-name: spin;

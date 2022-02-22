@@ -95,6 +95,12 @@ html, body {
 .layout-container .content-container .top-info .music-container.loading .overlay::after {
   content: "";
 }
+.layout-container .content-container .top-info .music-container.play .overlay {
+  display: block;
+}
+.layout-container .content-container .top-info .music-container.play .overlay::after {
+  content: "\e037";
+}
 .layout-container .content-container .top-info .music-container.playing .top-icon {
   animation-name: spin;
   animation-duration: 5000ms;

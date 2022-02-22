@@ -6,8 +6,8 @@ function overlayClick() {
     if(overlayState == "unloaded") {
         overlayState = "loading";
         musicEl.className = "music-container loading";
-        if(apiLoaded)
-            createPlayer();
+        if(playerLoaded)
+            playVideo();
     } else if(overlayState == "playing") {
         pauseVideo();
     } else if(overlayState == "stopped") {
@@ -16,14 +16,8 @@ function overlayClick() {
 }
 
 var player;
-var apiLoaded = false;
+var playerLoaded = false;
 function onYouTubeIframeAPIReady() {
-    apiLoaded = true;
-    if(overlayState == "loading")
-        createPlayer();
-}
-
-function createPlayer() {
     player = new YT.Player('player', {
         height: '390',
         width: '640',
@@ -31,7 +25,6 @@ function createPlayer() {
         playerVars: {
             'origin': 'https://dotdo.es/',
             'playsinline': 1,
-            'autoplay': 1,
             'start': 90,
             'end': 135,
             'enablejsapi': 1
@@ -44,25 +37,34 @@ function createPlayer() {
 }
 
 function onPlayerReady(event) {
+    playerLoaded = true;
     event.target.setVolume(25);
-    playVideo();
+
+    if(overlayState == "loading") {
+        playVideo();
+    }
 }
 
 function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.ENDED) {
+    if (event.data == YT.PlayerState.PLAYING) {
+        musicEl.className = "music-container playing";
+        overlayState = "playing";
+    } else if (event.data == YT.PlayerState.PAUSED) {
+        musicEl.className = "music-container stopped";
+        overlayState = "stopped";
+    } else if(event.data == YT.PlayerState.CUED) {
+        musicEl.className = "music-container play";
+        overlayState = "stopped";
+    } else if (event.data == YT.PlayerState.ENDED) {
         pauseVideo();
     }
 }
 
 function playVideo() {
     player.playVideo();
-    overlayState = "playing";
-    musicEl.className = "music-container playing";
 }
 
 function pauseVideo() {
     player.pauseVideo();
     player.seekTo(90, true);
-    overlayState = "stopped";
-    musicEl.className = "music-container stopped";
 }
