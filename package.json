@@ -1,7 +1,7 @@
 {
-  "name": "incentive-psychology",
+  "name": "dotdo.es",
   "version": "1.0.0",
-  "description": "The website for Incentive Psychology",
+  "description": "The website for DotDo.es",
   "main": "gulpfile.js",
   "dependencies": {
     "gulp-clean-css": "^4.3.0",
@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Efektion-Networks/incentive-psychology.git"
+    "url": "git+https://github.com/DotEfekts/dotdo.es.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Efektion-Networks/incentive-psychology/issues"
+    "url": "https://github.com/DotEfekts/dotdo.es/issues"
   },
-  "homepage": "https://github.com/Efektion-Networks/incentive-psychology#readme"
+  "homepage": "https://github.com/DotEfekts/dotdo.es"
 }
