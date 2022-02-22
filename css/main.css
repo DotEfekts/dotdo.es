@@ -137,6 +137,11 @@ html, body {
   justify-content: center;
   max-width: 1000px;
 }
+@media (max-width: 650px) {
+  .layout-container .content-container .main-info {
+    flex-direction: column;
+  }
+}
 .layout-container .content-container .main-info > div {
   flex: 1;
   padding: 0 25px;
