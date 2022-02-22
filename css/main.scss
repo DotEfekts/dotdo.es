@@ -13,6 +13,8 @@ html, body {
 .layout-container {
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
+
 
     h1, h2, h3, h4 {
         font-family: 'Montserrat', sans-serif;
@@ -91,7 +93,9 @@ html, body {
                     }
                 }
 
-                &.ready {
+                &.ready,
+                &.playing,
+                &.stopped {
                     cursor: pointer;
 
                     &:hover .overlay{
@@ -185,6 +189,26 @@ html, body {
                     margin-top: 5px;
                 }
             }
+        }
+    }
+
+    .oop {
+        display: flex;
+
+        div {
+            height: 2px;
+            flex: 1;
+            background-color: #fff;
+        }
+
+        div:first-child,
+        div:last-child {
+            background-color: #74d7ee;
+        }
+
+        div:nth-child(2),
+        div:nth-last-child(2) {
+            background-color: #ffafc8;
         }
     }
 }

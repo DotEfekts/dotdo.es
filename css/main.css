@@ -13,6 +13,7 @@ html, body {
 .layout-container {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
 }
 .layout-container h1, .layout-container h2, .layout-container h3, .layout-container h4 {
   font-family: "Montserrat", sans-serif;
@@ -82,10 +83,10 @@ html, body {
   content: "\e037";
   font-size: 100px;
 }
-.layout-container .content-container .top-info .music-container.ready {
+.layout-container .content-container .top-info .music-container.ready, .layout-container .content-container .top-info .music-container.playing, .layout-container .content-container .top-info .music-container.stopped {
   cursor: pointer;
 }
-.layout-container .content-container .top-info .music-container.ready:hover .overlay {
+.layout-container .content-container .top-info .music-container.ready:hover .overlay, .layout-container .content-container .top-info .music-container.playing:hover .overlay, .layout-container .content-container .top-info .music-container.stopped:hover .overlay {
   display: block;
 }
 .layout-container .content-container .top-info .music-container.loading {
@@ -154,6 +155,22 @@ html, body {
 }
 .layout-container .content-container .main-info .thing p {
   margin-top: 5px;
+}
+.layout-container .oop {
+  display: flex;
+}
+.layout-container .oop div {
+  height: 2px;
+  flex: 1;
+  background-color: #fff;
+}
+.layout-container .oop div:first-child,
+.layout-container .oop div:last-child {
+  background-color: #74d7ee;
+}
+.layout-container .oop div:nth-child(2),
+.layout-container .oop div:nth-last-child(2) {
+  background-color: #ffafc8;
 }
 
 .lds-ring div {
