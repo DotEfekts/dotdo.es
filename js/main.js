@@ -31,6 +31,7 @@ function createPlayer() {
         playerVars: {
             'origin': 'https://dotdo.es/',
             'playsinline': 1,
+            'autoplay': 1,
             'start': 90,
             'end': 135,
             'enablejsapi': 1
