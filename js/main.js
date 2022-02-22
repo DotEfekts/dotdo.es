@@ -1,22 +1,4 @@
-
-var overlayState = "unloaded";
-var musicEl = document.getElementById("music-container");
-
-function overlayClick() {
-    if(overlayState == "unloaded") {
-        overlayState = "loading";
-        musicEl.className = "music-container loading";
-        if(playerLoaded)
-            playVideo();
-    } else if(overlayState == "playing") {
-        pauseVideo();
-    } else if(overlayState == "stopped") {
-        playVideo();
-    }
-}
-
 var player;
-var playerLoaded = false;
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         height: '390',
@@ -36,12 +18,29 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
+var playerLoaded = false;
+var musicEl = document.getElementById("music-container");
+
 function onPlayerReady(event) {
-    playerLoaded = true;
     event.target.setVolume(25);
 
-    if(overlayState == "loading") {
-        playVideo();
+    playerLoaded = true;
+    musicEl.className = "music-container ready";
+}
+
+var overlayState = "unloaded";
+
+function overlayClick() {
+    if(playerLoaded) {
+        if(overlayState == "unloaded") {
+            overlayState = "loading";
+            musicEl.className = "music-container loading";
+            playVideo();
+        } else if(overlayState == "playing") {
+            pauseVideo();
+        } else if(overlayState == "stopped") {
+            playVideo();
+        }
     }
 }
 
@@ -51,9 +50,6 @@ function onPlayerStateChange(event) {
         overlayState = "playing";
     } else if (event.data == YT.PlayerState.PAUSED) {
         musicEl.className = "music-container stopped";
-        overlayState = "stopped";
-    } else if(event.data == YT.PlayerState.CUED) {
-        musicEl.className = "music-container play";
         overlayState = "stopped";
     } else if (event.data == YT.PlayerState.ENDED) {
         pauseVideo();

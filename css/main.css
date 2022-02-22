@@ -38,7 +38,6 @@ html, body {
   border-radius: 50%;
   overflow: hidden;
   position: relative;
-  cursor: pointer;
   /* Fix Safari not hiding overflow during animation */
   -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
@@ -83,6 +82,12 @@ html, body {
   content: "\e037";
   font-size: 100px;
 }
+.layout-container .content-container .top-info .music-container.ready {
+  cursor: pointer;
+}
+.layout-container .content-container .top-info .music-container.ready:hover .overlay {
+  display: block;
+}
 .layout-container .content-container .top-info .music-container.loading {
   cursor: default;
 }
@@ -95,12 +100,6 @@ html, body {
 .layout-container .content-container .top-info .music-container.loading .overlay::after {
   content: "";
 }
-.layout-container .content-container .top-info .music-container.play .overlay {
-  display: block;
-}
-.layout-container .content-container .top-info .music-container.play .overlay::after {
-  content: "\e037";
-}
 .layout-container .content-container .top-info .music-container.playing .top-icon {
   animation-name: spin;
   animation-duration: 5000ms;
@@ -109,9 +108,6 @@ html, body {
 }
 .layout-container .content-container .top-info .music-container.playing:hover .overlay::after {
   content: "\e047";
-}
-.layout-container .content-container .top-info .music-container:hover .overlay {
-  display: block;
 }
 @keyframes spin {
   from {

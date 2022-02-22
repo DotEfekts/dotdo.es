@@ -40,7 +40,6 @@ html, body {
                 border-radius: 50%;
                 overflow: hidden;
                 position: relative;
-                cursor: pointer;
 
                 /* Fix Safari not hiding overflow during animation */
                 -webkit-mask-image: -webkit-radial-gradient(white, black);
@@ -92,6 +91,14 @@ html, body {
                     }
                 }
 
+                &.ready {
+                    cursor: pointer;
+
+                    &:hover .overlay{
+                        display: block;
+                    }
+                }
+
                 &.loading {
                     cursor: default;
                     
@@ -108,16 +115,6 @@ html, body {
                     }
                 }
 
-                &.play {
-                    .overlay {
-                        display: block;
-                        
-                        &::after {
-                            content: "\e037";
-                        }
-                    }
-                }
-
                 &.playing {
                     .top-icon {
                         animation-name: spin;
@@ -128,12 +125,6 @@ html, body {
 
                     &:hover .overlay::after {
                         content: "\e047";
-                    }
-                }
-
-                &:hover {
-                    .overlay {
-                        display: block;
                     }
                 }
 
