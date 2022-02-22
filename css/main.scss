@@ -1,0 +1,216 @@
+* {
+ box-sizing: border-box;
+}
+
+html, body {
+    background-color: #412742;
+    color: #e7e7e7;
+    font-family: 'Open Sans', sans-serif;
+    max-width: 1920px;
+    margin: auto;
+}
+
+.layout-container {
+    min-height: 100vh;
+    display: flex;
+
+    h1, h2, h3, h4 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+    }
+
+    a {
+        color: #92eaf1;
+        text-decoration: none;
+    }
+
+    .content-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        
+        .top-info {
+            text-align: center;
+            
+            .music-container {
+                display: inline-block;
+                border-radius: 50%;
+                overflow: hidden;
+                position: relative;
+                cursor: pointer;
+
+                /* Fix Safari not hiding overflow during animation */
+                -webkit-mask-image: -webkit-radial-gradient(white, black);
+
+                .frame-container {
+                    height: 0;
+                    width: 0;
+                    position: absolute;
+                    border: none;
+
+                    &::before {
+                        font-family: 'Material Icons';
+                        content: "\e037";
+                    }
+                }
+
+                .top-icon {
+                    max-height: 150px;
+                    will-change: transform;
+                }
+
+                .overlay {
+                    display: none;
+                    position: absolute;
+                    background-color: rgba(0, 0, 0, 0.2);
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+
+                    .lds-ring {
+                        position: absolute;
+                        width: 100px;
+                        height: 100px;
+                        top: 25px;
+                        left: 25px;
+                        display: none;
+                    }
+
+                    &::after {
+                        position: absolute;
+                        width: 100px;
+                        line-height: 100px;
+                        top: 25px;
+                        left: 25px;
+                        font-family: 'Material Icons';
+                        content: "\e037";
+                        font-size: 100px;
+                    }
+                }
+
+                &.loading {
+                    cursor: default;
+                    
+                    .overlay {
+                        display: block;
+                        
+                        .lds-ring {
+                            display: inline-block;
+                        }
+
+                        &::after {
+                            content: "";
+                        }
+                    }
+                }
+
+                &.playing {
+                    .top-icon {
+                        animation-name: spin;
+                        animation-duration: 5000ms;
+                        animation-iteration-count: infinite;
+                        animation-timing-function: linear;
+                    }
+
+                    &:hover .overlay::after {
+                        content: "\e047";
+                    }
+                }
+
+                &:hover {
+                    .overlay {
+                        display: block;
+                    }
+                }
+
+                @keyframes spin {
+                    from {
+                        transform:rotate(0deg);
+                    }
+                    to {
+                        transform:rotate(360deg);
+                    }
+                }
+            }
+
+            .title {
+                h1 {
+                    font-weight: 200;
+                    margin-bottom: 0;
+                }
+
+                h3, h4 {
+                    margin: 0;
+                }
+            }
+
+            .contact {
+                margin-top: 10px;
+                padding: 0 10px;
+                display: inline-block;
+                
+                p {
+                    margin: 5px 0;
+                    text-align: center;
+                    font-style: italic;
+                }
+            }
+        }
+
+        .main-info {
+            display: flex;
+            justify-content: center;
+            max-width: 1000px;
+
+            & > div {
+                flex: 1;
+                padding: 0 25px;
+                text-align: center;
+            }
+
+            .thing {
+                h4 {
+                    margin: 0;
+                }
+                p {
+                    margin-top: 5px;
+                }
+            }
+        }
+    }
+}
+
+
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    margin: 10px;
+    border: 10px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

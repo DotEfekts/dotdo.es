@@ -1,0 +1,96 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+	<meta charset="utf-8">
+	<title>Dot Does Stuff</title>
+	<meta name="description" content="The personal website of Chelsea Pritchard (aka DotEfekts).">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta property="og:title" content="Dot Does Stuff">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://dotdo.es/">
+	<meta property="og:image" content="https://dotdo.es/img/coolyori.png">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&family=Open+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/normalize.min.css">
+	<link rel="stylesheet" href="css/boilerplate.min.css">
+	<link rel="stylesheet" href="css/main.min.css">
+
+	<meta name="theme-color" content="#412742">
+</head>
+
+<body>
+	<div class="layout-container">
+		<div class="content-container">
+			<div class="top-info">
+				<div class="music-container" id="music-container">
+					<img class="top-icon" src="img/coolyori.png" alt="Website Icon" />
+					<div class="frame-container">
+						<div id="player"></div>
+					</div>
+					<div class="overlay" onclick="overlayClick()">
+						<!-- Loading icon from https://loading.io/css/ -->
+						<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+					</div>
+				</div>
+				<div class="title">
+					<h1>Chelsea Pritchard</h1>
+					<h3><a href="https://dotdo.es">dot do.es stuff</a></a></h3>
+				</div>
+				<div class="contact">
+					<p>
+						<a href="mailto:hello@dotdo.es" target="_blank">hello@dotdo.es</a><br />
+						<a href="https://github.com/DotEfekts" target="_blank">DotEfekts on GitHub</a><br />
+					</p>
+				</div>
+			</div>
+			<h3>Things I've made</h2>
+			<div class="main-info">
+				<div class="left-column">
+					<div class="thing">
+						<h4><a href="https://tradecommander.dotefekts.net" target="_blank">TradeCommander</a></h3>
+						<p>
+							A CLI style interface for the SpaceTraders API, written in Blazor WebAssembly. 
+							<a href="https://github.com/DotEfekts/TradeCommander" target="_blank">source</a>
+						</p>
+					</div>
+					<div class="thing">
+						<h4>DotUtilities</h3>
+						<p>
+							A utilities plugin for CraftBukkit plugin developers containing a command manager and an inventory menu API. 
+							<a href="https://github.com/DotEfekts/DotUtilities" target="_blank">source</a>
+						</p>
+					</div>
+				</div>
+				<div class="right-column">
+					<div class="thing">
+						<h4>PlayerProfile</h3>
+						<p>
+							A plugin for MC Paper that allows players to switch user profiles and spoof other users. 
+							<a href="https://github.com/DotEfekts/PlayerProfile" target="_blank">source</a>
+						</p>
+					</div>
+					<div class="thing">
+						<h4>DotChat</h3>
+						<p>
+							A proof-of-concept plugin for CraftBukkit derivatives that adds clickable chat tabs to Minecraft. Discontinued due to performance issues. 
+							<a href="https://github.com/DotEfekts/DotChat" target="_blank">source</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/vendor/modernizr-3.11.2.min.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="https://www.youtube.com/iframe_api"></script>
+	<script src="js/main.js"></script>
+</body>
+
+</html>
