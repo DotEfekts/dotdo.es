@@ -135,34 +135,22 @@
 	<link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
 		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,500;0,700;1,200;1,500;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap">
 	
-	<link rel="preload" href="/css/music.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<link rel="preload" href="/css/search.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<link rel="preload" href="/css/print.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<script src="/js/theme.min.js" async></script>
+	<script src="/js/scroll.min.js" async></script>
 	
 	<noscript>
 	<link rel="stylesheet" 
 		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,500;0,700;1,200;1,400;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap">
-	<link rel="stylesheet" href="/css/highlight.min.css">
 	
 	<link rel="stylesheet" href="/css/music.min.css">
 	<link rel="stylesheet" href="/css/search.min.css">
 	<link rel="stylesheet" href="/css/print.min.css">
+	<link rel="stylesheet" href="/css/vendor/highlightjs-copy.min.css">
+	<link rel="stylesheet" href="/css/highlight.min.css">
 	</noscript>
 
-	<script src="/js/search.min.js" async></script>
-	<script src="/js/theme.min.js" async></script>
-	<script src="/js/scroll.min.js" async></script>
-	<script src="/js/music.min.js" async></script>
-
-	<link rel="preload" href="/css/vendor/highlightjs-copy.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<link rel="preload" href="/css/highlight.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-	<noscript>
-		<link rel="stylesheet" href="/css/vendor/highlightjs-copy.min.css">
-		<link rel="stylesheet" href="/css/highlight.min.css">
-	</noscript>
-
-	<script src="/js/vendor/highlightjs-copy.min.js" async onload="loadHljsCopy()"></script>
-	<script src="/js/vendor/highlight/highlight.min.js" async onload="loadHljs()"></script>
+	<!-- build:js inline -->
+	<script src="/js/postload.min.js"></script>
+	<!-- /build -->
 </body>
 </html>
