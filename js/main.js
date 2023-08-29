@@ -68,10 +68,9 @@ function pauseVideo() {
 const markdownContainer = document.getElementById("markdown-container");
 const contentContainer = document.getElementById("content-container");
 
-const navContainer = document.getElementById("nav-container");
 const currentUrl = new URL(document.URL);
 
-navContainer.addEventListener("click", async function(event) {
+window.addEventListener("click", async function(event) {
     if(event.target.tagName === "A" && 
        event.target.href.startsWith(currentUrl.origin) && 
        !event.target.target){
@@ -109,6 +108,12 @@ async function loadPage(url) {
 
     pageMarkdown = pageMarkdown.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
     markdownContainer.innerHTML = marked.parse(pageMarkdown);
+    const aTags = markdownContainer.getElementsByTagName("A");
+    for (let i = 0; i < aTags.length; i++) {
+        if(!aTags[i].href.startsWith(currentUrl.origin))
+            aTags[i].target = "_blank";
+    }​
+
     contentContainer.classList.remove("loading");
 }
 
