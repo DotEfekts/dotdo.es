@@ -9,10 +9,6 @@ html, body {
   margin: auto;
 }
 
-.mobile-show {
-  display: none !important;
-}
-
 .layout-container {
   min-height: 100vh;
   display: flex;
@@ -182,6 +178,16 @@ html, body {
   text-align: center;
   font-style: italic;
 }
+.layout-container .nav-container .top-info .contact a.icon-link {
+  height: 30px;
+  display: inline-block;
+  margin: 5px;
+}
+.layout-container .nav-container .top-info .contact a.icon-link object {
+  pointer-events: none;
+  height: 30px;
+  width: 30px;
+}
 .layout-container .nav-container .top-info .menu-control {
   display: block;
   height: 40px;
@@ -343,6 +349,11 @@ html, body {
   opacity: 1;
   transition: opacity 0.2s 0.3s;
 }
+@media (min-width: 921px) {
+  .layout-container .mobile-show {
+    display: none !important;
+  }
+}
 @media (max-width: 920px) {
   .layout-container {
     flex-direction: column;
@@ -366,8 +377,8 @@ html, body {
   .layout-container .nav-container .top-info h2, .layout-container .nav-container .top-info .contact {
     margin: 0;
   }
-  .layout-container .nav-container .top-info .contact {
-    margin-left: auto;
+  .layout-container .nav-container .top-info .title {
+    margin-right: auto;
   }
   .layout-container .nav-container .top-info::after {
     content: " ";
@@ -405,9 +416,6 @@ html, body {
   }
   .layout-container .mobile-hide {
     display: none !important;
-  }
-  .layout-container .mobile-show {
-    display: block !important;
   }
 }
 @media (max-width: 600px) {

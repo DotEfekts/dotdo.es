@@ -9,10 +9,6 @@ html, body {
     margin: auto;
 }
 
-.mobile-show {
-    display: none!important;
-}
-
 .layout-container {
     min-height: 100vh;
     display: flex;
@@ -217,6 +213,18 @@ html, body {
                     text-align: center;
                     font-style: italic;
                 }
+
+                a.icon-link {
+                    height: 30px;
+                    display: inline-block;
+                    margin: 5px;
+
+                    object {
+                        pointer-events: none;
+                        height: 30px;
+                        width: 30px;
+                    }
+                }
             }
 
             .menu-control {
@@ -413,6 +421,11 @@ html, body {
         }
     }
     
+    @media(min-width:921px) {
+        .mobile-show {
+            display: none!important;
+        }
+    }
 
     @media(max-width:920px) {
         flex-direction: column;
@@ -438,8 +451,8 @@ html, body {
                     margin: 0;
                 }
                 
-                .contact {
-                    margin-left: auto;
+                .title {
+                    margin-right: auto;
                 }
 
                 &::after {
@@ -485,10 +498,6 @@ html, body {
 
         .mobile-hide {
             display: none!important;
-        }
-
-        .mobile-show {
-            display: block!important;
         }
     }
 
