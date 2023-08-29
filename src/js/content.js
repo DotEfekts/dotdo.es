@@ -40,7 +40,7 @@ window.addEventListener("popstate", async function(event) {
 });
 
 async function loadPage(url) {
-    contentContainer.classList.add("loading");
+    setTimeoutLoader();
     menuContainer.classList.remove("open");
     updateMenuIcon();
 
@@ -93,7 +93,19 @@ async function loadPage(url) {
             children[i].classList.add("img-container");
     }
 
+    window.clearTimeout(timeout);
+    timeout = null;
+    
     contentContainer.classList.remove("loading");
+}
+
+var timeout;
+function setTimeoutLoader() {
+    if(!timeout)
+        timeout = window.setTimeout(function() {
+            contentContainer.classList.add("loading");
+            timeout = null;
+        }, 50);
 }
 
 var abortController;
