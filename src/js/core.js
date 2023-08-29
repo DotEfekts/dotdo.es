@@ -72,7 +72,7 @@ async function firstLoad() {
     let markdown = await loadPageMarkdown(currentUrl);
     if(typeof parseMarkdown !== 'undefined') {
         parseMarkdown(markdown, document.getElementById("markdown-container"));
-        document.getElementById("content-container").classList.remove("loading");
+        document.getElementById("content-container").classList.remove("first-load");
     } else {
         firstLoadMarkdown = markdown;
     }
