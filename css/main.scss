@@ -237,6 +237,7 @@ html, body {
             padding-bottom: 10%;
             opacity: 0;
             transition: opacity 0.2s;
+            pointer-events: none;
 
             .lds-ring {
                 width: 90px;
