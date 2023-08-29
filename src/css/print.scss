@@ -1,0 +1,87 @@
+@media print {
+    .layout-container {
+        .mobile-show {
+            display: none!important;
+        }
+
+        .print-header {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            justify-content: space-between;
+            width: 100%;
+            background-color: transparent!important;
+    
+            h2,h3 {
+                margin: 10px 0;
+                font-weight: 300;
+            }
+        }
+
+        .nav-container {
+            display: none;
+        }
+
+        .content-container {
+            padding: 0;
+            margin-left: 0;
+
+            .search-container {
+                display: none;
+            }
+
+            .print-container {
+                padding: 0;
+                display: block!important;
+
+                .empty-header {
+                    margin-top: 50px;
+                }
+            
+                .empty-footer {
+                    margin-bottom: 30px;
+                }
+
+                > table > tbody > tr{
+                    page-break-inside: auto;
+
+                    > td {
+                        page-break-inside: auto;
+                    }
+                }
+
+                .markdown-container {
+                    padding: 0;
+
+                    h1, h2, h3 {
+                        display: block;
+                        page-break-before: auto;
+                        page-break-inside: avoid;
+                        page-break-after: avoid;
+                    }
+
+                    p.img-container {
+                        page-break-inside: avoid;
+                    }
+
+                    table { page-break-inside: auto }
+                    tr    { page-break-inside: avoid; page-break-after: auto; }
+                    thead { display: table-header-group; }
+                    tfoot { display: table-footer-group; }
+                }
+            }
+        }
+
+        .copyright-container {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    .scroll-top-container {
+        display: none;
+    }
+}

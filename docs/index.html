@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Dot Does Stuff</title>
+	<meta name="description" content="The personal website of Chelsea Pritchard (aka DotEfekts).">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta property="og:title" content="Dot Does Stuff">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://dotdo.es/">
+	<meta property="og:image" content="https://dotdo.es/img/coolyori.png">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+	<link rel="stylesheet" href="/css/vendor/normalize.min.css">
+	<link rel="stylesheet" href="/css/vendor/boilerplate.min.css">
+	<link rel="stylesheet" href="/css/main.min.css">
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+
+	<meta name="theme-color" content="#e7e7e7">
+
+	<base href="/" />
+</head>
+
+<body>
+	<div class="scroll-top-container">
+		<a id="scroll-top" class="scroll-top" aria-label="Scroll to top">
+			<object data="img/scroll-top.svg" type="image/svg+xml" aria-label="Scroll to top icon"></object>
+		</a>
+	</div>
+
+	<div class="layout-container">
+		<div class="print-header">
+			<h2>Chelsea Pritchard</h2>
+			<h3>hello@dotdo.es</h3>
+		</div>
+		<div class="nav-container" id="nav-container">
+			<div class="top-info">
+				<div class="music-container ready" id="music-container">
+					<img src="/img/coolyori.webp" srcset="/img/coolyori@2x.webp 2x" 
+						class="top-icon mobile-hide" alt="Website Icon" width="125" height="125" />
+					<img src="/img/coolyori-mobile.webp" srcset="/img/coolyori-mobile@2x.webp 2x" 
+						class="top-icon mobile-show" alt="Website Icon" width="50" height="50" />
+					<div class="frame-container">
+						<div id="player"></div>
+					</div>
+					<div class="overlay" onclick="overlayClick()">
+						<object class="play" data="img/play.svg" type="image/svg+xml" aria-label="Play button"></object>
+						<object class="pause" data="img/pause.svg" type="image/svg+xml" aria-label="Pause button"></object>
+						<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+					</div>
+				</div>
+				<div class="title mobile-small-hide">
+					<h2>Chelsea Pritchard</h1>
+				</div>
+				<div class="contact">
+					<p>
+						<a href="mailto:hello@dotdo.es" target="_blank" class="mobile-hide" aria-label="Email me">hello@dotdo.es</a><br class="mobile-hide" />
+						<a href="mailto:hello@dotdo.es" class="icon-link mobile-show" target="_blank" aria-label="Email me">
+							<object data="img/email.svg" type="image/svg+xml" aria-label="Email icon"></object>
+						</a>
+						<a href="https://github.com/DotEfekts" class="icon-link" target="_blank" aria-label="View my Github">
+							<object data="img/github.svg" type="image/svg+xml" aria-label="Github icon"></object>
+						</a>
+						<a href="https://discord.gg/ZKeYp5p" class="icon-link" target="_blank" aria-label="Join my Discord server">
+							<object data="img/discord.svg" type="image/svg+xml" aria-label="Discord icon"></object>
+						</a>
+					</p>
+				</div>
+				<a id="menu-control" class="menu-control mobile-show" ">
+					<object data="img/menu_open.svg" type="image/svg+xml" id="menu-icon" aria-label="Open the menu"></object>
+				</a>
+			</div>
+			<div class="nav-links-container" id="nav-links-container">
+				<ul class="nav-links">
+					<li class="nav-link"><a href="/">Home</a></li>
+					<li class="nav-link"><a href="/projects">Projects</a></li>
+					<li class="nav-link"><a href="/writeups">CTF Writeups</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="content-container" id="content-container">
+			<div class="search-container">
+				<div id="search-overlay" class="search-overlay"></div>
+				<input type="search" id="article-search" disabled placeholder="Loading..." />
+				<div id="search-results" class="search-results"></div>
+			</div>
+			<div class="loader-container">
+				<div class="dot-loader"></div>
+			</div>
+			<div class="print-container">
+				<table>
+					<thead><th><td><div class="empty-header"></div></td></th></thead>
+					<tbody><tr><td><div class="markdown-container" id="print-content"></div></td></tr></tbody>
+					<tfoot><th><td><div class="empty-footer"></div></td></th></tfoot>
+				</table>
+				<div class="markdown-container" id="markdown-container"></div>
+			</div>
+			<div class="copyright-container">© Chelsea Pritchard 2023</div>
+		</div>
+	</div>
+
+	<script src="/js/vendor/modernizr-3.11.2.min.js"></script>
+	<script src="/js/vendor/plugins.min.js"></script>
+	<script src="/js/vendor/marked.min.js"></script>
+	<script src="/js/content.min.js"></script>
+
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans&display=swap">
+	<link rel="stylesheet" href="/css/music.min.css">
+	<link rel="stylesheet" href="/css/search.min.css">
+	<link rel="stylesheet" href="/css/print.min.css">
+
+	<script src="/js/search.min.js" defer></script>
+	<script src="/js/scroll.min.js" defer></script>
+	<script src="/js/music.min.js" defer></script>
+
+</body>
+</html>

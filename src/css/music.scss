@@ -1,0 +1,144 @@
+.layout-container {
+    .nav-container {
+        .music-container {
+            .lds-ring {
+                position: absolute;
+                width: 75px;
+                height: 75px;
+                top: 25px;
+                left: 25px;
+                display: none;
+
+                div {
+                    box-sizing: border-box;
+                    display: block;
+                    position: absolute;
+                    width: 55px;
+                    height: 55px;
+                    margin: 10px;
+                    border: 8px solid #fff;
+                    border-radius: 50%;
+                    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                    border-color: #fff transparent transparent transparent;
+                }
+            
+                div:nth-child(1) {
+                    animation-delay: -0.45s;
+                }
+                div:nth-child(2) {
+                    animation-delay: -0.3s;
+                }
+                div:nth-child(3) {
+                    animation-delay: -0.15s;
+                }
+            }
+            
+            @keyframes lds-ring {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+
+            object {
+                position: absolute;
+                width: 75px;
+                height: 75px;
+                top: 25px;
+                left: 25px;
+                pointer-events: none;
+
+                &.pause {
+                    display: none;
+                }
+            }
+
+            &.ready,
+            &.playing,
+            &.stopped {
+                cursor: pointer;
+
+                &:hover .overlay {
+                    display: block;
+                }
+            }
+
+            &.loading {
+                cursor: default;
+                
+                .overlay {
+                    display: block;
+                    
+                    .lds-ring {
+                        display: inline-block;
+                    }
+
+                    & .play {
+                        display: none;
+                    }
+                }
+            }
+
+            &.playing {
+                .top-icon {
+                    animation-name: spin;
+                    animation-duration: 5000ms;
+                    animation-iteration-count: infinite;
+                    animation-timing-function: linear;
+                }
+
+                &:hover .overlay .pause {
+                    display: block;
+                }
+
+                &:hover .overlay .play {
+                    display: none;
+                }
+            }
+
+            @keyframes spin {
+                from {
+                    transform:rotate(0deg);
+                }
+                to {
+                    transform:rotate(360deg);
+                }
+            }
+        }
+
+        @media not print {
+            @media(max-width: 920px) {
+                .overlay {
+                    .lds-ring {
+                        position: absolute;
+                        width: 50px;
+                        height: 50px;
+                        top: 0;
+                        left: 0;
+                        display: none;
+
+                        div {
+                            width: 30px;
+                            height: 30px;
+                            margin: 10px;
+                            border-width: 6px;
+                        }
+                    }
+
+                    &::after {
+                        position: absolute;
+                        width: 30px;
+                        line-height: 30px;
+                        top: 10px;
+                        left: 10px;
+                        font-family: 'Material Icons';
+                        content: "\e037";
+                        font-size: 30px;
+                    }
+                }
+            }
+        }
+    }
+}
