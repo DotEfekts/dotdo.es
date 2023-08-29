@@ -139,5 +139,5 @@ async function getNotFound() {
     return await getMarkdown("/markdown/404.md");
 }
 
-history.pushState({ url: document.URL }, null, document.URL);
+history.replaceState({ url: document.URL }, null, document.URL);
 loadPage(currentUrl);
