@@ -85,7 +85,7 @@ function parseMarkdown(markdown, container) {
                     }
             } else {
                 codeBlocks[i].classList.add('language-bash');
-                highlightBlock('language-bash', codeBlocks[i]);
+                highlightBlock('bash', codeBlocks[i]);
             }
     }
 
