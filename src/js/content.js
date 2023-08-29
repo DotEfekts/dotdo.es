@@ -39,6 +39,8 @@ window.addEventListener("popstate", async function(event) {
         loadPage(new URL(event.state.url));
 });
 
+var imgRegex = new RegExp(/(<img .*?)src="(.*?)\.png"( .*?>)/, "gi");
+
 async function loadPage(url) {
     setTimeoutLoader();
     menuContainer.classList.remove("open");
@@ -63,39 +65,27 @@ async function loadPage(url) {
 
 
     pageMarkdown = pageMarkdown.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
-    var processing = document.createElement("div");
-    processing.innerHTML = marked.parse(pageMarkdown);
-    const aTags = processing.getElementsByTagName("A");
+    var parsedDom = marked.parse(pageMarkdown);
+    var first = true;
+    parsedDom = parsedDom.replace(imgRegex, function(_, pre, name, post) {
+        if(!first)
+            post = 'loading="lazy"' + post;
+        first = false;
+        return pre + `src="${name}-regular.webp" srcset="${name}-small.webp 320w, ${name}-medium.webp 480w, ${name}-regular.webp 640w, ${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
+    });
+
+    markdownContainer.innerHTML = parsedDom;
+    const aTags = markdownContainer.getElementsByTagName("A");
     for (let i = 0; i < aTags.length; i++) {
         if(!aTags[i].href.startsWith(currentUrl.origin))
             aTags[i].target = "_blank";
     }
 
-    const imgTags = processing.getElementsByTagName("IMG");
-    for (let i = 0; i < imgTags.length; i++) {
-        if(i > 0)
-            imgTags[i].loading = "lazy";
-
-        let name = imgTags[i].getAttribute('src');
-        imgTags[i].setAttribute('srcset', 
-        name.replace(".png", "-small.webp") + " 320w, " + 
-        name.replace(".png", "-medium.webp") + " 480w," + 
-        name.replace(".png", "-regular.webp") + " 640w," + 
-        name.replace(".png", "-large.webp") + " 1280w");
-
-        imgTags[i].setAttribute('sizes', '(max-width: 920px) 80vw, 640px')
-
-        imgTags[i].setAttribute('src', name.replace(".png", ".webp"));
-    }
-
-    const children = processing.children;
+    const children = markdownContainer.children;
     for (let i = 0; i < children.length; i++) {
         if(children[i].children.length == 1 && children[i].children[0].tagName == "IMG")
             children[i].classList.add("img-container");
     }
-
-    markdownContainer.innerHTML = processing.innerHTML;
-    processing.innerHTML = "";
 
     window.clearTimeout(timeout);
     timeout = null;

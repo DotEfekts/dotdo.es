@@ -1,21 +1,32 @@
-@media (prefers-color-scheme: dark) {
-    .search-container {
-        .search-results {
-            background-color: #333;
+@mixin dark-theme {
+    .search-results {
+        background-color: #333;
 
-            a {
-                color: #e7e7e7;
+        a {
+            color: #e7e7e7;
 
-                &:hover {
-                    background-color: #444;
-                }
-            }
-
-            h2 {
-                color: #e378e2;
+            &:hover {
+                background-color: #444;
             }
         }
+
+        h2 {
+            color: #e378e2;
+        }
     }
+
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.theme-light) {
+        .top-container {
+            @include dark-theme;
+        }
+    }
+}
+
+body.theme-dark {
+    @include dark-theme;
 }
 
 .show-search-results {
@@ -37,6 +48,7 @@
     display: none;
     position: absolute;
     top: 75px;
+    right: 20px;
     background-color: #e7e7e7;
     border: solid 1px #bbb;
     width: 500px;

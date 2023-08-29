@@ -9,29 +9,73 @@ html, body {
     margin: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-    html, body {
-        background-color: #252525;
-        color: #e7e7e7;
+@mixin dark-theme {
+    background-color: #252525;
+    color: #e7e7e7;
 
-        .layout-container {
-            a {
-                color: #e378e2;
+    .layout-container {
+        .content-container {
+            .top-container {
+                .theme-switcher object {
+                    fill: #e7e7e7;
+                }
+
+                input[type=search] {
+                    background-color: #333;
+                    color: #e7e7e7;
+                }
             }
 
-            .content-container {
-                .search-container {
-                    input[type=search] {
-                        background-color: #333;
-                        color: #e7e7e7;
-                    }
+            .markdown-container {
+                a {
+                    color: #e378e2;
                 }
-    
-                .dot-loader {
-                    background: #e2e2e2;
+                
+                table tr:nth-child(odd) td {
+                    background-color: #ffffff22;
                 }
+            }
+
+            .dot-loader {
+                background: #e2e2e2;
             }
         }
+    }
+}
+
+body.theme-dark {
+    @include dark-theme;
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.theme-light) {
+        @include dark-theme;
+    }
+
+    body.theme-auto .layout-container .content-container .theme-switcher .light {
+        display: block;
+    }
+
+    body.theme-light .layout-container .content-container .theme-switcher .dark {
+        display: block;
+    }
+
+    body.theme-dark .layout-container .content-container .theme-switcher .auto-dark {
+        display: block;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body.theme-auto .layout-container .content-container  .theme-switcher .dark {
+        display: block;
+    }
+
+    body.theme-dark .layout-container .content-container .theme-switcher .light {
+        display: block;
+    }
+
+    body.theme-light .layout-container .content-container .theme-switcher .auto-light {
+        display: block;
     }
 }
 
@@ -58,6 +102,18 @@ html, body {
             height: 50px;
             width: 50px;
         }
+    }
+}
+
+a.icon-link {
+    height: 30px;
+    display: inline-block;
+    margin: 5px;
+
+    object {
+        pointer-events: none;
+        height: 30px;
+        width: 30px;
     }
 }
 
@@ -188,18 +244,6 @@ html, body {
                     text-align: center;
                     font-style: italic;
                 }
-
-                a.icon-link {
-                    height: 30px;
-                    display: inline-block;
-                    margin: 5px;
-
-                    object {
-                        pointer-events: none;
-                        height: 30px;
-                        width: 30px;
-                    }
-                }
             }
         }
     }
@@ -212,12 +256,24 @@ html, body {
         padding: 20px;
         margin-left: 225px;
 
-        .search-container {
+        .top-container {
             display: flex;
             width: 100%;
             flex-direction: row;
-            justify-content: flex-end;
+            align-items: center;
+            justify-content: space-between;
             padding: 0;
+
+            .theme-switcher {
+                cursor: pointer;
+                margin-right: 10px;
+                margin-left: 0;
+
+                object {
+                    display: none;
+                    fill: #111;
+                }
+            }
 
             input[type=search] {
                 width: 100%;
@@ -229,6 +285,13 @@ html, body {
                 background: #e7e7e7 url("/img/search.svg") no-repeat 13px;
                 background-size: 28px;
                 z-index: 1;
+            }
+
+            input[type="search"]::-webkit-search-decoration,
+            input[type="search"]::-webkit-search-cancel-button,
+            input[type="search"]::-webkit-search-results-button,
+            input[type="search"]::-webkit-search-results-decoration {
+                -webkit-appearance:none;
             }
             
             .search-overlay {

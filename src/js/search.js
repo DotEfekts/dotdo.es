@@ -29,10 +29,6 @@ async function loadSearchData() {
     searchBox.removeAttribute('disabled');
 }
 
-searchBox.addEventListener("input", processSearch);
-searchBox.addEventListener("paste", processSearch);
-searchBox.addEventListener("focus", processSearch);
-
 function processSearch(event) {
     searchResults.innerHTML = "";
     let h2First = -1;
@@ -123,5 +119,14 @@ function handleSearchClick(event) {
 
     closeSearch();
 }
+
+function selectSearch() {
+    searchBox.select();
+}
+
+searchBox.addEventListener("input", processSearch);
+searchBox.addEventListener("paste", processSearch);
+searchBox.addEventListener("focus", processSearch);
+searchBox.addEventListener("click", selectSearch);
 
 loadSearchData();

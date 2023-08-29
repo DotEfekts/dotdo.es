@@ -87,7 +87,13 @@
 			</div>
 		</div>
 		<div class="content-container" id="content-container">
-			<div class="search-container">
+			<div class="top-container">
+				<a id="theme-switcher" class="theme-switcher icon-link">
+					<object class="auto-light" data="img/auto_light.svg" type="image/svg+xml" aria-label="Auto theme mode"></object>
+					<object class="auto-dark" data="img/auto_dark.svg" type="image/svg+xml" aria-label="Auto theme mode"></object>
+					<object class="light" data="img/light.svg" type="image/svg+xml" aria-label="Light theme mode"></object>
+					<object class="dark" data="img/dark.svg" type="image/svg+xml" aria-label="Dark theme mode"></object>
+				</a>
 				<div id="search-overlay" class="search-overlay"></div>
 				<input type="search" id="article-search" disabled placeholder="Loading..." />
 				<div id="search-results" class="search-results"></div>
@@ -112,12 +118,20 @@
 	<script src="/js/vendor/marked.min.js"></script>
 	<script src="/js/content.min.js"></script>
 
+	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<link rel="preload" href="/css/music.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<link rel="preload" href="/css/search.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<link rel="preload" href="/css/print.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	
+	<noscript>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans&display=swap">
 	<link rel="stylesheet" href="/css/music.min.css">
 	<link rel="stylesheet" href="/css/search.min.css">
 	<link rel="stylesheet" href="/css/print.min.css">
+	</noscript>
 
 	<script src="/js/search.min.js" defer></script>
+	<script src="/js/theme.min.js" defer></script>
 	<script src="/js/scroll.min.js" defer></script>
 	<script src="/js/music.min.js" defer></script>
 </body>
