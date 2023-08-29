@@ -112,7 +112,8 @@ gulp.task('buildimages', function (cb) {
     runCWebP('dist/content/**/*.png', { resize: [640, 0], q: 75 }),
     runCWebP('dist/content/**/*.png', { resize: [480, 0], q: 75 }, '-medium'),
     runCWebP('dist/content/**/*.png', { resize: [320, 0], q: 75 }, '-small'),
-    function() {
+    function(cb2) {
+      cb2();
       cb();
     }
   )();
