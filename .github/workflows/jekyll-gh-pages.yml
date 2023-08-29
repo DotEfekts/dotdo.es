@@ -36,7 +36,6 @@ jobs:
         run: |
          npm install
          npx gulp build
-         bash build-content.sh
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:

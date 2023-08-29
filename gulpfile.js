@@ -3,6 +3,8 @@ const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const cleanCSS = require('gulp-clean-css');
 const cleanJS = require('gulp-minify');
+const cwebp = require('gulp-cwebp');
+const del = require('del');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 const plumber = require('gulp-plumber');
@@ -55,6 +57,62 @@ gulp.task('minifyjs', function(cb) {
   cb();
 });
 
+gulp.task('copycontent', function(cb) {
+  gulp
+    .src('./content/**/*')
+    .pipe(gulp.dest('./docs/content'));
+  cb();
+});
+
+gulp.task('buildimages', function (cb) {
+  gulp.src('docs/content/**/*.png')
+    .pipe(cwebp({ resize: [1280, 0], q: 75}))
+    .pipe(rename({
+      suffix: '-large'
+    }))
+    .pipe(
+      gulp.dest(function(f) {
+        return f.base;
+      }));
+      
+  gulp.src('docs/content/**/*.png')
+  .pipe(cwebp({ resize: [640, 0], q: 75}))
+  .pipe(rename({
+    suffix: '-regular'
+  }))
+  .pipe(
+    gulp.dest(function(f) {
+      return f.base;
+    }));
+    
+  gulp.src('docs/content/**/*.png')
+  .pipe(cwebp({ resize: [480, 0], q: 75}))
+  .pipe(rename({
+    suffix: '-medium'
+  }))
+  .pipe(
+    gulp.dest(function(f) {
+      return f.base;
+    }));
+    
+  gulp.src('docs/content/**/*.png')
+  .pipe(cwebp({ resize: [320, 0], q: 75}))
+  .pipe(rename({
+    suffix: '-small'
+  }))
+  .pipe(
+    gulp.dest(function(f) {
+      return f.base;
+    }));
+
+  cb();
+});
+
+gulp.task('removepng', function(cb) {
+  del('docs/content/**/*.png');
+  cb();
+});
+
 gulp.task(
   'default',
   gulp.series('sass', 'minifycss', 'minifyjs', function(cb) {
@@ -67,5 +125,5 @@ gulp.task(
 
 gulp.task(
   'build',
-  gulp.series('sass', 'minifycss', 'minifyjs')
+  gulp.series('sass', 'minifycss', 'minifyjs', 'copycontent', 'buildimages')
 );
