@@ -223,9 +223,6 @@ a.icon-link {
             padding: 0;
 
             @media (min-width:1165px) {
-                justify-content: space-between;
-                position: relative;
-
                 &::before {
                     content: ' ';
                 }
@@ -262,7 +259,7 @@ a.icon-link {
                 z-index: 1;
             }
             
-            .search-overlay {
+            .search-overlay, .search-results {
                 display: none;
             }
         }
@@ -288,7 +285,7 @@ a.icon-link {
             align-items: center;
             padding-bottom: 10%;
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: opacity 0.1s;
             pointer-events: none;
 
             .dot-loader {
@@ -317,13 +314,11 @@ a.icon-link {
             .print-container {
                 .markdown-container {
                     opacity: 0;
-                    transition: opacity 0.2s;
                 }
             }
 
             .loader-container {
                 opacity: 1;
-                transition: opacity 0.2s 0.3s;
             }
 
             .copyright-container {

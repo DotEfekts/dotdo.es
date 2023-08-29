@@ -58,7 +58,7 @@ function parseMarkdown(markdown, container) {
     let first = true;
     parsedDom = parsedDom.replace(imgRegex, function(_, pre, name, width, height, post) {
         if(!first)
-            post = 'loading="lazy"' + post;
+            post = ' loading="lazy"' + post;
         first = false;
         return pre + `width="${width}" height="${height}" src="/content/${name}.webp" srcset="/content/${name}-small.webp 320w, /content/${name}-medium.webp 480w, /content/${name}.webp 640w, /content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
     });

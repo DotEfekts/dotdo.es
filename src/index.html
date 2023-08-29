@@ -31,6 +31,8 @@
 	<script src="/js/core.min.js"></script>
 	<!-- /build -->
 
+	<script src="/js/vendor/marked.min.js"></script>
+
 	<base href="/" />
 </head>
 
@@ -68,7 +70,7 @@
 				</div>
 				<div class="contact">
 					<p>
-						<a href="mailto:hello@dotdo.es" target="_blank" class="mobile-hide" aria-label="Email me">hello@dotdo.es</a><br class="mobile-hide" />
+						<a href="mailto:hello@dotdo.es" target="_blank" class="mobile-hide" aria-label="Email me at hello@dotdo.es">hello@dotdo.es</a><br class="mobile-hide" />
 						<a href="mailto:hello@dotdo.es" class="icon-link mobile-show" target="_blank" aria-label="Email me">
 							<object data="img/email.svg" type="image/svg+xml" aria-label="Email icon"></object>
 						</a>
@@ -121,11 +123,11 @@
 
 
 	<link rel="stylesheet" href="/css/main.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
-
-	<script src="/js/vendor/plugins.min.js"></script>
-	<script src="/js/vendor/marked.min.js"></script>
+	<link rel="preload" onload="this.onload=null;this.rel='stylesheet'" as="style"
+	href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
+	
 	<script src="/js/content.min.js"></script>
+	<script src="/js/vendor/plugins.min.js"></script>
 
 	<link rel="prefetch" href="/img/auto_light.svg" as="image" type="image/svg+xml" />
 	<link rel="prefetch" href="/img/auto_dark.svg" as="image" type="image/svg+xml" />
@@ -137,6 +139,7 @@
 	<link rel="preload" href="/css/print.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	
 	<noscript>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
 	<link rel="stylesheet" href="/css/highlight.min.css">
 	
 	<link rel="stylesheet" href="/css/music.min.css">

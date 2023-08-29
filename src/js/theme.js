@@ -1,28 +1,3 @@
-function setTheme(theme) {
-    document.documentElement.classList.remove('theme-auto');
-    document.documentElement.classList.remove('theme-dark');
-    document.documentElement.classList.remove('theme-light');
-    document.documentElement.classList.add(theme);
-}
-
-function setThemeBool(dark) {
-    if (dark) {
-        setTheme('theme-dark');
-    } else {
-        setTheme('theme-light');
-    }
-}
-
-function queryTheme() {
-    const storedTheme = localStorage.getItem('theme');
-
-    if (storedTheme) {
-        setTheme(storedTheme);
-    } else {
-        setTheme('theme-auto');
-    }
-}
-
 function cycleTheme(event) {
     event.preventDefault();
 
