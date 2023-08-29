@@ -197,6 +197,7 @@ html, body {
   padding-bottom: 10%;
   opacity: 0;
   transition: opacity 0.2s;
+  pointer-events: none;
 }
 .layout-container .content-container .loader-container .lds-ring {
   width: 90px;
