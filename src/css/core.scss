@@ -35,6 +35,10 @@ html, body {
                 a {
                     color: #e1abe0;
                 }
+
+                img {
+                    background-color: #e7e7e711;
+                }
                 
                 table tr:nth-child(odd) td {
                     background-color: #ffffff22;
@@ -272,6 +276,11 @@ a.icon-link {
                 > table {
                     display: none;
                 }
+            }
+
+            .markdown-container {
+                opacity: 1;
+                transition: opacity 0.1s;
             }
         }
 

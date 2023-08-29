@@ -61,7 +61,9 @@ function parseMarkdown(markdown, container) {
 
     let first = true;
     parsedDom = parsedDom.replace(imgRegex, function(_, pre, name, width, height, post) {
-        if(!first)
+        if(first)
+            post = ' fetchpriority="high" loading="eager"' + post;
+        else
             post = ' loading="lazy"' + post;
         first = false;
         return pre + `width="${width}" height="${height}" src="/content/${name}.webp" srcset="/content/${name}-small.webp 320w, /content/${name}-medium.webp 480w, /content/${name}.webp 640w, /content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
@@ -114,7 +116,7 @@ function highlightBlock(language, block) {
 function addHighlightLang(language) {
     let script = document.createElement("script");
     script.src = `/js/vendor/highlight/languages/${language}.min.js`;
-    script.defer = true;
+    script.async = true;
     script.onload = function() {
         loadedLanguages.push(language);
         for(let l = 0; l < loadingCallback[language].length; l++)

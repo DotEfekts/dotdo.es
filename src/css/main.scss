@@ -143,10 +143,8 @@ html.theme-light {
         
         .print-container {
             .markdown-container {
-                opacity: 1;
                 max-width: 800px;
                 padding-top: 20px;
-                transition: opacity 0.1s;
 
                 > :first-child {
                     margin-top: 0;
@@ -181,7 +179,6 @@ html.theme-light {
                 }
 
                 p.img-container {
-                    min-height: 200px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -195,10 +192,12 @@ html.theme-light {
                     max-height: 400px;
                     height: auto;
                     width: auto;
+                    flex: 1;
                     border-radius: 15px;
                     box-shadow: 1px 5px 5px -3px rgba(0,0,0,0.75);
                     -webkit-box-shadow: 1px 5px 5px -3px rgba(0,0,0,0.75);
                     -moz-box-shadow: 1px 5px 5px -3px rgba(0,0,0,0.75);
+                    background-color: #1111;
                 }
 
                 table {
