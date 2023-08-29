@@ -180,7 +180,10 @@ html, body {
   transition: opacity 0.2s 0.3s;
 }
 .layout-container .content-container .markdown-container h1, .layout-container .content-container .markdown-container h2 {
-  border-bottom: solid 1px #000000aa;
+  border-bottom: solid 1px #bbb;
+}
+.layout-container .content-container .markdown-container h2 {
+  margin-right: 80px;
 }
 .layout-container .content-container .loader-container {
   flex: 1;

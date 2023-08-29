@@ -1,5 +1,7 @@
 # Past Projects
 
+Below is a collection of previous projects. Mostly small short term projects that I've since stopped working on.
+
 ## [Trade Commander](https://tradecommander.dotefekts.net)
 
 A CLI style interface for the SpaceTraders API, written in Blazor WebAssembly.  

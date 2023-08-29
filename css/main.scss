@@ -217,7 +217,11 @@ html, body {
             transition: opacity 0.2s 0.3s;
 
             h1, h2 {
-                border-bottom: solid 1px #000000aa;
+                border-bottom: solid 1px #bbb;
+            }
+
+            h2 {
+                margin-right: 80px;
             }
         }
 
