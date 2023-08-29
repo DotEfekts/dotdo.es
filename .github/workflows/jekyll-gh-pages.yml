@@ -32,10 +32,13 @@ jobs:
         uses: actions/configure-pages@v3
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.8.1
-      - run: |
+      - name: Run Gulp Build
+        run: |
          npm install
          npx gulp build
-         ./build-content
+      - name: Run Content Build
+        run: ./build-content.sh
+        shell: bash
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:

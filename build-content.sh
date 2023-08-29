@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 cp -r content/ docs/content/
 cd docs/content
 find . -type f -name "*.png" | while read fname; do
