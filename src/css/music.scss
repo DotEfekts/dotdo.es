@@ -127,15 +127,13 @@
                         }
                     }
 
-                    &::after {
+                    object {
                         position: absolute;
                         width: 30px;
-                        line-height: 30px;
+                        height: 30px;
                         top: 10px;
                         left: 10px;
-                        font-family: 'Material Icons';
-                        content: "\e037";
-                        font-size: 30px;
+                        pointer-events: none;
                     }
                 }
             }

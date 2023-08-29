@@ -1,8 +1,10 @@
 var player;
+var playOnReady = false;
+var loadOnReady = false;
 
 function onYouTubeIframeAPIReady() {
     apiLoaded = true;
-    if(playOnReady)
+    if(playOnReady || loadOnReady)
         loadYoutubeFrame();
 }
 
@@ -29,14 +31,17 @@ var playerLoaded = false;
 var apiLoaded = false;
 var musicEl = document.getElementById("music-container");
 
-musicEl.addEventListener("mouseenter", loadYoutubeApi);
+musicEl.addEventListener("pointerenter", loadYoutubeApi);
 
-function loadYoutubeApi() {
+function loadYoutubeApi(event) {
     var script = document.createElement("script");
     script.src = "https://www.youtube.com/iframe_api";
     document.body.append(script);
 
-    musicEl.removeEventListener("mouseenter", loadYoutubeApi);
+    if(event.pointerType == "touch")
+        loadOnReady = true;
+
+    musicEl.removeEventListener("pointerenter", loadYoutubeApi);
 }
 
 function onPlayerReady(event) {
@@ -48,7 +53,6 @@ function onPlayerReady(event) {
 }
 
 var overlayState = "unloaded";
-var playOnReady = false;
 
 function overlayClick() {
     if(playerLoaded) {
