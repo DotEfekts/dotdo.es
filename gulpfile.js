@@ -10,6 +10,7 @@ const rename = require('gulp-rename');
 const plumber = require('gulp-plumber');
 const fs = require('fs');
 const es = require('event-stream');
+const connect = require('gulp-connect');
 
 gulp.task('removedist', function(cb) {
   if(fs.existsSync('dist'))
@@ -127,16 +128,37 @@ gulp.task('cleanup', function(cb) {
 });
 
 gulp.task(
-  'watch',
-  gulp.series('copysrc', 'copycontent', 'sass', 'minifycss', 'minifyjs', 'buildimages', function(cb) {
-    gulp.watch('src/css/**/*.scss', gulp.series('sass'));
-    gulp.watch(['src/css/**/*.css', '!src/css/**/*.min.css'], gulp.series('minifycss'));
-    gulp.watch(['src/js/**/*.js', '!src/js/**/*.min.js'], gulp.series('minifyjs'));
-    cb();
-  })
+  'build',
+  gulp.series('removedist', 'copysrc', 'copycontent', 'sass', 'minifycss', 'minifyjs', 'buildimages', 'cleanup')
 );
 
 gulp.task(
-  'build',
-  gulp.series('removedist', 'copysrc', 'copycontent', 'sass', 'minifycss', 'minifyjs', 'buildimages', 'cleanup')
+  'serve',
+  function(cb) {
+    connect.server({
+      root: 'dist',
+      port: 8000,
+      fallback: 'dist/index.html',
+      livereload: true
+    });
+    cb();
+  }
+)
+
+var lastPath = "";
+function callReload(cb) {
+  gulp.src(lastPath)
+    .pipe(connect.reload());
+  cb();
+}
+
+gulp.task(
+  'watch',
+  gulp.series('build', 'serve', function(cb) {
+    const watcher = gulp.watch('src/**/*', gulp.series('build', callReload));
+    watcher.on('change', function (path) {
+      lastPath = path;
+    });
+    cb();
+  })
 );
