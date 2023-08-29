@@ -101,9 +101,10 @@ async function loadPage(url) {
             pageMarkdown = await getNotFound();
         if(pageMarkdown === "cancelled")
             return;
-    } catch {
+    } catch { }
+
+    if(!pageMarkdown)
         pageMarkdown = "## An unknown error occurred. Could not load page.";
-    }
 
 
     pageMarkdown = pageMarkdown.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
@@ -144,7 +145,7 @@ async function getMarkdown(url, preserveExisting) {
 }
 
 async function getNotFound() {
-    return await getMarkdown("/markdown/404.md");
+    return await getMarkdown("/content/404.md");
 }
 
 history.replaceState({ url: document.URL }, null, document.URL);
@@ -259,3 +260,26 @@ function handleSearchClick(event) {
 }
 
 loadSearchData();
+
+var scrollToTopBtn = document.getElementById("scroll-top");
+
+scrollToTopBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    document.documentElement.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    return false;
+});
+
+document.addEventListener("scroll", function(event) {
+    let rootElement = document.documentElement;
+    if (rootElement.scrollTop > 400) {
+        scrollToTopBtn.classList.add("show")
+    } else {
+        scrollToTopBtn.classList.remove("show")
+    }
+});
+
+

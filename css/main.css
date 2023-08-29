@@ -265,6 +265,31 @@ html, body {
 .layout-container .content-container .markdown-container h2 {
   margin-right: 80px;
 }
+.layout-container .content-container .markdown-container img {
+  display: block;
+  max-width: 80%;
+  max-height: 400px;
+  border-radius: 15px;
+  margin: 20px auto;
+  box-shadow: 1px 5px 5px -3px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 1px 5px 5px -3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px 5px 5px -3px rgba(0, 0, 0, 0.75);
+}
+.layout-container .content-container .markdown-container table {
+  border-collapse: collapse;
+}
+.layout-container .content-container .markdown-container table th:not(:last-child), .layout-container .content-container .markdown-container table td:not(:last-child) {
+  border-right: solid 1px #bbb;
+}
+.layout-container .content-container .markdown-container table td, .layout-container .content-container .markdown-container table th {
+  padding: 4px 6px;
+}
+.layout-container .content-container .markdown-container table tr:nth-child(odd) td {
+  background-color: #ffffff66;
+}
+.layout-container .content-container .copyright-container {
+  margin-top: 20px;
+}
 .layout-container .content-container .loader-container {
   flex: 1;
   display: flex;
@@ -291,28 +316,36 @@ html, body {
   opacity: 1;
   transition: opacity 0.2s 0.3s;
 }
-.layout-container .oop {
-  display: flex;
-}
-.layout-container .oop div {
-  height: 2px;
-  flex: 1;
-  background-color: #fff;
-}
-.layout-container .oop div:first-child,
-.layout-container .oop div:last-child {
-  background-color: #74d7ee;
-}
-.layout-container .oop div:nth-child(2),
-.layout-container .oop div:nth-last-child(2) {
-  background-color: #ffafc8;
-}
 
 .show-search-results .search-overlay {
   display: block !important;
 }
 .show-search-results .search-results {
   display: block !important;
+}
+
+.scroll-top-container {
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+}
+.scroll-top-container .scroll-top {
+  opacity: 0;
+  display: block;
+  padding: 10px;
+  height: 45px;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+.scroll-top-container .scroll-top.show {
+  opacity: 1;
+  cursor: pointer;
+  pointer-events: all;
+}
+.scroll-top-container .scroll-top object {
+  pointer-events: none;
+  height: 25px;
+  width: 25px;
 }
 
 .lds-ring div {

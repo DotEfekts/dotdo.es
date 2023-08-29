@@ -316,6 +316,37 @@ html, body {
             h2 {
                 margin-right: 80px;
             }
+
+            img {
+                display: block;
+                max-width: 80%;
+                max-height: 400px;
+                border-radius: 15px;
+                margin: 20px auto;
+                box-shadow: 1px 5px 5px -3px rgba(0,0,0,0.75);
+                -webkit-box-shadow: 1px 5px 5px -3px rgba(0,0,0,0.75);
+                -moz-box-shadow: 1px 5px 5px -3px rgba(0,0,0,0.75);
+            }
+
+            table {
+                border-collapse: collapse;
+
+                th:not(:last-child), td:not(:last-child) {
+                    border-right: solid 1px #bbb;
+                }
+
+                td, th {
+                    padding: 4px 6px;
+                }
+
+                tr:nth-child(odd) td {
+                    background-color: #ffffff66;
+                }
+            }
+        }
+
+        .copyright-container {
+            margin-top: 20px;
         }
 
         .loader-container {
@@ -350,26 +381,6 @@ html, body {
             }
         }
     }
-
-    .oop {
-        display: flex;
-
-        div {
-            height: 2px;
-            flex: 1;
-            background-color: #fff;
-        }
-
-        div:first-child,
-        div:last-child {
-            background-color: #74d7ee;
-        }
-
-        div:nth-child(2),
-        div:nth-last-child(2) {
-            background-color: #ffafc8;
-        }
-    }
 }
 
 .show-search-results {
@@ -379,6 +390,33 @@ html, body {
 
     .search-results {
         display: block!important;
+    }
+}
+
+.scroll-top-container {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+
+    .scroll-top {
+        opacity: 0;
+        display: block;
+        padding: 10px;
+        height: 45px;
+        transition: opacity 0.2s;
+        pointer-events: none;
+
+        &.show {
+            opacity: 1;
+            cursor: pointer;
+            pointer-events: all;
+        }
+
+        object {
+            pointer-events: none;
+            height: 25px;
+            width: 25px;
+        }
     }
 }
 
