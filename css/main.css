@@ -431,7 +431,7 @@ html, body {
     border-bottom: solid 1px #bbb;
   }
 }
-@media (max-width: 485px) {
+@media (max-width: 500px) {
   .layout-container .mobile-small-hide {
     display: none !important;
   }

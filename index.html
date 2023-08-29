@@ -1,0 +1,106 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+	<meta charset="utf-8">
+	<title>Dot Does Stuff</title>
+	<meta name="description" content="The personal website of Chelsea Pritchard (aka DotEfekts).">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta property="og:title" content="Dot Does Stuff">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://dotdo.es/">
+	<meta property="og:image" content="https://dotdo.es/img/coolyori.png">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500&family=Open+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<link rel="stylesheet" href="/css/normalize.min.css">
+	<link rel="stylesheet" href="/css/boilerplate.min.css">
+	<link rel="stylesheet" href="/css/main.min.css">
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+
+	<meta name="theme-color" content="#e7e7e7">
+
+	<base href="/" />
+</head>
+
+<body>
+	<div class="layout-container">
+		<div class="nav-container" id="nav-container">
+			<div class="top-info">
+				<div class="music-container mobile-hide" id="music-container">
+					<img class="top-icon" src="/img/coolyori.png" alt="Website Icon" />
+					<div class="frame-container">
+						<div id="player"></div>
+					</div>
+					<div class="overlay" onclick="overlayClick()">
+						<!-- Loading icon from https://loading.io/css/ -->
+						<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+					</div>
+				</div>
+				<div class="mobile-icon mobile-show">
+					<img class="top-icon-mobile" src="/img/coolyori.png" alt="Website Icon" />
+				</div>
+				<div class="title mobile-small-hide">
+					<h2>Chelsea Pritchard</h1>
+				</div>
+				<div class="contact">
+					<p>
+						<a href="mailto:hello@dotdo.es" target="_blank" class="mobile-hide">hello@dotdo.es</a><br class="mobile-hide" />
+						<a href="mailto:hello@dotdo.es" class="icon-link mobile-show" target="_blank">
+							<object data="img/email.svg" type="image/svg+xml"></object>
+						</a>
+						<a href="https://github.com/DotEfekts" class="icon-link" target="_blank">
+							<object data="img/github.svg" type="image/svg+xml"></object>
+						</a>
+						<a href="https://discord.gg/ZKeYp5p" class="icon-link" target="_blank">
+							<object data="img/discord.svg" type="image/svg+xml"></object>
+						</a>
+					</p>
+				</div>
+				<a id="menu-control" class="menu-control mobile-show">
+					<object data="img/menu_open.svg" type="image/svg+xml" id="menu-icon"></object>
+				</a>
+			</div>
+			<div class="nav-links-container" id="nav-links-container">
+				<ul class="nav-links">
+					<li class="nav-link"><a href="/">Home</a></li>
+					<li class="nav-link"><a href="/projects">Projects</a></li>
+					<li class="nav-link"><a href="/writeups">CTF Writeups</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="content-container" id="content-container">
+			<div class="search-container">
+				<div id="search-overlay" class="search-overlay"></div>
+				<input type="search" id="article-search" disabled placeholder="Loading..." />
+				<div id="search-results" class="search-results"></div>
+			</div>
+			<div class="markdown-container" id="markdown-container"></div>
+			<div class="copyright-container">© Chelsea Pritchard 2023</div>
+			<div class="loader-container">
+				<div class="dot-loader"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="scroll-top-container">
+		<a id="scroll-top" class="scroll-top">
+			<object data="img/scroll-top.svg" type="image/svg+xml"></object>
+		</a>
+	</div>
+
+	<script src="/js/vendor/modernizr-3.11.2.min.js"></script>
+	<script src="/js/plugins.js"></script>
+	<script src="https://www.youtube.com/iframe_api"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/7.0.4/marked.min.js" integrity="sha512-YP97/YPA6jvflTCd5c6mMNg5M5uyhNlm7dM+TG7E+NdVx98DfA5myxg7zRp2iXjl+gFoln6AGXg31SZe+TDQ3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="/js/main.js"></script>
+</body>
+</html>
