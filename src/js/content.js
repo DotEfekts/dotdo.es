@@ -39,7 +39,77 @@ window.addEventListener("popstate", async function(event) {
         loadPage(new URL(event.state.url));
 });
 
-var imgRegex = new RegExp(/(<img .*?)src="(.*?)\.png"( .*?>)/, "gi");
+var imgRegex = new RegExp(/(<img .*?)src="\/(.*?)\.png"( .*?>)/, "gi");
+var internalLinkRegex = new RegExp(/\[\[(.*?)\]\]/, "gi");
+var loadingCallback = {};
+var loadedLanguages = [];
+
+function parseMarkdown(markdown, container) {
+    markdown = markdown.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
+    let parsedDom = marked.parse(markdown, { breaks: true });
+
+    let first = true;
+    parsedDom = parsedDom.replace(imgRegex, function(_, pre, name, post) {
+        if(!first)
+            post = 'loading="lazy"' + post;
+        first = false;
+        return pre + `src="/content/${name}.webp" srcset="/content/${name}-small.webp 320w, /content/${name}-medium.webp 480w, /content/${name}.webp 640w, /content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
+    });
+
+    parsedDom = parsedDom.replace(internalLinkRegex, function (_, linkText) {
+        let split = linkText.split('|');
+        return split.length > 1 ? split[1] : split[0];
+    });
+
+    container.innerHTML = parsedDom;
+    const aTags = container.getElementsByTagName("A");
+    for (let i = 0; i < aTags.length; i++) {
+        if(!aTags[i].href.startsWith(currentUrl.origin))
+            aTags[i].target = "_blank";
+    }
+
+    const children = container.children;
+    for (let i = 0; i < children.length; i++) {
+        if(children[i].children.length == 1 && children[i].children[0].tagName == "IMG")
+            children[i].classList.add("img-container");
+    }
+
+    const codeBlocks = container.getElementsByTagName("CODE");
+    for (let i = 0; i < codeBlocks.length; i++) {
+        if(codeBlocks[i].parentElement.tagName == "PRE")
+            if(codeBlocks[i].classList.length > 0) {
+                for (let c = 0; c < codeBlocks[i].classList.length; c++)
+                    if(codeBlocks[i].classList[c].startsWith('language-')){
+                        let language = codeBlocks[i].classList[c].replace('language-', '');
+                        highlightBlock(language, codeBlocks[i]);
+                    }
+            } else {
+                codeBlocks[i].classList.add('language-bash');
+                highlightBlock('language-bash', codeBlocks[i]);
+            }
+    }
+
+}
+
+function highlightBlock(language, block) {
+    if(loadedLanguages.includes(language)){
+        hljs.highlightElement(block);
+    } else if(loadingCallback[language]) {
+        loadingCallback[language].push(block);
+    } else {
+        let script = document.createElement("script");
+        script.src = `/js/vendor/highlight/languages/${language}.min.js`;
+        script.onload = function() {
+            loadedLanguages.push(language);
+            for(let l = 0; l < loadingCallback[language].length; l++)
+                hljs.highlightElement(loadingCallback[language][l]);
+            loadingCallback[language] = null;
+        };
+
+        loadingCallback[language] = [block];
+        document.body.append(script);
+    }
+}
 
 async function loadPage(url) {
     setTimeoutLoader();
@@ -63,29 +133,11 @@ async function loadPage(url) {
     if(!pageMarkdown)
         pageMarkdown = "## An unknown error occurred. Could not load page.";
 
-
-    pageMarkdown = pageMarkdown.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
-    var parsedDom = marked.parse(pageMarkdown);
-    var first = true;
-    parsedDom = parsedDom.replace(imgRegex, function(_, pre, name, post) {
-        if(!first)
-            post = 'loading="lazy"' + post;
-        first = false;
-        return pre + `src="${name}-regular.webp" srcset="${name}-small.webp 320w, ${name}-medium.webp 480w, ${name}-regular.webp 640w, ${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
+    parseMarkdown(pageMarkdown, markdownContainer);
+    document.documentElement.scrollTo({
+        top: 0,
+        behavior: "smooth"
     });
-
-    markdownContainer.innerHTML = parsedDom;
-    const aTags = markdownContainer.getElementsByTagName("A");
-    for (let i = 0; i < aTags.length; i++) {
-        if(!aTags[i].href.startsWith(currentUrl.origin))
-            aTags[i].target = "_blank";
-    }
-
-    const children = markdownContainer.children;
-    for (let i = 0; i < children.length; i++) {
-        if(children[i].children.length == 1 && children[i].children[0].tagName == "IMG")
-            children[i].classList.add("img-container");
-    }
 
     window.clearTimeout(timeout);
     timeout = null;

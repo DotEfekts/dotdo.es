@@ -1,8 +1,8 @@
 function setTheme(theme) {
-    document.body.classList.remove('theme-auto');
-    document.body.classList.remove('theme-dark');
-    document.body.classList.remove('theme-light');
-    document.body.classList.add(theme);
+    document.documentElement.classList.remove('theme-auto');
+    document.documentElement.classList.remove('theme-dark');
+    document.documentElement.classList.remove('theme-light');
+    document.documentElement.classList.add(theme);
 }
 
 function setThemeBool(dark) {

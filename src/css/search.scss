@@ -18,14 +18,14 @@
 }
 
 @media (prefers-color-scheme: dark) {
-    body:not(.theme-light) {
+    html:not(.theme-light) {
         .top-container {
             @include dark-theme;
         }
     }
 }
 
-body.theme-dark {
+html.theme-dark {
     @include dark-theme;
 }
 

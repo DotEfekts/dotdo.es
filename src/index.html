@@ -124,16 +124,25 @@
 	<link rel="prefetch" href="/img/dark.svg" as="image" type="image/svg+xml" />
 
 	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<link rel="preload" href="/css/vendor/highlightjs-copy.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<link rel="preload" href="/css/highlight.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	
 	<link rel="preload" href="/css/music.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<link rel="preload" href="/css/search.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<link rel="preload" href="/css/print.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	
 	<noscript>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans&display=swap">
+	<link rel="stylesheet" href="/css/highlight.min.css">
+	
 	<link rel="stylesheet" href="/css/music.min.css">
 	<link rel="stylesheet" href="/css/search.min.css">
 	<link rel="stylesheet" href="/css/print.min.css">
 	</noscript>
+
+	<script src="/js/vendor/highlightjs-copy.min.js"></script>
+	<script src="/js/vendor/highlight/highlight.min.js"></script>
+	<script>hljs.addPlugin(new CopyButtonPlugin());</script>
 
 	<script src="/js/search.min.js" defer></script>
 	<script src="/js/theme.min.js" defer></script>

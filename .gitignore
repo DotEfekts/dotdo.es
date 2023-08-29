@@ -1,4 +1,5 @@
 dist/
+.obsidian/
 
 # General
 .DS_Store

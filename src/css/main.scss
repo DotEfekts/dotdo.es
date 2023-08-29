@@ -13,6 +13,11 @@ html, body {
     background-color: #252525;
     color: #e7e7e7;
 
+    body {
+        background-color: #252525;
+        color: #e7e7e7;
+    }
+
     .layout-container {
         .content-container {
             .top-container {
@@ -43,38 +48,38 @@ html, body {
     }
 }
 
-body.theme-dark {
+html.theme-dark {
     @include dark-theme;
 }
 
 @media (prefers-color-scheme: dark) {
-    body:not(.theme-light) {
+    html:not(.theme-light) {
         @include dark-theme;
     }
 
-    body.theme-auto .layout-container .content-container .theme-switcher .light {
+    html.theme-auto .layout-container .content-container .theme-switcher .light {
         display: block;
     }
 
-    body.theme-light .layout-container .content-container .theme-switcher .dark {
+    html.theme-light .layout-container .content-container .theme-switcher .dark {
         display: block;
     }
 
-    body.theme-dark .layout-container .content-container .theme-switcher .auto-dark {
+    html.theme-dark .layout-container .content-container .theme-switcher .auto-dark {
         display: block;
     }
 }
 
 @media (prefers-color-scheme: light) {
-    body.theme-auto .layout-container .content-container  .theme-switcher .dark {
+    html.theme-auto .layout-container .content-container  .theme-switcher .dark {
         display: block;
     }
 
-    body.theme-dark .layout-container .content-container .theme-switcher .light {
+    html.theme-dark .layout-container .content-container .theme-switcher .light {
         display: block;
     }
 
-    body.theme-light .layout-container .content-container .theme-switcher .auto-light {
+    html.theme-light .layout-container .content-container .theme-switcher .auto-light {
         display: block;
     }
 }
@@ -268,6 +273,19 @@ a.icon-link {
             justify-content: space-between;
             padding: 0;
 
+            @media (min-width:1165px) {
+                justify-content: space-between;
+                position: relative;
+
+                &::before {
+                    content: ' ';
+                }
+
+                .theme-switcher {
+                    position: fixed;
+                }
+            }
+
             .theme-switcher {
                 cursor: pointer;
                 margin-right: 10px;
@@ -344,6 +362,10 @@ a.icon-link {
 
                 p {
                     text-align: justify;
+                }
+
+                code {
+                    white-space: pre-wrap;
                 }
 
                 p.img-container {

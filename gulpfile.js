@@ -14,6 +14,7 @@ const connect = require('gulp-connect');
 const rev = require('gulp-rev');
 const revDel = require('gulp-rev-delete-original');
 const revRewrite = require('gulp-rev-rewrite');
+var gulpif = require('gulp-if');
 
 gulp.task('removedist', function(cb) {
   if(fs.existsSync('dist'))
@@ -42,7 +43,7 @@ gulp.task('sass', function() {
       }));
 });
 
-gulp.task('minifycss', function(cb) {
+gulp.task('minifycss', function() {
     return gulp.src(['dist/css/**/*.css', '!dist/css/**/*.min.css'])
     .pipe(plumber())
     .pipe(cleanCSS())
@@ -55,7 +56,7 @@ gulp.task('minifycss', function(cb) {
       }));
 });
 
-gulp.task('minifycss-sourcemap', function(cb) {
+gulp.task('minifycss-sourcemap', function() {
   return gulp.src(['dist/css/**/*.css', '!dist/css/**/*.min.css'])
   .pipe(plumber())
   .pipe(sourcemaps.init())
@@ -86,7 +87,7 @@ gulp.task('minifyjs', function(cb) {
       }))
 });
 
-gulp.task('minifyjs-sourcemap', function(cb) {
+gulp.task('minifyjs-sourcemap', function() {
     return gulp.src(['dist/js/**/*.js', '!dist/js/**/*.min.js'])
     .pipe(plumber())
     .pipe(sourcemaps.init())
@@ -105,51 +106,31 @@ gulp.task('minifyjs-sourcemap', function(cb) {
 });
 
 gulp.task('buildimages', function (cb) {
-  es.concat(
-    gulp.src('dist/img/**/*.png')
-    .pipe(cwebp({ q: 75 }))
-    .pipe(
-      gulp.dest(function(f) {
-        return f.base;
-      })),
-    gulp.src('dist/content/**/*.png')
-    .pipe(cwebp({ resize: [1280, 0], q: 75 }))
-    .pipe(rename({
-      suffix: '-large'
-    }))
-    .pipe(
-      gulp.dest(function(f) {
-        return f.base;
-      })),
-    gulp.src('dist/content/**/*.png')
-    .pipe(cwebp({ resize: [640, 0], q: 75 }))
-    .pipe(rename({
-      suffix: '-regular'
-    }))
-    .pipe(
-      gulp.dest(function(f) {
-        return f.base;
-      })),
-    gulp.src('dist/content/**/*.png')
-    .pipe(cwebp({ resize: [480, 0], q: 75 }))
-    .pipe(rename({
-      suffix: '-medium'
-    }))
-    .pipe(
-      gulp.dest(function(f) {
-        return f.base;
-      })),
-    gulp.src('dist/content/**/*.png')
-    .pipe(cwebp({ resize: [320, 0], q: 75 }))
-    .pipe(rename({
-      suffix: '-small'
-    }))
-    .pipe(
-      gulp.dest(function(f) {
-        return f.base;
-      }))
-  ).on('end', cb);
+  return gulp.series(
+    runCWebP('dist/img/**/*.png', { q: 75 }),
+    runCWebP('dist/content/**/*.png', { resize: [1280, 0], q: 75 }, '-large'),
+    runCWebP('dist/content/**/*.png', { resize: [640, 0], q: 75 }),
+    runCWebP('dist/content/**/*.png', { resize: [480, 0], q: 75 }, '-medium'),
+    runCWebP('dist/content/**/*.png', { resize: [320, 0], q: 75 }, '-small'),
+    function() {
+      cb();
+    }
+  )();
 });
+
+function runCWebP(path, params, suffix) {
+  return function(cb){
+    return gulp.src(path)
+    .pipe(cwebp(params))
+    .pipe(gulpif(suffix != undefined, rename({
+      suffix: suffix
+    })))
+    .pipe(
+      gulp.dest(function(f) {
+        return f.base;
+      }));
+  };
+}
 
 gulp.task(
   'generaterev', 
@@ -165,6 +146,7 @@ gulp.task(
 
 gulp.task('cleanup', function(cb) {
   Promise.all([
+    del(['dist/content/knowledge-base']),
     del(['dist/content/**/*.png']),
     del(['dist/img/**/*.png']),
     del(['dist/css/**/*.scss']),
@@ -175,6 +157,7 @@ gulp.task('cleanup', function(cb) {
 
 gulp.task('cleanupdev', function(cb) {
   Promise.all([
+    del(['dist/content/knowledge-base']),
     del(['dist/content/**/*.png']),
     del(['dist/img/**/*.png']),
     del(['dist/css/**/*.scss'])
