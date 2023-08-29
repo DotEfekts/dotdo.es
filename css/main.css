@@ -119,6 +119,39 @@ html, body {
   left: 25px;
   display: none;
 }
+.layout-container .nav-container .top-info .music-container .overlay .lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  border: 10px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.layout-container .nav-container .top-info .music-container .overlay .lds-ring.dark div {
+  border: 10px solid #555;
+  border-color: #555 transparent transparent transparent;
+}
+.layout-container .nav-container .top-info .music-container .overlay .lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.layout-container .nav-container .top-info .music-container .overlay .lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.layout-container .nav-container .top-info .music-container .overlay .lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .layout-container .nav-container .top-info .music-container .overlay::after {
   position: absolute;
   width: 100px;
@@ -163,16 +196,6 @@ html, body {
   to {
     transform: rotate(360deg);
   }
-}
-.layout-container .nav-container .top-info .mobile-icon {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 10px;
-}
-.layout-container .nav-container .top-info .mobile-icon img {
-  height: 100%;
 }
 .layout-container .nav-container .top-info .title h2 {
   font-weight: 200;
@@ -307,11 +330,17 @@ html, body {
   padding-top: 20px;
   transition: opacity 0.2s 0.3s;
 }
+.layout-container .content-container .print-container .markdown-container > :first-child {
+  margin-top: 0;
+}
 .layout-container .content-container .print-container .markdown-container h1, .layout-container .content-container .print-container .markdown-container h2 {
   border-bottom: solid 1px #bbb;
 }
 .layout-container .content-container .print-container .markdown-container h2 {
   margin-right: 80px;
+}
+.layout-container .content-container .print-container .markdown-container p {
+  text-align: justify;
 }
 .layout-container .content-container .print-container .markdown-container img {
   display: block;
@@ -352,9 +381,35 @@ html, body {
   transition: opacity 0.2s;
   pointer-events: none;
 }
-.layout-container .content-container .loader-container .lds-ring {
-  width: 90px;
-  height: 90px;
+.layout-container .content-container .loader-container .dot-loader {
+  width: 140px;
+  /* control the size */
+  aspect-ratio: 8/5;
+  --_g: no-repeat radial-gradient(#888 68%,#8880 71%);
+  -webkit-mask: var(--_g), var(--_g), var(--_g);
+  -webkit-mask-size: 20% 30%;
+  background: #888;
+  animation: load 1.5s infinite;
+}
+@keyframes load {
+  0% {
+    -webkit-mask-position: 0% 100%, 50% 100%, 100% 100%;
+  }
+  22.5% {
+    -webkit-mask-position: 0% 50%, 50% 100%, 100% 100%;
+  }
+  45% {
+    -webkit-mask-position: 0% 100%, 50% 50%, 100% 100%;
+  }
+  67.5% {
+    -webkit-mask-position: 0% 100%, 50% 100%, 100% 50%;
+  }
+  90% {
+    -webkit-mask-position: 0% 100%, 50% 100%, 100% 100%;
+  }
+  100% {
+    -webkit-mask-position: 0% 100%, 50% 100%, 100% 100%;
+  }
 }
 .layout-container .content-container.loading .markdown-container {
   opacity: 0;
@@ -386,6 +441,37 @@ html, body {
       flex-direction: row;
       align-items: center;
       width: 100%;
+    }
+    .layout-container .nav-container .top-info .music-container {
+      margin-right: 10px;
+    }
+    .layout-container .nav-container .top-info .music-container .top-icon {
+      max-height: 50px;
+      will-change: transform;
+    }
+    .layout-container .nav-container .top-info .music-container .overlay .lds-ring {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      top: 0;
+      left: 0;
+      display: none;
+    }
+    .layout-container .nav-container .top-info .music-container .overlay .lds-ring div {
+      width: 30px;
+      height: 30px;
+      margin: 10px;
+      border-width: 6px;
+    }
+    .layout-container .nav-container .top-info .music-container .overlay::after {
+      position: absolute;
+      width: 30px;
+      line-height: 30px;
+      top: 10px;
+      left: 10px;
+      font-family: "Material Icons";
+      content: "\e037";
+      font-size: 30px;
     }
     .layout-container .nav-container .top-info > * {
       z-index: 4;
@@ -490,71 +576,6 @@ html, body {
   width: 50px;
 }
 
-.lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  margin: 10px;
-  border: 10px solid #fff;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
-}
-.lds-ring.dark div {
-  border: 10px solid #555;
-  border-color: #555 transparent transparent transparent;
-}
-.lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
-}
-
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-.dot-loader {
-  width: 140px;
-  /* control the size */
-  aspect-ratio: 8/5;
-  --_g: no-repeat radial-gradient(#888 68%,#8880 71%);
-  -webkit-mask: var(--_g), var(--_g), var(--_g);
-  -webkit-mask-size: 20% 30%;
-  background: #888;
-  animation: load 1.5s infinite;
-}
-
-@keyframes load {
-  0% {
-    -webkit-mask-position: 0% 100%, 50% 100%, 100% 100%;
-  }
-  22.5% {
-    -webkit-mask-position: 0% 50%, 50% 100%, 100% 100%;
-  }
-  45% {
-    -webkit-mask-position: 0% 100%, 50% 50%, 100% 100%;
-  }
-  67.5% {
-    -webkit-mask-position: 0% 100%, 50% 100%, 100% 50%;
-  }
-  90% {
-    -webkit-mask-position: 0% 100%, 50% 100%, 100% 100%;
-  }
-  100% {
-    -webkit-mask-position: 0% 100%, 50% 100%, 100% 100%;
-  }
-}
 @media print {
   .layout-container .mobile-show {
     display: none !important;
@@ -590,9 +611,6 @@ html, body {
   }
   .layout-container .content-container .print-container .markdown-container {
     padding: 0;
-  }
-  .layout-container .content-container .print-container .markdown-container > :first-child {
-    margin-top: 0;
   }
   .layout-container .content-container .print-container .markdown-container h1, .layout-container .content-container .print-container .markdown-container h2, .layout-container .content-container .print-container .markdown-container h3 {
     display: block;

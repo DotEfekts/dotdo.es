@@ -132,6 +132,43 @@ html, body {
                         top: 25px;
                         left: 25px;
                         display: none;
+
+                        div {
+                            box-sizing: border-box;
+                            display: block;
+                            position: absolute;
+                            width: 80px;
+                            height: 80px;
+                            margin: 10px;
+                            border: 10px solid #fff;
+                            border-radius: 50%;
+                            animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+                            border-color: #fff transparent transparent transparent;
+                        }
+                    
+                        &.dark div {
+                            border: 10px solid #555;
+                            border-color: #555 transparent transparent transparent;
+                        }
+                    
+                        div:nth-child(1) {
+                            animation-delay: -0.45s;
+                        }
+                        div:nth-child(2) {
+                            animation-delay: -0.3s;
+                        }
+                        div:nth-child(3) {
+                            animation-delay: -0.15s;
+                        }
+                    }
+                    
+                    @keyframes lds-ring {
+                        0% {
+                            transform: rotate(0deg);
+                        }
+                        100% {
+                            transform: rotate(360deg);
+                        }
                     }
 
                     &::after {
@@ -192,18 +229,6 @@ html, body {
                     to {
                         transform:rotate(360deg);
                     }
-                }
-            }
-
-            .mobile-icon {
-                height: 50px;
-                width: 50px;
-                border-radius: 50%;
-                overflow: hidden;
-                margin-right: 10px;
-                
-                img {
-                    height: 100%;
                 }
             }
 
@@ -365,12 +390,20 @@ html, body {
                 padding-top: 20px;
                 transition: opacity 0.2s 0.3s;
 
+                > :first-child {
+                    margin-top: 0;
+                }
+
                 h1, h2 {
                     border-bottom: solid 1px #bbb;
                 }
 
                 h2 {
                     margin-right: 80px;
+                }
+
+                p {
+                    text-align: justify;
                 }
 
                 img {
@@ -420,9 +453,23 @@ html, body {
             transition: opacity 0.2s;
             pointer-events: none;
 
-            .lds-ring {
-                width: 90px;
-                height: 90px;
+            .dot-loader {
+                width: 140px; /* control the size */
+                aspect-ratio: 8/5;
+                --_g: no-repeat radial-gradient(#888 68%,#8880 71%);
+                -webkit-mask: var(--_g),var(--_g),var(--_g);
+                -webkit-mask-size: 20% 30%;
+                background: #888;
+                animation: load 1.5s infinite;
+            }
+
+            @keyframes load {
+                0%    {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
+                22.5% {-webkit-mask-position: 0% 50% ,50% 100%,100% 100%}
+                45%   {-webkit-mask-position: 0% 100%,50% 50% ,100% 100%}
+                67.5% {-webkit-mask-position: 0% 100%,50% 100%,100% 50%}
+                90%   {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
+                100%  {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
             }
         }
 
@@ -461,6 +508,43 @@ html, body {
                     flex-direction: row;
                     align-items: center;
                     width: 100%;
+
+                    .music-container {
+                        margin-right: 10px;
+
+                        .top-icon {
+                            max-height: 50px;
+                            will-change: transform;
+                        }
+                        .overlay {
+                            .lds-ring {
+                                position: absolute;
+                                width: 50px;
+                                height: 50px;
+                                top: 0;
+                                left: 0;
+                                display: none;
+
+                                div {
+                                    width: 30px;
+                                    height: 30px;
+                                    margin: 10px;
+                                    border-width: 6px;
+                                }
+                            }
+
+                            &::after {
+                                position: absolute;
+                                width: 30px;
+                                line-height: 30px;
+                                top: 10px;
+                                left: 10px;
+                                font-family: 'Material Icons';
+                                content: "\e037";
+                                font-size: 30px;
+                            }
+                        }
+                    }
 
                     & > * {
                         z-index: 4;
@@ -589,64 +673,6 @@ html, body {
     }
 }
 
-.lds-ring {
-    div {
-        box-sizing: border-box;
-        display: block;
-        position: absolute;
-        width: 80px;
-        height: 80px;
-        margin: 10px;
-        border: 10px solid #fff;
-        border-radius: 50%;
-        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        border-color: #fff transparent transparent transparent;
-    }
-
-    &.dark div {
-        border: 10px solid #555;
-        border-color: #555 transparent transparent transparent;
-    }
-
-    div:nth-child(1) {
-        animation-delay: -0.45s;
-    }
-    div:nth-child(2) {
-        animation-delay: -0.3s;
-    }
-    div:nth-child(3) {
-        animation-delay: -0.15s;
-    }
-}
-
-@keyframes lds-ring {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.dot-loader {
-    width: 140px; /* control the size */
-    aspect-ratio: 8/5;
-    --_g: no-repeat radial-gradient(#888 68%,#8880 71%);
-    -webkit-mask: var(--_g),var(--_g),var(--_g);
-    -webkit-mask-size: 20% 30%;
-    background: #888;
-    animation: load 1.5s infinite;
-}
-
-@keyframes load {
-    0%    {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
-    22.5% {-webkit-mask-position: 0% 50% ,50% 100%,100% 100%}
-    45%   {-webkit-mask-position: 0% 100%,50% 50% ,100% 100%}
-    67.5% {-webkit-mask-position: 0% 100%,50% 100%,100% 50%}
-    90%   {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
-    100%  {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
-}
-
 @media print {
     .layout-container {
         .mobile-show {
@@ -691,10 +717,6 @@ html, body {
 
                 .markdown-container {
                     padding: 0;
-
-                    > :first-child {
-                        margin-top: 0;
-                    }
 
                     h1, h2, h3 {
                         display: block;
