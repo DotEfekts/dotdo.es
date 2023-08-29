@@ -76,13 +76,13 @@ navContainer.addEventListener("click", async function(event) {
        event.target.href.startsWith(currentUrl.origin) && 
        !event.target.target){
         event.preventDefault();
-        history.pushState(null, null, event.target.href);
+        history.pushState({ url: event.target.href }, null, event.target.href);
         loadPage(new URL(event.target.href));
         return false;
     }
 });
 
-document.addEventListener("popstate", async function(event) {
+window.addEventListener("popstate", async function(event) {
     if(event.state.url)
         loadPage(new URL(event.state.url));
 });
@@ -139,4 +139,5 @@ async function getNotFound() {
     return await getMarkdown("/markdown/404.md");
 }
 
+history.pushState({ url: document.URL }, null, document.URL);
 loadPage(currentUrl);
