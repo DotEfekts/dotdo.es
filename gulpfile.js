@@ -11,6 +11,9 @@ const plumber = require('gulp-plumber');
 const fs = require('fs');
 const es = require('event-stream');
 const connect = require('gulp-connect');
+const rev = require('gulp-rev');
+const revDel = require('gulp-rev-delete-original');
+const revRewrite = require('gulp-rev-rewrite');
 
 gulp.task('removedist', function(cb) {
   if(fs.existsSync('dist'))
@@ -43,7 +46,6 @@ gulp.task('minifycss', function(cb) {
     return gulp.src(['dist/css/**/*.css', '!dist/css/**/*.min.css'])
     .pipe(plumber())
     .pipe(cleanCSS())
-    .pipe(sourcemaps.write())
     .pipe(rename({
       suffix: '.min'
     }))
@@ -53,9 +55,41 @@ gulp.task('minifycss', function(cb) {
       }));
 });
 
+gulp.task('minifycss-sourcemap', function(cb) {
+  return gulp.src(['dist/css/**/*.css', '!dist/css/**/*.min.css'])
+  .pipe(plumber())
+  .pipe(sourcemaps.init())
+  .pipe(cleanCSS())
+  .pipe(sourcemaps.write())
+  .pipe(rename({
+    suffix: '.min'
+  }))
+  .pipe(
+    gulp.dest(function(f) {
+      return f.cwd + "/dist/css";
+    }));
+});
+
 gulp.task('minifyjs', function(cb) {
     return gulp.src(['dist/js/**/*.js', '!dist/js/**/*.min.js'])
     .pipe(plumber())
+    .pipe(cleanJS({
+      ext:{
+        src:'.js',
+        min:'.min.js'
+      },
+      noSource: true
+    }))
+    .pipe(
+      gulp.dest(function(f) {
+        return f.cwd + "/dist/js";
+      }))
+});
+
+gulp.task('minifyjs-sourcemap', function(cb) {
+    return gulp.src(['dist/js/**/*.js', '!dist/js/**/*.min.js'])
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
     .pipe(cleanJS({
       ext:{
         src:'.js',
@@ -117,6 +151,18 @@ gulp.task('buildimages', function (cb) {
   ).on('end', cb);
 });
 
+gulp.task(
+  'generaterev', 
+  function(){
+    return gulp.src(['dist/**/*.min.{css,js}', '!dist/**/vendor/*'])
+    .pipe(rev())
+    .pipe(revDel())
+    .pipe(gulp.src('dist/**/*.html'))
+    .pipe(revRewrite())
+    .pipe(gulp.dest('dist'));
+  }
+);
+
 gulp.task('cleanup', function(cb) {
   Promise.all([
     del(['dist/content/**/*.png']),
@@ -127,9 +173,22 @@ gulp.task('cleanup', function(cb) {
   ]).then(function() { cb(); });
 });
 
+gulp.task('cleanupdev', function(cb) {
+  Promise.all([
+    del(['dist/content/**/*.png']),
+    del(['dist/img/**/*.png']),
+    del(['dist/css/**/*.scss'])
+  ]).then(function() { cb(); });
+});
+
 gulp.task(
   'build',
-  gulp.series('removedist', 'copysrc', 'copycontent', 'sass', 'minifycss', 'minifyjs', 'buildimages', 'cleanup')
+  gulp.series('removedist', 'copysrc', 'copycontent', 'sass', 'minifycss', 'minifyjs', 'buildimages', 'generaterev', 'cleanup')
+);
+
+gulp.task(
+  'builddev',
+  gulp.series('removedist', 'copysrc', 'copycontent', 'sass', 'minifycss-sourcemap', 'minifyjs-sourcemap', 'buildimages', 'cleanup')
 );
 
 gulp.task(
@@ -154,8 +213,8 @@ function callReload(cb) {
 
 gulp.task(
   'watch',
-  gulp.series('build', 'serve', function(cb) {
-    const watcher = gulp.watch('src/**/*', gulp.series('build', callReload));
+  gulp.series('builddev', 'serve', function(cb) {
+    const watcher = gulp.watch('src/**/*', gulp.series('builddev', callReload));
     watcher.on('change', function (path) {
       lastPath = path;
     });
