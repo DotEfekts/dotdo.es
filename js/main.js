@@ -112,7 +112,7 @@ async function loadPage(url) {
     for (let i = 0; i < aTags.length; i++) {
         if(!aTags[i].href.startsWith(currentUrl.origin))
             aTags[i].target = "_blank";
-    }​
+    }
 
     contentContainer.classList.remove("loading");
 }
