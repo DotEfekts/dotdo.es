@@ -1,9 +1,0 @@
-version: 1
-frontend:
-  artifacts:
-    baseDirectory: /
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
