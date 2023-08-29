@@ -97,6 +97,15 @@ function parseMarkdown(markdown, container) {
             }
     }
 
+    var titles = container.getElementsByTagName("H1");
+    if(titles.length = 0)
+        titles = container.getElementsByTagName("H2");
+
+    if(titles.length > 0 && titles[0].innerText != 'Dot Does Stuff') {
+        document.title = `${titles[0].innerText} - Dot Does Stuff`;
+        document.getElementById('title-tag').setAttribute('content', `${titles[0].innerText} - Dot Does Stuff`);
+        document.getElementById('description-tag').setAttribute('content', `${titles[0].innerText} on Dot Does Stuff (dotdo.es)`);
+    }
 }
 
 function highlightBlock(language, block) {
