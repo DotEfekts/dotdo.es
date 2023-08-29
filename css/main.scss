@@ -20,7 +20,7 @@ html, body {
     } 
 
     a {
-        color: #e7e7e7;
+        color: #682567;
         text-decoration: none;
         font-style: italic;
         font-weight: 200;
@@ -36,6 +36,10 @@ html, body {
         background-color: #682567;
         color: #e7e7e7;
         border-radius: 0 15px 15px 0;
+
+        a {
+            color: #e7e7e7;
+        }
 
         .nav-links-container {
             display: block;
@@ -207,16 +211,23 @@ html, body {
         padding-top: 60px;
         
         .markdown-container {
+            opacity: 1;
             max-width: 1000px;
+            transition: opacity 0.2s 0.3s;
         }
 
         .loader-container {
             flex: 1;
-            display: none;
+            display: flex;
+            position: absolute;
+            top: 0;
+            height: 100%;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            padding-bottom: 20%;
+            padding-bottom: 10%;
+            opacity: 0;
+            transition: opacity 0.2s;
 
             .lds-ring {
                 width: 90px;
@@ -226,11 +237,13 @@ html, body {
 
         &.loading {
             .markdown-container {
-                display: none;
+                opacity: 0;
+                transition: opacity 0.2s;
             }
 
             .loader-container {
-                display: flex;
+                opacity: 1;
+                transition: opacity 0.2s 0.3s;
             }
         }
     }
@@ -272,9 +285,8 @@ html, body {
     }
 
     &.dark div {
-        border: 10px solid #000;
-        border-color: #000 transparent transparent transparent;
-        opacity: 0.6;
+        border: 10px solid #555;
+        border-color: #555 transparent transparent transparent;
     }
 
     div:nth-child(1) {
@@ -296,3 +308,22 @@ html, body {
         transform: rotate(360deg);
     }
 }
+
+.dot-loader {
+    width: 140px; /* control the size */
+    aspect-ratio: 8/5;
+    --_g: no-repeat radial-gradient(#888 68%,#8880 71%);
+    -webkit-mask: var(--_g),var(--_g),var(--_g);
+    -webkit-mask-size: 20% 30%;
+    background: #888;
+    animation: load 1.5s infinite;
+  }
+  
+  @keyframes load {
+    0%    {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
+    22.5% {-webkit-mask-position: 0% 50% ,50% 100%,100% 100%}
+    45%   {-webkit-mask-position: 0% 100%,50% 50% ,100% 100%}
+    67.5% {-webkit-mask-position: 0% 100%,50% 100%,100% 50%}
+    90%   {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
+    100%  {-webkit-mask-position: 0% 100%,50% 100%,100% 100%}
+  }

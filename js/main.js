@@ -68,18 +68,23 @@ function pauseVideo() {
 const markdownContainer = document.getElementById("markdown-container");
 const contentContainer = document.getElementById("content-container");
 
-addEventListener("navigate", (event) => {
-    if(!event.canIntercept ||
-       event.downloadRequest !== null || 
-       event.hashChange === true)
-        return;
+const navContainer = document.getElementById("nav-container");
+const currentUrl = new URL(document.URL);
 
-    const url = new URL(event.destination.url);
-    event.intercept({
-        async handler(){
-            await loadPage(url);
-        }
-    });
+navContainer.addEventListener("click", async function(event) {
+    if(event.target.tagName === "A" && 
+       event.target.href.startsWith(currentUrl.origin) && 
+       !event.target.target){
+        event.preventDefault();
+        history.pushState(null, null, event.target.href);
+        loadPage(new URL(event.target.href));
+        return false;
+    }
+});
+
+document.addEventListener("popstate", async function(event) {
+    if(event.state.url)
+        loadPage(new URL(event.state.url));
 });
 
 async function loadPage(url) {
@@ -134,4 +139,4 @@ async function getNotFound() {
     return await getMarkdown("/markdown/404.md");
 }
 
-loadPage(new URL(document.URL));
+loadPage(currentUrl);
