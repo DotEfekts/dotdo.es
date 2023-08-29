@@ -50,4 +50,4 @@ const cwebp = (options = {}) => through.obj(async (file, encode, callback) => {
   }
 });
 
-export default cwebp;
+module.exports = cwebp;
