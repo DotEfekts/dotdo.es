@@ -25,7 +25,7 @@ function onPlayerReady(event) {
     event.target.setVolume(25);
 
     playerLoaded = true;
-    musicEl.className = "music-container ready";
+    setMusicClass("ready");
 }
 
 var overlayState = "unloaded";
@@ -34,7 +34,7 @@ function overlayClick() {
     if(playerLoaded) {
         if(overlayState == "unloaded") {
             overlayState = "loading";
-            musicEl.className = "music-container loading";
+            setMusicClass("loading");
             playVideo();
         } else if(overlayState == "playing") {
             pauseVideo();
@@ -46,14 +46,22 @@ function overlayClick() {
 
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
-        musicEl.className = "music-container playing";
+        setMusicClass("playing");
         overlayState = "playing";
     } else if (event.data == YT.PlayerState.PAUSED) {
-        musicEl.className = "music-container stopped";
+        setMusicClass("stopped");
         overlayState = "stopped";
     } else if (event.data == YT.PlayerState.ENDED) {
         pauseVideo();
     }
+}
+
+function setMusicClass(className) {
+    musicEl.classList.remove("ready");
+    musicEl.classList.remove("loading");
+    musicEl.classList.remove("playing");
+    musicEl.classList.remove("stopped");
+    musicEl.classList.add(className);
 }
 
 function playVideo() {
@@ -64,6 +72,23 @@ function pauseVideo() {
     player.pauseVideo();
     player.seekTo(90, true);
 }
+
+const menuContainer = document.getElementById("nav-links-container");
+const menuIcon = document.getElementById("menu-icon");
+document.getElementById("menu-control").addEventListener("click", toggleMenu);
+
+function toggleMenu() {
+    menuContainer.classList.toggle("open");
+    updateMenuIcon();
+}
+
+function updateMenuIcon() {
+    if(menuContainer.classList.contains("open"))
+        menuIcon.data = "img/menu_close.svg";
+    else
+        menuIcon.data = "img/menu_open.svg";
+}
+
 
 const markdownContainer = document.getElementById("markdown-container");
 const contentContainer = document.getElementById("content-container");
@@ -88,6 +113,8 @@ window.addEventListener("popstate", async function(event) {
 
 async function loadPage(url) {
     contentContainer.classList.add("loading");
+    menuContainer.classList.remove("open");
+    updateMenuIcon();
 
     if(url.pathname === "" || url.pathname == "/")
         url.pathname = "/index";

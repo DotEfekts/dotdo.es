@@ -9,6 +9,10 @@ html, body {
   margin: auto;
 }
 
+.mobile-show {
+  display: none;
+}
+
 .layout-container {
   min-height: 100vh;
   display: flex;
@@ -151,6 +155,16 @@ html, body {
     transform: rotate(360deg);
   }
 }
+.layout-container .nav-container .top-info .mobile-icon {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.layout-container .nav-container .top-info .mobile-icon img {
+  height: 100%;
+}
 .layout-container .nav-container .top-info .title h2 {
   font-weight: 200;
   margin-bottom: 0;
@@ -167,6 +181,17 @@ html, body {
   margin: 5px 0;
   text-align: center;
   font-style: italic;
+}
+.layout-container .nav-container .top-info .menu-control {
+  display: block;
+  height: 40px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.layout-container .nav-container .top-info .menu-control object {
+  pointer-events: none;
+  height: 40px;
+  width: 40px;
 }
 .layout-container .content-container {
   flex: 1;
@@ -190,6 +215,7 @@ html, body {
   display: block;
   padding: 9px 4px 9px 45px;
   background: #e7e7e7 url("/img/search.svg") no-repeat 13px;
+  background-size: 28px;
   z-index: 1;
 }
 .layout-container .content-container .search-container .search-results {
@@ -202,6 +228,7 @@ html, body {
   width: 500px;
   padding: 10px;
   border-radius: 15px;
+  max-width: calc(100% - 40px);
 }
 .layout-container .content-container .search-container .search-results h2.no-results {
   font-size: 18px;
@@ -316,7 +343,98 @@ html, body {
   opacity: 1;
   transition: opacity 0.2s 0.3s;
 }
+@media (max-width: 920px) {
+  .layout-container {
+    flex-direction: column;
+  }
+  .layout-container .nav-container {
+    position: initial;
+    width: auto;
+    padding: 10px;
+    position: relative;
+    border-radius: 0 0 15px 15px;
+  }
+  .layout-container .nav-container .top-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+  }
+  .layout-container .nav-container .top-info > * {
+    z-index: 4;
+  }
+  .layout-container .nav-container .top-info h2, .layout-container .nav-container .top-info .contact {
+    margin: 0;
+  }
+  .layout-container .nav-container .top-info .contact {
+    margin-left: auto;
+  }
+  .layout-container .nav-container .top-info::after {
+    content: " ";
+    position: absolute;
+    background-color: #682567;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 1px 5px 5px -3px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 1px 5px 5px -3px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 1px 5px 5px -3px rgba(0, 0, 0, 0.75);
+  }
+  .layout-container .nav-container .nav-links-container {
+    position: absolute;
+    background-color: #682567;
+    border-radius: 0 0 15px 15px;
+    z-index: 2;
+    padding: 15px;
+    padding-bottom: 0;
+    bottom: 100%;
+    transition: transform 0.2s, bottom 0.2s;
+  }
+  .layout-container .nav-container .nav-links-container.open {
+    bottom: 20px;
+    transform: translateY(100%);
+  }
+  .layout-container .content-container {
+    margin-left: 0;
+  }
+  .layout-container .content-container .search-results {
+    top: 145px !important;
+  }
+  .layout-container .mobile-hide {
+    display: none !important;
+  }
+  .layout-container .mobile-show {
+    display: block !important;
+  }
+}
+@media (max-width: 600px) {
+  .layout-container table {
+    width: 100%;
+  }
+  .layout-container table th, .layout-container table td {
+    display: block;
+    width: 100%;
+    border-right: none !important;
+  }
+  .layout-container table th:not(:last-child), .layout-container table td:not(:last-child) {
+    border-bottom: solid 1px #bbb;
+  }
+}
+@media (max-width: 485px) {
+  .layout-container .mobile-small-hide {
+    display: none !important;
+  }
+  .layout-container .menu-control {
+    margin-left: auto !important;
+  }
+}
 
+.show-search-results .nav-container {
+  z-index: 0;
+}
 .show-search-results .search-overlay {
   display: block !important;
 }
@@ -326,14 +444,13 @@ html, body {
 
 .scroll-top-container {
   position: fixed;
-  right: 30px;
-  bottom: 30px;
+  right: 20px;
+  bottom: 20px;
 }
 .scroll-top-container .scroll-top {
   opacity: 0;
   display: block;
-  padding: 10px;
-  height: 45px;
+  height: 50px;
   transition: opacity 0.2s;
   pointer-events: none;
 }
@@ -344,8 +461,8 @@ html, body {
 }
 .scroll-top-container .scroll-top object {
   pointer-events: none;
-  height: 25px;
-  width: 25px;
+  height: 50px;
+  width: 50px;
 }
 
 .lds-ring div {

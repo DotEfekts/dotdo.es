@@ -35,7 +35,7 @@
 	<div class="layout-container">
 		<div class="nav-container" id="nav-container">
 			<div class="top-info">
-				<div class="music-container" id="music-container">
+				<div class="music-container mobile-hide" id="music-container">
 					<img class="top-icon" src="/img/coolyori.png" alt="Website Icon" />
 					<div class="frame-container">
 						<div id="player"></div>
@@ -45,17 +45,23 @@
 						<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 					</div>
 				</div>
+				<div class="mobile-icon mobile-show">
+					<img class="top-icon-mobile" src="/img/coolyori.png" alt="Website Icon" />
+				</div>
 				<div class="title">
 					<h2>Chelsea Pritchard</h1>
 				</div>
-				<div class="contact">
+				<div class="contact mobile-small-hide">
 					<p>
-						<a href="mailto:hello@dotdo.es" target="_blank">hello@dotdo.es</a><br />
-						<a href="https://github.com/DotEfekts" target="_blank">DotEfekts on GitHub</a><br />
+						<a href="mailto:hello@dotdo.es" target="_blank">hello@dotdo.es</a><br class="mobile-hide" />
+						<a href="https://github.com/DotEfekts" class="mobile-hide" target="_blank">DotEfekts on GitHub</a><br class="mobile-hide" />
 					</p>
 				</div>
+				<a id="menu-control" class="menu-control">
+					<object data="img/menu_open.svg" type="image/svg+xml" id="menu-icon"></object>
+				</a>
 			</div>
-			<div class="nav-links-container">
+			<div class="nav-links-container" id="nav-links-container">
 				<ul class="nav-links">
 					<li class="nav-link"><a href="/">Home</a></li>
 					<li class="nav-link"><a href="/projects">Projects</a></li>
