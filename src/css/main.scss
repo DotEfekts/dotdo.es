@@ -362,10 +362,13 @@ a.icon-link {
 
                 p {
                     text-align: justify;
+                    word-wrap: break-word;
                 }
 
                 code {
                     white-space: pre-wrap;
+                    word-wrap: break-word;
+                    word-wrap: anywhere;
                 }
 
                 p.img-container {

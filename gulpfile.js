@@ -136,7 +136,7 @@ function runCWebP(path, params, suffix) {
 gulp.task(
   'generaterev', 
   function(){
-    return gulp.src(['dist/**/*.min.{css,js}', '!dist/**/vendor/*'])
+    return gulp.src(['dist/**/*.min.{css,js}', '!dist/**/vendor/**/*'])
     .pipe(rev())
     .pipe(revDel())
     .pipe(gulp.src('dist/**/*.html'))
