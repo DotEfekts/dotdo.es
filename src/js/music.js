@@ -1,10 +1,8 @@
 var player;
-var playOnReady = false;
-var loadOnReady = false;
 
 function onYouTubeIframeAPIReady() {
     apiLoaded = true;
-    if(playOnReady || loadOnReady)
+    if(playOnReady || musicEl.classList.contains('preloading'))
         loadYoutubeFrame();
 }
 
@@ -38,8 +36,8 @@ function loadYoutubeApi(event) {
     script.src = "https://www.youtube.com/iframe_api";
     document.body.append(script);
 
-    if(event.pointerType == "touch")
-        loadOnReady = true;
+    if(event.pointerType === "touch")
+        setMusicClass("preloading");
 
     musicEl.removeEventListener("pointerenter", loadYoutubeApi);
 }
@@ -50,9 +48,12 @@ function onPlayerReady(event) {
     playerLoaded = true;
     if(playOnReady)
         overlayClick();
+    if(musicEl.classList.contains('preloading'))
+        setMusicClass("ready");
 }
 
 var overlayState = "unloaded";
+var playOnReady = false;
 
 function overlayClick() {
     if(playerLoaded) {
@@ -67,10 +68,12 @@ function overlayClick() {
             playVideo();
         }
     } else {
-        if(apiLoaded)
-            loadYoutubeFrame();
-        playOnReady = true;
-        setMusicClass("loading");
+        if(!musicEl.classList.contains('preloading')) {
+            if(apiLoaded)
+                loadYoutubeFrame();
+            playOnReady = true;
+            setMusicClass("loading");
+        }
     }
 }
 
@@ -88,6 +91,7 @@ function onPlayerStateChange(event) {
 
 function setMusicClass(className) {
     musicEl.classList.remove("ready");
+    musicEl.classList.remove("preloading");
     musicEl.classList.remove("loading");
     musicEl.classList.remove("playing");
     musicEl.classList.remove("stopped");

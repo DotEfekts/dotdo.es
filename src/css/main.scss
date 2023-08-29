@@ -4,9 +4,35 @@
 
 html, body {
     background-color: #e7e7e7;
-    color: #111111;
+    color: #111;
     font-family: 'Open Sans', sans-serif;
     margin: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background-color: #252525;
+        color: #e7e7e7;
+
+        .layout-container {
+            a {
+                color: #e378e2;
+            }
+
+            .content-container {
+                .search-container {
+                    input[type=search] {
+                        background-color: #333;
+                        color: #e7e7e7;
+                    }
+                }
+    
+                .dot-loader {
+                    background: #e2e2e2;
+                }
+            }
+        }
+    }
 }
 
 .scroll-top-container {

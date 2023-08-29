@@ -1,3 +1,23 @@
+@media (prefers-color-scheme: dark) {
+    .search-container {
+        .search-results {
+            background-color: #333;
+
+            a {
+                color: #e7e7e7;
+
+                &:hover {
+                    background-color: #444;
+                }
+            }
+
+            h2 {
+                color: #e378e2;
+            }
+        }
+    }
+}
+
 .show-search-results {
     .nav-container {
         z-index: 0;

@@ -65,12 +65,15 @@
                 }
             }
 
-            &.loading {
+            &.loading,
+            &.preloading {
                 cursor: default;
-                
+
                 .overlay {
                     display: block;
-                    
+                }
+                
+                .overlay {
                     .lds-ring {
                         display: inline-block;
                     }
