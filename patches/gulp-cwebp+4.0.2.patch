@@ -1,0 +1,17 @@
+diff --git a/node_modules/gulp-cwebp/index.js b/node_modules/gulp-cwebp/index.js
+index e7b3413..1b78947 100644
+--- a/node_modules/gulp-cwebp/index.js
++++ b/node_modules/gulp-cwebp/index.js
+@@ -31,7 +31,11 @@ module.exports = (options = {}) => through.obj(async (file, encode, callback) =>
+     args.push(`-${key}`);
+ 
+     if (!booleanFlags.has(key)) {
+-      args.push(options[key]);
++        if(options[key] instanceof Array)
++          for(const i in options[key])
++            args.push(options[key][i]);
++        else
++          args.push(options[key]);
+     }
+   });
+ 

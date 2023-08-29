@@ -52,6 +52,8 @@ async function loadPage(url) {
     let pageMarkdown;
     try {
         pageMarkdown = await getMarkdown(url);
+        if(pageMarkdown === null)
+            pageMarkdown = await getMarkdown('/content/404.md');
         if(pageMarkdown === "cancelled")
             return;
     } catch { }
@@ -73,7 +75,7 @@ async function loadPage(url) {
         if(i > 0)
             imgTags[i].loading = "lazy";
 
-        /*let name = imgTags[i].getAttribute('src');
+        let name = imgTags[i].getAttribute('src');
         imgTags[i].setAttribute('srcset', 
         name.replace(".png", "-small.webp") + " 320w, " + 
         name.replace(".png", "-medium.webp") + " 480w," + 
@@ -82,7 +84,7 @@ async function loadPage(url) {
 
         imgTags[i].setAttribute('sizes', '(max-width: 920px) 80vw, 640px')
 
-        imgTags[i].setAttribute('src', name.replace(".png", ".webp"));*/
+        imgTags[i].setAttribute('src', name.replace(".png", ".webp"));
     }
 
     const children = markdownContainer.children;
@@ -106,6 +108,9 @@ async function getMarkdown(url, preserveExisting) {
         let currentLoad = await fetch(url, {
             signal: preserveExisting ? null : abortController.signal
         });
+
+        if(currentLoad.status === 404)
+            return null;
 
         if(currentLoad.status > 299)
             throw new Error("Unknown Error");
