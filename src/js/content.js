@@ -105,6 +105,10 @@ function parseMarkdown(markdown, container) {
         document.title = `${titles[0].innerText} - Dot Does Stuff`;
         document.getElementById('title-tag').setAttribute('content', `${titles[0].innerText} - Dot Does Stuff`);
         document.getElementById('description-tag').setAttribute('content', `${titles[0].innerText} on Dot Does Stuff (dotdo.es)`);
+    } else {
+        document.title = 'Dot Does Stuff';
+        document.getElementById('title-tag').setAttribute('content', 'Dot Does Stuff');
+        document.getElementById('description-tag').setAttribute('content', 'The personal website of Chelsea Pritchard (aka DotEfekts).');
     }
 }
 
