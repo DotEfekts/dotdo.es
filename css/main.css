@@ -516,6 +516,9 @@ html, body {
     .layout-container .content-container .search-results {
       top: 145px !important;
     }
+    .layout-container .content-container .markdown-container h2 {
+      margin-right: 0 !important;
+    }
     .layout-container .mobile-hide {
       display: none !important;
     }

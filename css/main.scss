@@ -597,6 +597,12 @@ html, body {
                 .search-results {
                     top: 145px!important;
                 }
+
+                .markdown-container {
+                    h2 {
+                        margin-right: 0!important;
+                    }
+                }
             }
 
             .mobile-hide {
