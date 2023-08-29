@@ -63,14 +63,15 @@ async function loadPage(url) {
 
 
     pageMarkdown = pageMarkdown.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
-    markdownContainer.innerHTML = marked.parse(pageMarkdown);
-    const aTags = markdownContainer.getElementsByTagName("A");
+    var processing = document.createElement("div");
+    processing.innerHTML = marked.parse(pageMarkdown);
+    const aTags = processing.getElementsByTagName("A");
     for (let i = 0; i < aTags.length; i++) {
         if(!aTags[i].href.startsWith(currentUrl.origin))
             aTags[i].target = "_blank";
     }
 
-    const imgTags = markdownContainer.getElementsByTagName("IMG");
+    const imgTags = processing.getElementsByTagName("IMG");
     for (let i = 0; i < imgTags.length; i++) {
         if(i > 0)
             imgTags[i].loading = "lazy";
@@ -87,11 +88,14 @@ async function loadPage(url) {
         imgTags[i].setAttribute('src', name.replace(".png", ".webp"));
     }
 
-    const children = markdownContainer.children;
+    const children = processing.children;
     for (let i = 0; i < children.length; i++) {
         if(children[i].children.length == 1 && children[i].children[0].tagName == "IMG")
             children[i].classList.add("img-container");
     }
+
+    markdownContainer.innerHTML = processing.innerHTML;
+    processing.innerHTML = "";
 
     window.clearTimeout(timeout);
     timeout = null;
