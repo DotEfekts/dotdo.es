@@ -229,7 +229,7 @@ function processSearch(event) {
         return;
     }
 
-    const terms = searchBox.value.split(' ');
+    const terms = searchBox.value.toLowerCase().split(' ');
     const results = [];
 
     for(var i = 0; i < searchInfo.children.length && resultCount < 10; i++) {
@@ -241,8 +241,9 @@ function processSearch(event) {
                 continue;
         
         let matches = 0;
+        let contentSearch = child.innerHTML.toLowerCase();
         for(var t = 0; t < terms.length; t++)
-            if(child.innerHTML.includes(terms[t]))
+            if(contentSearch.includes(terms[t]))
                 child.tagName == "H2" ? matches += 2 : matches++;
 
         if(matches > 0) {

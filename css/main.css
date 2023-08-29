@@ -251,7 +251,8 @@ html, body {
   padding: 0;
 }
 .layout-container .content-container .search-container input[type=search] {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   border-radius: 15px;
   border: 1px solid #bbb;
   display: block;
@@ -442,9 +443,6 @@ html, body {
       align-items: center;
       width: 100%;
     }
-    .layout-container .nav-container .top-info .music-container {
-      margin-right: 10px;
-    }
     .layout-container .nav-container .top-info .music-container .top-icon {
       max-height: 50px;
       will-change: transform;
@@ -480,6 +478,7 @@ html, body {
       margin: 0;
     }
     .layout-container .nav-container .top-info .title {
+      margin-left: 15px;
       margin-right: auto;
     }
     .layout-container .nav-container .top-info::after {

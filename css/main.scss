@@ -298,7 +298,8 @@ html, body {
             padding: 0;
 
             input[type=search] {
-                width: 300px;
+                width: 100%;
+                max-width: 300px;
                 border-radius: 15px;
                 border: 1px solid #bbb;
                 display: block;
@@ -510,8 +511,6 @@ html, body {
                     width: 100%;
 
                     .music-container {
-                        margin-right: 10px;
-
                         .top-icon {
                             max-height: 50px;
                             will-change: transform;
@@ -555,6 +554,7 @@ html, body {
                     }
                     
                     .title {
+                        margin-left: 15px;
                         margin-right: auto;
                     }
 
