@@ -1,9 +1,9 @@
-const { path } = require('node:path');
-const { PluginError } = require('plugin-error');
-const { replaceExt } = require('replace-ext');
-const { through } = require('through2');
-const { execBuffer } = require('exec-buffer');
-const { bin } = require('cwebp-bin');
+const path = require('node:path');
+const PluginError = require('plugin-error');
+const replaceExt = require('replace-ext');
+const through = require('through2');
+const execBuffer = require('exec-buffer');
+const bin = require('cwebp-bin');
 
 const booleanFlags = new Set(['lossless', 'mt', 'low_memory', 'af', 'jpeg_like', 'strong', 'nostrong', 'sharp_yuv']);
 
