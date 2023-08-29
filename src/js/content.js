@@ -23,6 +23,16 @@ const contentContainer = document.getElementById("content-container");
 
 const currentUrl = new URL(document.URL);
 
+markdownContainer.addEventListener('touchstart', function(event) {
+    let wrapper = event.target.closest('.hljs-copy-wrapper');
+    if(wrapper) {
+        wrapper.classList.add('show-copy');
+        if(wrapper.copyTimeout)
+            window.clearTimeout(wrapper.copyTimeout);
+        wrapper.copyTimeout = window.setTimeout(function() { wrapper.copyTimeout = null; wrapper.classList.remove('show-copy');}, 5000);
+    }
+});
+
 window.addEventListener("click", async function(event) {
     if(event.target.tagName === "A" && 
        event.target.href.startsWith(currentUrl.origin) && 

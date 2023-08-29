@@ -371,6 +371,10 @@ a.icon-link {
                     word-wrap: anywhere;
                 }
 
+                .hljs-copy-wrapper.show-copy .hljs-copy-button, .hljs-copy-button:focus {
+                    transform: translateX(0);
+                }
+
                 p.img-container {
                     min-height: 200px;
                     display: flex;
