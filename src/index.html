@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="/css/vendor/normalize.min.css">
 	<link rel="stylesheet" href="/css/vendor/boilerplate.min.css">
 	<link rel="stylesheet" href="/css/core.min.css">
+	<link rel="stylesheet" href="/css/fonts.min.css">
 	<!-- /build -->
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -30,8 +31,10 @@
 	<!-- build:js inline -->
 	<script src="/js/core.min.js"></script>
 	<!-- /build -->
-
-	<script src="/js/vendor/marked.min.js"></script>
+	
+	<script src="/js/vendor/plugins.min.js" defer></script>
+	<script src="/js/vendor/marked.min.js" defer></script>
+	<script src="/js/content.min.js" defer></script>
 
 	<base href="/" />
 </head>
@@ -94,7 +97,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="content-container loading" id="content-container">
+		<div class="content-container first-load" id="content-container">
 			<div class="top-container">
 				<a id="theme-switcher" class="theme-switcher icon-link">
 					<object class="auto-light" data="img/auto_light.svg" type="image/svg+xml" aria-label="Auto theme mode"></object>
@@ -121,25 +124,24 @@
 		</div>
 	</div>
 
-
 	<link rel="stylesheet" href="/css/main.min.css">
-	<link rel="preload" onload="this.onload=null;this.rel='stylesheet'" as="style"
-	href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
-	
-	<script src="/js/content.min.js"></script>
-	<script src="/js/vendor/plugins.min.js"></script>
 
 	<link rel="prefetch" href="/img/auto_light.svg" as="image" type="image/svg+xml" />
 	<link rel="prefetch" href="/img/auto_dark.svg" as="image" type="image/svg+xml" />
 	<link rel="prefetch" href="/img/light.svg" as="image" type="image/svg+xml" />
 	<link rel="prefetch" href="/img/dark.svg" as="image" type="image/svg+xml" />
 
+
+	<link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
+		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,500;0,700;1,200;1,500;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap">
+	
 	<link rel="preload" href="/css/music.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<link rel="preload" href="/css/search.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<link rel="preload" href="/css/print.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	
 	<noscript>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
+	<link rel="stylesheet" 
+		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
 	<link rel="stylesheet" href="/css/highlight.min.css">
 	
 	<link rel="stylesheet" href="/css/music.min.css">
@@ -147,10 +149,10 @@
 	<link rel="stylesheet" href="/css/print.min.css">
 	</noscript>
 
-	<script src="/js/search.min.js" defer></script>
-	<script src="/js/theme.min.js" defer></script>
-	<script src="/js/scroll.min.js" defer></script>
-	<script src="/js/music.min.js" defer></script>
+	<script src="/js/search.min.js" async></script>
+	<script src="/js/theme.min.js" async></script>
+	<script src="/js/scroll.min.js" async></script>
+	<script src="/js/music.min.js" async></script>
 
 	<link rel="preload" href="/css/vendor/highlightjs-copy.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<link rel="preload" href="/css/highlight.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -160,7 +162,7 @@
 		<link rel="stylesheet" href="/css/highlight.min.css">
 	</noscript>
 
-	<script src="/js/vendor/highlightjs-copy.min.js" defer></script>
-	<script src="/js/vendor/highlight/highlight.min.js" defer onload="loadHljs()"></script>
+	<script src="/js/vendor/highlightjs-copy.min.js" async onload="loadHljsCopy()"></script>
+	<script src="/js/vendor/highlight/highlight.min.js" async onload="loadHljs()"></script>
 </body>
 </html>

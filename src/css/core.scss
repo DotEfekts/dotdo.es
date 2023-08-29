@@ -94,6 +94,7 @@ html.theme-dark {
 
 a.icon-link {
     height: 30px;
+    width: 30px;
     display: inline-block;
     margin: 5px;
 
@@ -324,6 +325,10 @@ a.icon-link {
             .copyright-container {
                 display: none;
             }
+        }
+
+        &.first-load .copyright-container {
+            display: none;
         }
     }
 

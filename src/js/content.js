@@ -120,9 +120,7 @@ function addHighlightLang(language) {
     document.body.append(script);
 }
 
-function loadHljs() {
-    hljs.addPlugin(new CopyButtonPlugin());
-
+function runHighlight() {
     for(const lang in loadingCallback)
         addHighlightLang(lang);
 }
@@ -162,5 +160,8 @@ window.addEventListener("beforeprint", function() {
 
 if(firstLoadMarkdown) {
     parseMarkdown(firstLoadMarkdown, markdownContainer);
-    contentContainer.classList.remove("loading");
+    contentContainer.classList.remove("first-load");
 }
+
+if(typeof CopyButtonPlugin !== 'undefined' && typeof hljs !== 'undefined')
+    runHighlight();

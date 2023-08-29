@@ -78,5 +78,21 @@ async function firstLoad() {
     }
 }
 
+function loadHljs() {
+    if(typeof CopyButtonPlugin !== 'undefined') {
+        hljs.addPlugin(new CopyButtonPlugin());
+        if(typeof runHighlight !== 'undefined')
+            runHighlight();
+    }
+}
+
+function loadHljsCopy() {
+    if(typeof hljs !== 'undefined') {
+        hljs.addPlugin(new CopyButtonPlugin());
+        if(typeof runHighlight !== 'undefined')
+            runHighlight();
+    }
+}
+
 queryTheme();
 firstLoad();
