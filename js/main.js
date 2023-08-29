@@ -237,7 +237,7 @@ function processSearch(event) {
     }
 
     if(!searchResults.innerHTML)
-        searchResults.innerHTML = "<h2>No search results found.</h2>";
+        searchResults.innerHTML = '<h2 class="no-results">No search results found.</h2>';
 
     document.body.classList.add("show-search-results");
 }

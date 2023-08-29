@@ -30,13 +30,13 @@ html, body {
   align-items: center;
   padding: 20px;
   background-color: #682567;
-  color: #e7e7e7;
+  color: #fff;
   border-radius: 0 15px 15px 0;
   position: fixed;
   height: 100%;
 }
 .layout-container .nav-container a {
-  color: #e7e7e7;
+  color: #fff;
   font-style: italic;
   font-weight: 200;
   font-family: "Montserrat", sans-serif;
@@ -202,6 +202,11 @@ html, body {
   width: 500px;
   padding: 10px;
   border-radius: 15px;
+}
+.layout-container .content-container .search-container .search-results h2.no-results {
+  font-size: 18px;
+  padding: 10px;
+  margin: 0;
 }
 .layout-container .content-container .search-container .search-results div {
   overflow: hidden;
