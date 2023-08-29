@@ -105,7 +105,7 @@ function setTimeoutLoader() {
         timeout = window.setTimeout(function() {
             contentContainer.classList.add("loading");
             timeout = null;
-        }, 50);
+        }, 200);
 }
 
 var abortController;
