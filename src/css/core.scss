@@ -26,7 +26,8 @@ html, body {
                 }
 
                 input[type=search] {
-                    background-color: #252525;
+                    background: #252525 url("/img/search_dark.svg") no-repeat 13px;
+                    background-size: 28px;
                     color: #e7e7e7;
                 }
             }
@@ -259,9 +260,9 @@ a.icon-link {
                 border: 1px solid #bbb;
                 display: block;
                 padding: 9px 4px 9px 45px;
-                background: #e7e7e7 url("/img/search.svg") no-repeat 13px;
+                background: #e7e7e7 url("/img/search_light.svg") no-repeat 13px;
                 background-size: 28px;
-                z-index: 1;
+                z-index: 2;
             }
             
             .search-overlay, .search-results {
@@ -372,7 +373,7 @@ a.icon-link {
                     }
 
                     & > * {
-                        z-index: 4;
+                        z-index: 5;
                     }
 
                     h2, .contact {
@@ -392,7 +393,7 @@ a.icon-link {
                         left: 0;
                         width: 100%;
                         height: 100%;
-                        z-index: 3;
+                        z-index: 4;
                         border-radius: 0 0 15px 15px;
                         box-shadow: 1px 5px 5px -3px rgba(0,0,0,0.75);
                         -webkit-box-shadow: 1px 5px 5px -3px rgba(0,0,0,0.75);
@@ -402,7 +403,7 @@ a.icon-link {
 
                 .nav-links-container {
                     position: absolute;
-                    z-index: 2;
+                    z-index: 3;
                     bottom: 100%;
                 }
 

@@ -16,7 +16,7 @@ window.addEventListener('load', function() {
 function loadSheet(url) {
     let sheet = document.createElement("link");
     sheet.rel = "stylesheet";
-    sheet.rel = url;
+    sheet.href = url;
     document.body.append(sheet);
 }
 

@@ -26,16 +26,16 @@
     pre code, pre code.hljs {
         display:block;
         overflow-x:auto;
-        padding:1em
+        padding:1em;
     }
     
     code.hljs {
-        padding:3px 5px
+        padding:3px 5px;
     }
 
     .hljs, pre code {
         color:#c9d1d9;
-        background:#0d1117
+        background:#0d1117;
     }
 }
 
@@ -43,16 +43,16 @@
     pre code, pre code.hljs {
         display:block;
         overflow-x:auto;
-        padding:1em
+        padding:1em;
     }
     
     code.hljs {
-        padding:3px 5px
+        padding:3px 5px;
     }
 
     .hljs, pre code {
         color:#24292e;
-        background:#fff
+        background:#eee;
     }
 }
 
@@ -137,7 +137,7 @@ html.theme-light {
                 background-color: #000;
                 opacity: 0.5;
                 display: none;
-                z-index: 0;
+                z-index: 1;
             }
         }
         
