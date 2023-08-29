@@ -14,9 +14,11 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+	<!-- build:css inline -->
 	<link rel="stylesheet" href="/css/vendor/normalize.min.css">
 	<link rel="stylesheet" href="/css/vendor/boilerplate.min.css">
-	<link rel="stylesheet" href="/css/main.min.css">
+	<link rel="stylesheet" href="/css/core.min.css">
+	<!-- /build -->
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -24,6 +26,10 @@
 	<link rel="manifest" href="/site.webmanifest">
 
 	<meta name="theme-color" content="#682567">
+
+	<!-- build:js inline -->
+	<script src="/js/core.min.js"></script>
+	<!-- /build -->
 
 	<base href="/" />
 </head>
@@ -86,7 +92,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="content-container" id="content-container">
+		<div class="content-container loading" id="content-container">
 			<div class="top-container">
 				<a id="theme-switcher" class="theme-switcher icon-link">
 					<object class="auto-light" data="img/auto_light.svg" type="image/svg+xml" aria-label="Auto theme mode"></object>
@@ -113,26 +119,24 @@
 		</div>
 	</div>
 
-	<script src="/js/vendor/modernizr-3.11.2.min.js"></script>
+
+	<link rel="stylesheet" href="/css/main.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap">
+
 	<script src="/js/vendor/plugins.min.js"></script>
 	<script src="/js/vendor/marked.min.js"></script>
 	<script src="/js/content.min.js"></script>
 
-	<link rel="prefetch" href="/img/auto-light.svg" as="image" type="image/svg+xml" />
-	<link rel="prefetch" href="/img/auto-dark.svg" as="image" type="image/svg+xml" />
+	<link rel="prefetch" href="/img/auto_light.svg" as="image" type="image/svg+xml" />
+	<link rel="prefetch" href="/img/auto_dark.svg" as="image" type="image/svg+xml" />
 	<link rel="prefetch" href="/img/light.svg" as="image" type="image/svg+xml" />
 	<link rel="prefetch" href="/img/dark.svg" as="image" type="image/svg+xml" />
 
-	<link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<link rel="preload" href="/css/vendor/highlightjs-copy.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<link rel="preload" href="/css/highlight.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	
 	<link rel="preload" href="/css/music.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<link rel="preload" href="/css/search.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<link rel="preload" href="/css/print.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	
 	<noscript>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,700;1,200;1,400;1,700&family=Open+Sans&display=swap">
 	<link rel="stylesheet" href="/css/highlight.min.css">
 	
 	<link rel="stylesheet" href="/css/music.min.css">
@@ -140,13 +144,20 @@
 	<link rel="stylesheet" href="/css/print.min.css">
 	</noscript>
 
-	<script src="/js/vendor/highlightjs-copy.min.js"></script>
-	<script src="/js/vendor/highlight/highlight.min.js"></script>
-	<script>hljs.addPlugin(new CopyButtonPlugin());</script>
-
 	<script src="/js/search.min.js" defer></script>
 	<script src="/js/theme.min.js" defer></script>
 	<script src="/js/scroll.min.js" defer></script>
 	<script src="/js/music.min.js" defer></script>
+
+	<link rel="preload" href="/css/vendor/highlightjs-copy.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<link rel="preload" href="/css/highlight.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+	<noscript>
+		<link rel="stylesheet" href="/css/vendor/highlightjs-copy.min.css">
+		<link rel="stylesheet" href="/css/highlight.min.css">
+	</noscript>
+
+	<script src="/js/vendor/highlightjs-copy.min.js" defer></script>
+	<script src="/js/vendor/highlight/highlight.min.js" defer onload="loadHljs()"></script>
 </body>
 </html>

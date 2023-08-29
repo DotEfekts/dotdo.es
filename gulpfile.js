@@ -4,6 +4,8 @@ const sass = require('gulp-sass')(require('sass'));
 const cleanCSS = require('gulp-clean-css');
 const cleanJS = require('gulp-minify');
 const cwebp = require('gulp-cwebp');
+const through = require('through2');
+const imageSize = require('image-size');
 const del = require('del');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
@@ -15,6 +17,7 @@ const rev = require('gulp-rev');
 const revDel = require('gulp-rev-delete-original');
 const revRewrite = require('gulp-rev-rewrite');
 var gulpif = require('gulp-if');
+var processhtml = require('gulp-processhtml');
 
 gulp.task('removedist', function(cb) {
   if(fs.existsSync('dist'))
@@ -33,14 +36,15 @@ gulp.task('copycontent', function() {
     .pipe(gulp.dest('./dist/content'));
 });
 
+gulp.task('removekb', function(cb) {
+  del(['dist/content/knowledge-base']).then(function() { cb(); });
+});
+
 gulp.task('sass', function() {
     return gulp.src('dist/css/**/*.scss')
     .pipe(plumber())
     .pipe(sass())
-    .pipe(
-      gulp.dest(function(f) {
-        return f.base;
-      }));
+    .pipe(gulp.dest((f) => f.base));
 });
 
 gulp.task('minifycss', function() {
@@ -50,10 +54,7 @@ gulp.task('minifycss', function() {
     .pipe(rename({
       suffix: '.min'
     }))
-    .pipe(
-      gulp.dest(function(f) {
-        return f.cwd + "/dist/css";
-      }));
+    .pipe(gulp.dest((f) => f.base));
 });
 
 gulp.task('minifycss-sourcemap', function() {
@@ -65,10 +66,7 @@ gulp.task('minifycss-sourcemap', function() {
   .pipe(rename({
     suffix: '.min'
   }))
-  .pipe(
-    gulp.dest(function(f) {
-      return f.cwd + "/dist/css";
-    }));
+  .pipe(gulp.dest((f) => f.base));
 });
 
 gulp.task('minifyjs', function(cb) {
@@ -81,10 +79,7 @@ gulp.task('minifyjs', function(cb) {
       },
       noSource: true
     }))
-    .pipe(
-      gulp.dest(function(f) {
-        return f.cwd + "/dist/js";
-      }))
+    .pipe(gulp.dest((f) => f.base));
 });
 
 gulp.task('minifyjs-sourcemap', function() {
@@ -99,19 +94,16 @@ gulp.task('minifyjs-sourcemap', function() {
       noSource: true
     }))
     .pipe(sourcemaps.write())
-    .pipe(
-      gulp.dest(function(f) {
-        return f.cwd + "/dist/js";
-      }))
+    .pipe(gulp.dest((f) => f.base));
 });
 
 gulp.task('buildimages', function (cb) {
   return gulp.series(
-    runCWebP('dist/img/**/*.png', { q: 75 }),
-    runCWebP('dist/content/**/*.png', { resize: [1280, 0], q: 75 }, '-large'),
-    runCWebP('dist/content/**/*.png', { resize: [640, 0], q: 75 }),
-    runCWebP('dist/content/**/*.png', { resize: [480, 0], q: 75 }, '-medium'),
-    runCWebP('dist/content/**/*.png', { resize: [320, 0], q: 75 }, '-small'),
+    runCWebP('dist/img/**/*.{png,jpg}', { q: 75 }),
+    runCWebP('dist/content/**/*.{png,jpg}', { resize: [1280, 0], q: 75 }, '-large'),
+    runCWebP('dist/content/**/*.{png,jpg}', { resize: [640, 0], q: 75 }),
+    runCWebP('dist/content/**/*.{png,jpg}', { resize: [480, 0], q: 75 }, '-medium'),
+    runCWebP('dist/content/**/*.{png,jpg}', { resize: [320, 0], q: 75 }, '-small'),
     function(cb2) {
       cb2();
       cb();
@@ -126,12 +118,43 @@ function runCWebP(path, params, suffix) {
     .pipe(gulpif(suffix != undefined, rename({
       suffix: suffix
     })))
-    .pipe(
-      gulp.dest(function(f) {
-        return f.base;
-      }));
+    .pipe(gulp.dest((f) => f.base));
   };
 }
+
+
+gulp.task('putimagesize', function(cb) {
+  return gulp.src(['dist/content/**/*.md'])
+    .pipe(through.obj((chunk, _, cb) => {
+      if (chunk.isNull()) {
+        callback(null, file);
+        return;
+      }
+    
+      let contents = chunk.contents.toString();
+      contents = contents.replace(/\[\[(.*?)\]\]/gi, function (_, linkText) {
+        let split = linkText.split('|');
+        return split.length > 1 ? split[1] : split[0];
+      });
+
+      chunk.contents = Buffer.from(contents.replace(/\!\[(.*?)\]\((.*?)\.(png|jpg)\)/gi, (_, alt, path, type) => {
+        let size = imageSize(`dist/content${path}.webp`);
+        return `![${alt}](${path}[${size.width}x${size.height}])`
+      }));
+
+      cb(null, chunk);
+    }))
+    .pipe(gulp.dest((f) => f.base));
+});
+
+gulp.task(
+  'processhtml', 
+  function () {
+  return gulp
+    .src(['dist/**/*.html'])
+    .pipe(processhtml())
+    .pipe(gulp.dest((f) => f.base));
+});
 
 gulp.task(
   'generaterev', 
@@ -141,13 +164,12 @@ gulp.task(
     .pipe(revDel())
     .pipe(gulp.src('dist/**/*.html'))
     .pipe(revRewrite())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest((f) => f.base));
   }
 );
 
 gulp.task('cleanup', function(cb) {
   Promise.all([
-    del(['dist/content/knowledge-base']),
     del(['dist/content/**/*.png']),
     del(['dist/img/**/*.png']),
     del(['dist/css/**/*.scss']),
@@ -158,7 +180,6 @@ gulp.task('cleanup', function(cb) {
 
 gulp.task('cleanupdev', function(cb) {
   Promise.all([
-    del(['dist/content/knowledge-base']),
     del(['dist/content/**/*.png']),
     del(['dist/img/**/*.png']),
     del(['dist/css/**/*.scss'])
@@ -167,12 +188,12 @@ gulp.task('cleanupdev', function(cb) {
 
 gulp.task(
   'build',
-  gulp.series('removedist', 'copysrc', 'copycontent', 'sass', 'minifycss', 'minifyjs', 'buildimages', 'generaterev', 'cleanup')
+  gulp.series('removedist', 'copysrc', 'copycontent', 'removekb', 'sass', 'minifycss', 'minifyjs', 'buildimages', 'putimagesize', 'processhtml', 'generaterev', 'cleanup')
 );
 
 gulp.task(
   'builddev',
-  gulp.series('removedist', 'copysrc', 'copycontent', 'sass', 'minifycss-sourcemap', 'minifyjs-sourcemap', 'buildimages', 'cleanup')
+  gulp.series('removedist', 'copysrc', 'copycontent', 'removekb', 'sass', 'minifycss-sourcemap', 'minifyjs-sourcemap', 'buildimages', 'putimagesize', 'processhtml', 'cleanup')
 );
 
 gulp.task(

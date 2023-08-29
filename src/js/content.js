@@ -21,8 +21,6 @@ function updateMenuIcon() {
 const markdownContainer = document.getElementById("markdown-container");
 const contentContainer = document.getElementById("content-container");
 
-const currentUrl = new URL(document.URL);
-
 markdownContainer.addEventListener('touchstart', function(event) {
     let wrapper = event.target.closest('.hljs-copy-wrapper');
     if(wrapper) {
@@ -31,7 +29,7 @@ markdownContainer.addEventListener('touchstart', function(event) {
             window.clearTimeout(wrapper.copyTimeout);
         wrapper.copyTimeout = window.setTimeout(function() { wrapper.copyTimeout = null; wrapper.classList.remove('show-copy');}, 5000);
     }
-});
+}, { passive: true });
 
 window.addEventListener("click", async function(event) {
     if(event.target.tagName === "A" && 
@@ -49,8 +47,7 @@ window.addEventListener("popstate", async function(event) {
         loadPage(new URL(event.state.url));
 });
 
-var imgRegex = new RegExp(/(<img .*?)src="\/(.*?)\.png"( .*?>)/, "gi");
-var internalLinkRegex = new RegExp(/\[\[(.*?)\]\]/, "gi");
+var imgRegex = new RegExp(/(<img .*?)src="\/(.*?)\%5B([0-9]+)x([0-9]+)\%5D"( .*?>)/, "gi");
 var loadingCallback = {};
 var loadedLanguages = [];
 
@@ -59,16 +56,11 @@ function parseMarkdown(markdown, container) {
     let parsedDom = marked.parse(markdown, { breaks: true });
 
     let first = true;
-    parsedDom = parsedDom.replace(imgRegex, function(_, pre, name, post) {
+    parsedDom = parsedDom.replace(imgRegex, function(_, pre, name, width, height, post) {
         if(!first)
             post = 'loading="lazy"' + post;
         first = false;
-        return pre + `src="/content/${name}.webp" srcset="/content/${name}-small.webp 320w, /content/${name}-medium.webp 480w, /content/${name}.webp 640w, /content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
-    });
-
-    parsedDom = parsedDom.replace(internalLinkRegex, function (_, linkText) {
-        let split = linkText.split('|');
-        return split.length > 1 ? split[1] : split[0];
+        return pre + `width="${width}" height="${height}" src="/content/${name}.webp" srcset="/content/${name}-small.webp 320w, /content/${name}-medium.webp 480w, /content/${name}.webp 640w, /content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
     });
 
     container.innerHTML = parsedDom;
@@ -107,18 +99,32 @@ function highlightBlock(language, block) {
     } else if(loadingCallback[language]) {
         loadingCallback[language].push(block);
     } else {
-        let script = document.createElement("script");
-        script.src = `/js/vendor/highlight/languages/${language}.min.js`;
-        script.onload = function() {
-            loadedLanguages.push(language);
-            for(let l = 0; l < loadingCallback[language].length; l++)
-                hljs.highlightElement(loadingCallback[language][l]);
-            loadingCallback[language] = null;
-        };
-
         loadingCallback[language] = [block];
-        document.body.append(script);
+
+        if(typeof hljs !== 'undefined') {
+            addHighlightLang(language);
+        }
     }
+}
+
+function addHighlightLang(language) {
+    let script = document.createElement("script");
+    script.src = `/js/vendor/highlight/languages/${language}.min.js`;
+    script.defer = true;
+    script.onload = function() {
+        loadedLanguages.push(language);
+        for(let l = 0; l < loadingCallback[language].length; l++)
+            hljs.highlightElement(loadingCallback[language][l]);
+        loadingCallback[language] = null;
+    };
+    document.body.append(script);
+}
+
+function loadHljs() {
+    hljs.addPlugin(new CopyButtonPlugin());
+
+    for(const lang in loadingCallback)
+        addHighlightLang(lang);
 }
 
 async function loadPage(url) {
@@ -126,22 +132,7 @@ async function loadPage(url) {
     menuContainer.classList.remove("open");
     updateMenuIcon();
 
-    if(url.pathname === "" || url.pathname == "/")
-        url.pathname = "/index";
-
-    url.pathname = "/content" + url.pathname + ".md";
-
-    let pageMarkdown;
-    try {
-        pageMarkdown = await getMarkdown(url);
-        if(pageMarkdown === null)
-            pageMarkdown = await getMarkdown('/content/404.md');
-        if(pageMarkdown === "cancelled")
-            return;
-    } catch { }
-
-    if(!pageMarkdown)
-        pageMarkdown = "## An unknown error occurred. Could not load page.";
+    var pageMarkdown = await loadPageMarkdown(url);
 
     parseMarkdown(pageMarkdown, markdownContainer);
     document.documentElement.scrollTo({
@@ -164,37 +155,12 @@ function setTimeoutLoader() {
         }, 200);
 }
 
-var abortController;
-async function getMarkdown(url, preserveExisting) {
-    if(!preserveExisting)
-    {
-        abortController && abortController.abort();
-        abortController = new AbortController();
-    }
-
-    try {
-        let currentLoad = await fetch(url, {
-            signal: preserveExisting ? null : abortController.signal
-        });
-
-        if(currentLoad.status === 404)
-            return null;
-
-        if(currentLoad.status > 299)
-            throw new Error("Unknown Error");
-        
-        return await currentLoad.text();
-    } catch(err) {
-        if(err.name == 'AbortError')
-            return "cancelled";
-        throw err;
-    }
-}
-
-history.replaceState({ url: document.URL }, null, document.URL);
-loadPage(currentUrl);
-
 var printContainer = document.getElementById('print-content');
 window.addEventListener("beforeprint", function() {
     printContainer.innerHTML = markdownContainer.innerHTML;
 });
+
+if(firstLoadMarkdown) {
+    parseMarkdown(firstLoadMarkdown, markdownContainer);
+    contentContainer.classList.remove("loading");
+}
