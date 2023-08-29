@@ -208,15 +208,99 @@ html, body {
     .content-container {
         flex: 1;
         display: flex;
-        flex-direction: row;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
         padding: 20px;
-        padding-top: 60px;
         margin-left: 250px;
+
+        .search-container {
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+            justify-content: flex-end;
+            padding: 0;
+
+            input[type=search] {
+                width: 300px;
+                border-radius: 15px;
+                border: 1px solid #bbb;
+                display: block;
+                padding: 9px 4px 9px 45px;
+                background: #e7e7e7 url("/img/search.svg") no-repeat 13px;
+                z-index: 1;
+            }
+
+            .search-results {
+                z-index: 1;
+                display: none;
+                position: absolute;
+                top: 75px;
+                background-color: #e7e7e7;
+                border: solid 1px #bbb;
+                width: 500px;
+                padding: 10px;
+                border-radius: 15px;
+
+                div {
+                    overflow: hidden;
+
+                    &:not(:last-child) {
+                        border-bottom: solid 1px #bbb;
+                    }
+
+                    &:first-child {
+                        border-radius: 5px 5px 0 0;
+                    }
+
+                    &:last-child {
+                        border-radius: 0 0 5px 5px;
+                    }
+
+                    a {
+                        display: block;
+                        padding: 10px;
+                        color: #111;
+
+                        &:hover {
+                            background-color: #ddd;
+                        }
+                    }
+
+                    h2 {
+                        color: #682567;
+                        margin: 0;
+                        font-size: 16px;
+                    }
+    
+                    p {
+                        margin: 0;
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 1;
+                        overflow: hidden;
+                        font-style: normal;
+                    }
+                }
+            }
+            
+            .search-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                opacity: 0.5;
+                display: none;
+                z-index: 0;
+            }
+        }
         
         .markdown-container {
+            flex: 1;
             opacity: 1;
             max-width: 800px;
+            padding-top: 20px;
             transition: opacity 0.2s 0.3s;
 
             h1, h2 {
@@ -279,6 +363,16 @@ html, body {
         div:nth-last-child(2) {
             background-color: #ffafc8;
         }
+    }
+}
+
+.show-search-results {
+    .search-overlay {
+        display: block!important;
+    }
+
+    .search-results {
+        display: block!important;
     }
 }
 

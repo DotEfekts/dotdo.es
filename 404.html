@@ -21,6 +21,11 @@
 	<link rel="stylesheet" href="/css/boilerplate.min.css">
 	<link rel="stylesheet" href="/css/main.min.css">
 
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+
 	<meta name="theme-color" content="#e7e7e7">
 
 	<base href="/" />
@@ -61,6 +66,11 @@
 			</div>
 		</div>
 		<div class="content-container" id="content-container">
+			<div class="search-container">
+				<div id="search-overlay" class="search-overlay"></div>
+				<input type="search" id="article-search" disabled placeholder="Loading..." />
+				<div id="search-results" class="search-results"></div>
+			</div>
 			<div class="markdown-container" id="markdown-container"></div>
 			<div class="loader-container">
 				<div class="dot-loader"></div>
