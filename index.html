@@ -33,6 +33,10 @@
 
 <body>
 	<div class="layout-container">
+		<div class="print-header">
+			<h2>Chelsea Pritchard</h2>
+			<h3>hello@dotdo.es</h3>
+		</div>
 		<div class="nav-container" id="nav-container">
 			<div class="top-info">
 				<div class="music-container mobile-hide" id="music-container">
@@ -83,7 +87,13 @@
 				<input type="search" id="article-search" disabled placeholder="Loading..." />
 				<div id="search-results" class="search-results"></div>
 			</div>
-			<div class="markdown-container" id="markdown-container"></div>
+			<div class="print-container">
+				<table>
+					<thead><th><td><div class="empty-header"></div></td></th></thead>
+					<tbody><tr><td><div class="markdown-container" id="markdown-container"></div></td></tr></tbody>
+					<tfoot><th><td><div class="empty-footer"></div></td></th></tfoot>
+				</table>
+			</div>
 			<div class="copyright-container">© Chelsea Pritchard 2023</div>
 			<div class="loader-container">
 				<div class="dot-loader"></div>

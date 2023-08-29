@@ -142,6 +142,12 @@ async function loadPage(url) {
             aTags[i].target = "_blank";
     }
 
+    const children = markdownContainer.children;
+    for (let i = 0; i < children.length; i++) {
+        if(children[i].children.length == 1 && children[i].children[0].tagName == "IMG")
+            children[i].classList.add("img-container");
+    }
+
     contentContainer.classList.remove("loading");
 }
 
@@ -223,6 +229,9 @@ function processSearch(event) {
         return;
     }
 
+    const terms = searchBox.value.split(' ');
+    const results = [];
+
     for(var i = 0; i < searchInfo.children.length && resultCount < 10; i++) {
         let child = searchInfo.children[i];
         if(h2First == -1)
@@ -231,7 +240,12 @@ function processSearch(event) {
             else
                 continue;
         
-        if(child.innerHTML.includes(searchBox.value)) {
+        let matches = 0;
+        for(var t = 0; t < terms.length; t++)
+            if(child.innerHTML.includes(terms[t]))
+                child.tagName == "H2" ? matches += 2 : matches++;
+
+        if(matches > 0) {
             var linkCheck = child;
             if(child.tagName != "H2")
                 linkCheck = searchInfo.children[i-1];
@@ -259,10 +273,19 @@ function processSearch(event) {
 
                 resultA.children[1].setAttribute('title', resultA.children[1].innerText);
                 resultCount++;
-                searchResults.append(resultDiv);
+
+                resultDiv.numMatches = matches;
+                results.push(resultDiv);
             }
         }
     }
+
+    results.sort(function(a, b) {
+        return b.numMatches - a.numMatches;
+    });
+
+    for(var r = 0; r < results.length; r++)
+        searchResults.append(results[r]);
 
     if(!searchResults.innerHTML)
         searchResults.innerHTML = '<h2 class="no-results">No search results found.</h2>';
