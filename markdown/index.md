@@ -1,2 +1,3 @@
 ## Dot Does Stuff
 
+Full-Stack developer with a focus on .NET Core. Experience in .NET Core ASP, Blazor, Angular, and DevOps with AWS, Docker, and Linux. Recently started learning about pentesting and CTF challenges. Previous projects can be seen on the [projects](/projects) page. Writeups for completed CTF challenges can been seen on the [writeups](/writeups) page. Any questions feel free to [email me](mailto:hello@dotdo.es).
