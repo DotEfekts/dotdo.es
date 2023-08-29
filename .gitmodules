@@ -1,0 +1,3 @@
+[submodule "content"]
+	path = content
+	url = git@github.com:DotEfekts/dotdo.es_content.git

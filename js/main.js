@@ -92,7 +92,7 @@ async function loadPage(url) {
     if(url.pathname === "" || url.pathname == "/")
         url.pathname = "/index";
 
-    url.pathname = "/markdown" + url.pathname + ".md";
+    url.pathname = "/content" + url.pathname + ".md";
 
     let pageMarkdown;
     try {
@@ -160,7 +160,7 @@ async function loadSearchData() {
 
     let pageMarkdown;
     try {
-        pageMarkdown = await getMarkdown("/markdown/writeups.md", true);
+        pageMarkdown = await getMarkdown("/content/writeups.md", true);
     } catch {
         console.log("Error loading search data");
     }
