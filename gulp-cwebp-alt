@@ -30,7 +30,7 @@ const cwebp = (options = {}) => through.obj(async (file, encode, callback) => {
     args.push(`-${key}`);
 
     if (!booleanFlags.has(key)) {
-      for (const arg of options[key].split(' ')
+      for (const arg of options[key].split(' '))
         args.push(arg);
     }
   }
