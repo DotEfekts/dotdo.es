@@ -17,6 +17,10 @@ function updateMenuIcon() {
     }
 }
 
+var printContainer = document.getElementById('print-content');
+window.addEventListener("beforeprint", function() {
+    printContainer.innerHTML = markdownContainer.innerHTML;
+});
 
 const markdownContainer = document.getElementById("markdown-container");
 const contentContainer = document.getElementById("content-container");
@@ -95,7 +99,7 @@ function parseMarkdown(markdown, container) {
 
 function highlightBlock(language, block) {
     if(loadedLanguages.includes(language)){
-        hljs.highlightElement(block);
+        triggerHighlight(block);
     } else if(loadingCallback[language]) {
         loadingCallback[language].push(block);
     } else {
@@ -114,7 +118,7 @@ function addHighlightLang(language) {
     script.onload = function() {
         loadedLanguages.push(language);
         for(let l = 0; l < loadingCallback[language].length; l++)
-            hljs.highlightElement(loadingCallback[language][l]);
+            triggerHighlight(loadingCallback[language][l]);
         loadingCallback[language] = null;
     };
     document.body.append(script);
@@ -123,6 +127,10 @@ function addHighlightLang(language) {
 function runHighlight() {
     for(const lang in loadingCallback)
         addHighlightLang(lang);
+}
+
+async function triggerHighlight(element) {
+    hljs.highlightElement(element);
 }
 
 async function loadPage(url) {
@@ -152,11 +160,6 @@ function setTimeoutLoader() {
             timeout = null;
         }, 200);
 }
-
-var printContainer = document.getElementById('print-content');
-window.addEventListener("beforeprint", function() {
-    printContainer.innerHTML = markdownContainer.innerHTML;
-});
 
 if(firstLoadMarkdown) {
     parseMarkdown(firstLoadMarkdown, markdownContainer);
