@@ -32,6 +32,8 @@ html, body {
   background-color: #682567;
   color: #e7e7e7;
   border-radius: 0 15px 15px 0;
+  position: fixed;
+  height: 100%;
 }
 .layout-container .nav-container a {
   color: #e7e7e7;
@@ -173,6 +175,7 @@ html, body {
   justify-content: center;
   padding: 20px;
   padding-top: 60px;
+  margin-left: 250px;
 }
 .layout-container .content-container .markdown-container {
   opacity: 1;
