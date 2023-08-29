@@ -21,12 +21,14 @@
 	<link rel="stylesheet" href="css/boilerplate.min.css">
 	<link rel="stylesheet" href="css/main.min.css">
 
-	<meta name="theme-color" content="#412742">
+	<meta name="theme-color" content="#e7e7e7">
+
+	<base href="/Users/dot/Development/dotdo.es/" />
 </head>
 
 <body>
 	<div class="layout-container">
-		<div class="content-container">
+		<div class="nav-container">
 			<div class="top-info">
 				<div class="music-container" id="music-container">
 					<img class="top-icon" src="img/coolyori.png" alt="Website Icon" />
@@ -39,8 +41,7 @@
 					</div>
 				</div>
 				<div class="title">
-					<h1>Chelsea Pritchard</h1>
-					<h3><a href="https://dotdo.es">dot do.es stuff</a></a></h3>
+					<h2>Chelsea Pritchard</h1>
 				</div>
 				<div class="contact">
 					<p>
@@ -49,55 +50,28 @@
 					</p>
 				</div>
 			</div>
-			<h3>Things I've made</h2>
-			<div class="main-info">
-				<div class="left-column">
-					<div class="thing">
-						<h4><a href="https://tradecommander.dotefekts.net" target="_blank">TradeCommander</a></h3>
-						<p>
-							A CLI style interface for the SpaceTraders API, written in Blazor WebAssembly. 
-							<a href="https://github.com/DotEfekts/TradeCommander" target="_blank">source</a>
-						</p>
-					</div>
-					<div class="thing">
-						<h4>DotUtilities</h3>
-						<p>
-							A utilities plugin for CraftBukkit plugin developers containing a command manager and an inventory menu API. 
-							<a href="https://github.com/DotEfekts/DotUtilities" target="_blank">source</a>
-						</p>
-					</div>
-				</div>
-				<div class="right-column">
-					<div class="thing">
-						<h4>PlayerProfile</h3>
-						<p>
-							A plugin for MC Paper that allows players to switch user profiles and spoof other users. 
-							<a href="https://github.com/DotEfekts/PlayerProfile" target="_blank">source</a>
-						</p>
-					</div>
-					<div class="thing">
-						<h4>DotChat</h3>
-						<p>
-							A proof-of-concept plugin for CraftBukkit derivatives that adds clickable chat tabs to Minecraft. Discontinued due to performance issues. 
-							<a href="https://github.com/DotEfekts/DotChat" target="_blank">source</a>
-						</p>
-					</div>
-				</div>
+			<div class="nav-links-container">
+				<ul class="nav-links">
+					<li class="nav-link"><a href="/">Home</a></li>
+					<li class="nav-link"><a href="/projects">Projects</a></li>
+					<li class="nav-link"><a href="/writeups">CTF Writeups</a></li>
+					<li class="nav-link sub-link"><a href="/writeups/htb-machines">HTB Machines</a></li>
+					<li class="nav-link sub-link"><a href="/writeups/htb-challenges">HTB Challenges</a></li>
+				</ul>
 			</div>
 		</div>
-		<div class="oop">
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
+		<div class="content-container" id="content-container">
+			<div class="markdown-container" id="markdown-container"></div>
+			<div class="loader-container">
+				<div class="lds-ring dark"><div></div><div></div><div></div><div></div></div>
+			</div>
 		</div>
 	</div>
 
 	<script src="js/vendor/modernizr-3.11.2.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="https://www.youtube.com/iframe_api"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/7.0.4/marked.min.js" integrity="sha512-YP97/YPA6jvflTCd5c6mMNg5M5uyhNlm7dM+TG7E+NdVx98DfA5myxg7zRp2iXjl+gFoln6AGXg31SZe+TDQ3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="js/main.js"></script>
 </body>
-
 </html>

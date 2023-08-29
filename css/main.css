@@ -3,8 +3,8 @@
 }
 
 html, body {
-  background-color: #412742;
-  color: #e7e7e7;
+  background-color: #e7e7e7;
+  color: #111111;
   font-family: "Open Sans", sans-serif;
   margin: auto;
 }
@@ -12,50 +12,78 @@ html, body {
 .layout-container {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 .layout-container h1, .layout-container h2, .layout-container h3, .layout-container h4 {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
 }
 .layout-container a {
-  color: #92eaf1;
+  color: #e7e7e7;
   text-decoration: none;
+  font-style: italic;
+  font-weight: 200;
+  font-family: "Montserrat", sans-serif;
 }
-.layout-container .content-container {
-  flex: 1;
+.layout-container .nav-container {
+  width: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   padding: 20px;
+  background-color: #682567;
+  color: #e7e7e7;
+  border-radius: 0 15px 15px 0;
 }
-.layout-container .content-container .top-info {
+.layout-container .nav-container .nav-links-container {
+  display: block;
+  width: 100%;
+  text-align: right;
+}
+.layout-container .nav-container .nav-links-container .nav-links {
+  display: block;
+  padding: 0;
+  list-style: none;
+}
+.layout-container .nav-container .nav-links-container .nav-links .nav-link {
+  margin-top: 10px;
+  display: block;
+  border-bottom: solid 1px #e7e7e7aa;
+}
+.layout-container .nav-container .nav-links-container .nav-links .nav-link a {
+  display: block;
+  padding: 7px;
+}
+.layout-container .nav-container .nav-links-container .nav-links .nav-link.sub-link {
+  margin-left: 25px;
+}
+.layout-container .nav-container .top-info {
   text-align: center;
 }
-.layout-container .content-container .top-info .music-container {
+.layout-container .nav-container .top-info .music-container {
   display: inline-block;
   border-radius: 50%;
   overflow: hidden;
   position: relative;
   /* Fix Safari not hiding overflow during animation */
   -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
 }
-.layout-container .content-container .top-info .music-container .frame-container {
+.layout-container .nav-container .top-info .music-container .frame-container {
   height: 0;
   width: 0;
   position: absolute;
   border: none;
 }
-.layout-container .content-container .top-info .music-container .frame-container::before {
+.layout-container .nav-container .top-info .music-container .frame-container::before {
   font-family: "Material Icons";
   content: "\e037";
 }
-.layout-container .content-container .top-info .music-container .top-icon {
+.layout-container .nav-container .top-info .music-container .top-icon {
   max-height: 150px;
   will-change: transform;
 }
-.layout-container .content-container .top-info .music-container .overlay {
+.layout-container .nav-container .top-info .music-container .overlay {
   display: none;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.2);
@@ -64,7 +92,7 @@ html, body {
   width: 100%;
   height: 100%;
 }
-.layout-container .content-container .top-info .music-container .overlay .lds-ring {
+.layout-container .nav-container .top-info .music-container .overlay .lds-ring {
   position: absolute;
   width: 100px;
   height: 100px;
@@ -72,7 +100,7 @@ html, body {
   left: 25px;
   display: none;
 }
-.layout-container .content-container .top-info .music-container .overlay::after {
+.layout-container .nav-container .top-info .music-container .overlay::after {
   position: absolute;
   width: 100px;
   line-height: 100px;
@@ -82,31 +110,31 @@ html, body {
   content: "\e037";
   font-size: 100px;
 }
-.layout-container .content-container .top-info .music-container.ready, .layout-container .content-container .top-info .music-container.playing, .layout-container .content-container .top-info .music-container.stopped {
+.layout-container .nav-container .top-info .music-container.ready, .layout-container .nav-container .top-info .music-container.playing, .layout-container .nav-container .top-info .music-container.stopped {
   cursor: pointer;
 }
-.layout-container .content-container .top-info .music-container.ready:hover .overlay, .layout-container .content-container .top-info .music-container.playing:hover .overlay, .layout-container .content-container .top-info .music-container.stopped:hover .overlay {
+.layout-container .nav-container .top-info .music-container.ready:hover .overlay, .layout-container .nav-container .top-info .music-container.playing:hover .overlay, .layout-container .nav-container .top-info .music-container.stopped:hover .overlay {
   display: block;
 }
-.layout-container .content-container .top-info .music-container.loading {
+.layout-container .nav-container .top-info .music-container.loading {
   cursor: default;
 }
-.layout-container .content-container .top-info .music-container.loading .overlay {
+.layout-container .nav-container .top-info .music-container.loading .overlay {
   display: block;
 }
-.layout-container .content-container .top-info .music-container.loading .overlay .lds-ring {
+.layout-container .nav-container .top-info .music-container.loading .overlay .lds-ring {
   display: inline-block;
 }
-.layout-container .content-container .top-info .music-container.loading .overlay::after {
+.layout-container .nav-container .top-info .music-container.loading .overlay::after {
   content: "";
 }
-.layout-container .content-container .top-info .music-container.playing .top-icon {
+.layout-container .nav-container .top-info .music-container.playing .top-icon {
   animation-name: spin;
   animation-duration: 5000ms;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
-.layout-container .content-container .top-info .music-container.playing:hover .overlay::after {
+.layout-container .nav-container .top-info .music-container.playing:hover .overlay::after {
   content: "\e047";
 }
 @keyframes spin {
@@ -117,43 +145,51 @@ html, body {
     transform: rotate(360deg);
   }
 }
-.layout-container .content-container .top-info .title h1 {
+.layout-container .nav-container .top-info .title h2 {
   font-weight: 200;
   margin-bottom: 0;
 }
-.layout-container .content-container .top-info .title h3, .layout-container .content-container .top-info .title h4 {
+.layout-container .nav-container .top-info .title h3, .layout-container .nav-container .top-info .title h4 {
   margin: 0;
 }
-.layout-container .content-container .top-info .contact {
+.layout-container .nav-container .top-info .contact {
   margin-top: 10px;
   padding: 0 10px;
   display: inline-block;
 }
-.layout-container .content-container .top-info .contact p {
+.layout-container .nav-container .top-info .contact p {
   margin: 5px 0;
   text-align: center;
   font-style: italic;
 }
-.layout-container .content-container .main-info {
+.layout-container .content-container {
+  flex: 1;
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  padding: 20px;
+  padding-top: 60px;
+}
+.layout-container .content-container .markdown-container {
   max-width: 1000px;
 }
-@media (max-width: 650px) {
-  .layout-container .content-container .main-info {
-    flex-direction: column;
-  }
-}
-.layout-container .content-container .main-info > div {
+.layout-container .content-container .loader-container {
   flex: 1;
-  padding: 0 25px;
-  text-align: center;
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20%;
 }
-.layout-container .content-container .main-info .thing h4 {
-  margin: 0;
+.layout-container .content-container .loader-container .lds-ring {
+  width: 90px;
+  height: 90px;
 }
-.layout-container .content-container .main-info .thing p {
-  margin-top: 5px;
+.layout-container .content-container.loading .markdown-container {
+  display: none;
+}
+.layout-container .content-container.loading .loader-container {
+  display: flex;
 }
 .layout-container .oop {
   display: flex;
@@ -184,15 +220,17 @@ html, body {
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: #fff transparent transparent transparent;
 }
-
+.lds-ring.dark div {
+  border: 10px solid #000;
+  border-color: #000 transparent transparent transparent;
+  opacity: 0.6;
+}
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
 }
-
 .lds-ring div:nth-child(2) {
   animation-delay: -0.3s;
 }
-
 .lds-ring div:nth-child(3) {
   animation-delay: -0.15s;
 }

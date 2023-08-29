@@ -1,8 +1,8 @@
 var player;
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-        height: '390',
-        width: '640',
+        height: '100',
+        width: '100',
         videoId: 'CwJx3Dbh4e8',
         playerVars: {
             'origin': 'https://dotdo.es/',
@@ -64,3 +64,74 @@ function pauseVideo() {
     player.pauseVideo();
     player.seekTo(90, true);
 }
+
+const markdownContainer = document.getElementById("markdown-container");
+const contentContainer = document.getElementById("content-container");
+
+addEventListener("navigate", (event) => {
+    if(!event.canIntercept ||
+       event.downloadRequest !== null || 
+       event.hashChange === true)
+        return;
+
+    const url = new URL(event.destination.url);
+    event.intercept({
+        async handler(){
+            await loadPage(url);
+        }
+    });
+});
+
+async function loadPage(url) {
+    contentContainer.classList.add("loading");
+
+    if(url.pathname === "" || url.pathname == "/")
+        url.pathname = "/index";
+
+    url.pathname = "/markdown" + url.pathname + ".md";
+
+    let pageMarkdown;
+    try {
+        pageMarkdown = await getMarkdown(url);
+        if(pageMarkdown === null)
+            pageMarkdown = await getNotFound();
+        if(pageMarkdown === "cancelled")
+            return;
+    } catch {
+        pageMarkdown = "## An unknown error occurred. Could not load page.";
+    }
+
+
+    pageMarkdown = pageMarkdown.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
+    markdownContainer.innerHTML = marked.parse(pageMarkdown);
+    contentContainer.classList.remove("loading");
+}
+
+var abortController;
+async function getMarkdown(url) {
+    abortController && abortController.abort();
+    abortController = new AbortController();
+
+    try {
+        let currentLoad = await fetch(url, {
+            signal: abortController.signal
+        });
+
+        if(currentLoad.status == 404)
+            return null;
+        if(currentLoad.status > 299)
+            throw new Error("Unknown Error");
+        
+        return await currentLoad.text();
+    } catch(err) {
+        if(err.name == 'AbortError')
+            return "cancelled";
+        throw err;
+    }
+}
+
+async function getNotFound() {
+    return await getMarkdown("/markdown/404.md");
+}
+
+loadPage(new URL(document.URL));

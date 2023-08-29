@@ -3,8 +3,8 @@
 }
 
 html, body {
-    background-color: #412742;
-    color: #e7e7e7;
+    background-color: #e7e7e7;
+    color: #111111;
     font-family: 'Open Sans', sans-serif;
     margin: auto;
 }
@@ -12,27 +12,58 @@ html, body {
 .layout-container {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-
+    flex-direction: row;
 
     h1, h2, h3, h4 {
         font-family: 'Montserrat', sans-serif;
         font-weight: 500;
-    }
+    } 
 
     a {
-        color: #92eaf1;
+        color: #e7e7e7;
         text-decoration: none;
+        font-style: italic;
+        font-weight: 200;
+        font-family: 'Montserrat', sans-serif;
     }
 
-    .content-container {
-        flex: 1;
+    .nav-container {
+        width: 250px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         padding: 20px;
-        
+        background-color: #682567;
+        color: #e7e7e7;
+        border-radius: 0 15px 15px 0;
+
+        .nav-links-container {
+            display: block;
+            width: 100%;
+            text-align: right;
+
+            .nav-links {
+                display: block;
+                padding: 0;
+                list-style: none;
+
+                .nav-link {
+                    margin-top: 10px;
+                    display: block;
+                    border-bottom: solid 1px #e7e7e7aa;
+
+                    a {
+                        display: block;
+                        padding: 7px;
+                    }
+
+                    &.sub-link {
+                        margin-left: 25px;
+                    }
+                }
+            }
+        }
+
         .top-info {
             text-align: center;
             
@@ -44,6 +75,7 @@ html, body {
 
                 /* Fix Safari not hiding overflow during animation */
                 -webkit-mask-image: -webkit-radial-gradient(white, black);
+                mask-image: radial-gradient(white, black);
 
                 .frame-container {
                     height: 0;
@@ -142,7 +174,7 @@ html, body {
             }
 
             .title {
-                h1 {
+                h2 {
                     font-weight: 200;
                     margin-bottom: 0;
                 }
@@ -164,29 +196,41 @@ html, body {
                 }
             }
         }
+    }
 
-        .main-info {
-            display: flex;
-            justify-content: center;
+    .content-container {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 20px;
+        padding-top: 60px;
+        
+        .markdown-container {
             max-width: 1000px;
+        }
 
-            @media(max-width: 650px) {
-                flex-direction: column;
+        .loader-container {
+            flex: 1;
+            display: none;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 20%;
+
+            .lds-ring {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        &.loading {
+            .markdown-container {
+                display: none;
             }
 
-            & > div {
-                flex: 1;
-                padding: 0 25px;
-                text-align: center;
-            }
-
-            .thing {
-                h4 {
-                    margin: 0;
-                }
-                p {
-                    margin-top: 5px;
-                }
+            .loader-container {
+                display: flex;
             }
         }
     }
@@ -213,27 +257,37 @@ html, body {
 }
 
 
-.lds-ring div {
-    box-sizing: border-box;
-    display: block;
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    margin: 10px;
-    border: 10px solid #fff;
-    border-radius: 50%;
-    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #fff transparent transparent transparent;
+.lds-ring {
+    div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        margin: 10px;
+        border: 10px solid #fff;
+        border-radius: 50%;
+        animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: #fff transparent transparent transparent;
+    }
+
+    &.dark div {
+        border: 10px solid #000;
+        border-color: #000 transparent transparent transparent;
+        opacity: 0.6;
+    }
+
+    div:nth-child(1) {
+        animation-delay: -0.45s;
+    }
+    div:nth-child(2) {
+        animation-delay: -0.3s;
+    }
+    div:nth-child(3) {
+        animation-delay: -0.15s;
+    }
 }
-.lds-ring div:nth-child(1) {
-    animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-    animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-    animation-delay: -0.15s;
-}
+
 @keyframes lds-ring {
     0% {
         transform: rotate(0deg);
