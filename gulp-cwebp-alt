@@ -1,9 +1,9 @@
-import path from 'node:path';
-import PluginError from 'plugin-error';
-import replaceExt from 'replace-ext';
-import through from 'through2';
-import execBuffer from 'exec-buffer';
-import bin from 'cwebp-bin';
+const { path } = require('node:path');
+const { PluginError } = require('plugin-error');
+const { replaceExt } = require('replace-ext');
+const { through } = require('through2');
+const { execBuffer } = require('exec-buffer');
+const { bin } = require('cwebp-bin');
 
 const booleanFlags = new Set(['lossless', 'mt', 'low_memory', 'af', 'jpeg_like', 'strong', 'nostrong', 'sharp_yuv']);
 
