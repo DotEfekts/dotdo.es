@@ -1,17 +1,17 @@
 @mixin dark-theme {
     .search-results {
-        background-color: #333;
+        background-color: #252525;
 
         a {
             color: #e7e7e7;
 
             &:hover {
-                background-color: #444;
+                background-color: #353535;
             }
         }
 
         h2 {
-            color: #e378e2;
+            color: #e1abe0;
         }
     }
 

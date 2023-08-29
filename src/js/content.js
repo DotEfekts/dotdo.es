@@ -131,3 +131,8 @@ async function getMarkdown(url, preserveExisting) {
 
 history.replaceState({ url: document.URL }, null, document.URL);
 loadPage(currentUrl);
+
+var printContainer = document.getElementById('print-content');
+window.addEventListener("beforeprint", function() {
+    printContainer.innerHTML = markdownContainer.innerHTML;
+});
