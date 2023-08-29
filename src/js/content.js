@@ -73,7 +73,7 @@ async function loadPage(url) {
         if(i > 0)
             imgTags[i].loading = "lazy";
 
-        let name = imgTags[i].getAttribute('src');
+        /*let name = imgTags[i].getAttribute('src');
         imgTags[i].setAttribute('srcset', 
         name.replace(".png", "-small.webp") + " 320w, " + 
         name.replace(".png", "-medium.webp") + " 480w," + 
@@ -82,7 +82,7 @@ async function loadPage(url) {
 
         imgTags[i].setAttribute('sizes', '(max-width: 920px) 80vw, 640px')
 
-        imgTags[i].setAttribute('src', name.replace(".png", ".webp"));
+        imgTags[i].setAttribute('src', name.replace(".png", ".webp"));*/
     }
 
     const children = markdownContainer.children;
