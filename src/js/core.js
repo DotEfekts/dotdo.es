@@ -18,6 +18,8 @@ function queryTheme() {
 async function loadPageMarkdown(url) {
     if(url.pathname === "" || url.pathname == "/")
         url.pathname = "/index";
+    if(url.pathname.endsWith('/'))
+        url.pathname = url.pathname.substring(0, url.pathname.length - 1);
 
     url.pathname = "/content" + url.pathname + ".md";
 
@@ -25,7 +27,12 @@ async function loadPageMarkdown(url) {
     try {
         pageMarkdown = await getMarkdown(url);
         if(pageMarkdown === null)
-            pageMarkdown = await getMarkdown('/content/404.md');
+        {
+            url.pathname = url.pathname.substring(0, url.pathname.length - 3) +  "/index.md";
+            pageMarkdown = await getMarkdown(url)
+            if(pageMarkdown === null)
+                pageMarkdown = await getMarkdown('/content/404.md');
+        }
         if(pageMarkdown === "cancelled")
             return;
     } catch { }
