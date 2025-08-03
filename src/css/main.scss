@@ -23,9 +23,9 @@
 }
 
 @mixin code-dark {
-    .hljs, pre code {
-        color:#c9d1d9;
-        background:var(--palette-dark-background-lighten);
+    .hljs, pre code, blockquote {
+        color: var(--palette-dark-text);
+        background: var(--palette-dark-background-lighten);
     }
 
     code:not(.hljs) {
@@ -35,8 +35,8 @@
 }
 
 @mixin code-light {
-    .hljs, pre code {
-        color:#24292e;
+    .hljs, pre code, blockquote {
+        color: var(--palette-light-text);
         background: var(--palette-light-background-darken);
     }
     
@@ -65,22 +65,28 @@ html.theme-light {
 }
 
 html {
-    pre code, pre code.hljs {
+    pre code, pre code.hljs, blockquote {
         display:block;
         overflow-x:auto;
         padding:1em;
+        border-radius: 10px;
+    }
+
+    blockquote :first-child {
+        margin-top: 0;
+    }
+
+    blockquote :last-child {
+        margin-bottom: 0;
     }
 
     code.hljs {
         padding:3px 5px;
     }
 
-    code {
-        border-radius: 4px;
-    }
-
     code:not(.hljs) {
         padding: 1px;
+        border-radius: 4px;
     }
 }
 

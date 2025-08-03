@@ -82,7 +82,8 @@ function processSearch(event) {
                 for(var x = 0; x < resultA.children.length; x++)
                     resultA.children[x].innerHTML = resultA.children[x].innerText;
 
-                resultA.children[1].setAttribute('title', resultA.children[1].innerText);
+                if(resultA.children.length > 1)
+                    resultA.children[1].setAttribute('title', resultA.children[1].innerText);
                 resultCount++;
 
                 resultDiv.numMatches = matches;
