@@ -1,17 +1,24 @@
 @mixin dark-theme {
     .search-results {
-        background-color: #252525;
+        background-color: var(--palette-dark-background);
+        border-color: var(--palette-dark-border);
+
+        div:not(:last-child) {
+            border-bottom: solid 1px var(--palette-dark-border);
+        }
 
         a {
-            color: #e7e7e7;
-
             &:hover {
-                background-color: #353535;
+                background-color: var(--palette-dark-background-lighten);
             }
         }
 
         h2 {
-            color: #e1abe0;
+            color: var(--palette-dark-text-highlight);
+        }
+
+        p {
+            color: var(--palette-dark-text);
         }
     }
 
@@ -49,8 +56,8 @@ html.theme-dark {
     position: absolute;
     top: 75px;
     right: 20px;
-    background-color: #e7e7e7;
-    border: solid 1px #bbb;
+    background-color: var(--palette-light-background);
+    border: solid 1px var(--palette-light-border);
     width: 500px;
     padding: 10px;
     border-radius: 15px;
@@ -66,7 +73,7 @@ html.theme-dark {
         overflow: hidden;
 
         &:not(:last-child) {
-            border-bottom: solid 1px #bbb;
+            border-bottom: solid 1px var(--palette-light-border);
         }
 
         &:first-child {
@@ -80,15 +87,14 @@ html.theme-dark {
         a {
             display: block;
             padding: 10px;
-            color: #111;
 
             &:hover {
-                background-color: #ddd;
+                background-color: var(--palette-light-background-darken);
             }
         }
 
         h2 {
-            color: #682567;
+            color: var(--palette-light-text-highlight);
             margin: 0;
             font-size: 16px;
         }
@@ -100,6 +106,7 @@ html.theme-dark {
             -webkit-line-clamp: 1;
             overflow: hidden;
             font-style: normal;
+            color: var(--palette-light-text);
         }
     }
 }

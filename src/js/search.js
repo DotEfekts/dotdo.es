@@ -8,7 +8,7 @@ async function loadSearchData() {
 
     let pageMarkdown;
     try {
-        pageMarkdown = await getMarkdown("/content/writeups.md", true);
+        pageMarkdown = await getMarkdown("/content/writeups/search.md", true);
     } catch {
         console.log("Error loading search data");
     }

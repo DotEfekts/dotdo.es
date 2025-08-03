@@ -1,44 +1,59 @@
 * {
     box-sizing: border-box;
+    --palette-light-background: #faf6fa;
+    --palette-light-background-rgb: 250, 246, 250;
+    --palette-light-background-darken: #f1edf1;
+    --palette-light-text: #111;
+    --palette-light-text-highlight: #682567;
+    --palette-light-border: #999;
+
+    --palette-dark-background: #201c20;
+    --palette-dark-background-rgb: 32, 28, 32;
+    --palette-dark-background-lighten: #302c30;
+    --palette-dark-text: #eee;
+    --palette-dark-text-rgb: 238, 238, 238;
+    --palette-dark-text-highlight: #e1abe0;
+    --palette-dark-border: #ddd;
 }
 
 html, body {
-    background-color: #e7e7e7;
-    color: #111;
+    background-color: var(--palette-light-background);
+    color: var(--palette-light-text);
     font-family: 'Open Sans', sans-serif;
     margin: auto;
 }
 
 @mixin dark-theme {
-    background-color: #252525;
-    color: #e7e7e7;
+    background-color: var(--palette-dark-background);
+    color: var(--palette-dark-text);
 
     body {
-        background-color: #252525;
-        color: #e7e7e7;
+        background-color: var(--palette-dark-background);
+        color: var(--palette-dark-text);
     }
 
     .layout-container {
         .content-container {
             .top-container {
                 .theme-switcher object {
-                    fill: #e7e7e7;
+                    fill: var(--palette-dark-text);
                 }
 
                 input[type=search] {
-                    background: #252525 url("/img/search_dark.svg") no-repeat 13px;
+                    background: var(--palette-dark-background) url("/img/search_dark.svg") no-repeat 13px;
                     background-size: 28px;
-                    color: #e7e7e7;
+                    color: var(--palette-dark-text);
+                    border-color: var(--palette-dark-border);
                 }
             }
 
             .markdown-container {
                 a {
-                    color: #e1abe0;
+                    color: var(--palette-dark-text-highlight);
                 }
 
                 img {
-                    background-color: #e7e7e711;
+                    background-color: rgba(var(--palette-dark-text-rgb), 0.07);
                 }
                 
                 table tr:nth-child(odd) td {
@@ -47,7 +62,7 @@ html, body {
             }
 
             .dot-loader {
-                background: #e2e2e2;
+                background: var(--palette-dark-text);
             }
         }
     }
@@ -116,7 +131,7 @@ a.icon-link {
     flex-direction: row;
 
     a {
-        color: #682567;
+        color: var(--palette-light-text-highlight);
         text-decoration: none;
         font-style: italic;
     }
@@ -132,13 +147,13 @@ a.icon-link {
         align-items: center;
         padding: 20px;
         background-color: #682567;
-        color: #fff;
+        color: var(--palette-dark-text);
         border-radius: 0 15px 15px 0;
         position: fixed;
         height: 100%;
 
         a {
-            color: #fff;
+            color: var(--palette-dark-text);
             font-style: italic;
         }
 
@@ -155,7 +170,7 @@ a.icon-link {
                 .nav-link {
                     margin-top: 10px;
                     display: block;
-                    border-bottom: solid 1px #e7e7e7aa;
+                    border-bottom: solid 1px rgba(var(--palette-dark-text-rgb), 0.67);
 
                     a {
                         display: block;
@@ -257,10 +272,10 @@ a.icon-link {
                 width: 100%;
                 max-width: 300px;
                 border-radius: 15px;
-                border: 1px solid #bbb;
+                border: 1px solid var(--palette-light-border);
                 display: block;
                 padding: 9px 4px 9px 45px;
-                background: #e7e7e7 url("/img/search_light.svg") no-repeat 13px;
+                background: var(--palette-light-background) url("/img/search_light.svg") no-repeat 13px;
                 background-size: 28px;
                 z-index: 2;
             }

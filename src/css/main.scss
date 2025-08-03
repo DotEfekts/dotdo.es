@@ -23,50 +23,26 @@
 }
 
 @mixin code-dark {
-    pre code, pre code.hljs {
-        display:block;
-        overflow-x:auto;
-        padding:1em;
-    }
-    
-    code.hljs {
-        padding:3px 5px;
-    }
-
     .hljs, pre code {
         color:#c9d1d9;
-        background:#0d1117;
+        background:var(--palette-dark-background-lighten);
     }
-    
+
     code:not(.hljs) {
-        padding: 1px;
-        border-radius: 4px;
-        background: #0d1117;
-        color: crimson;
+        background: var(--palette-dark-background-lighten);
+        color: var(--palette-dark-text-highlight);
     }
 }
 
 @mixin code-light {
-    pre code, pre code.hljs {
-        display:block;
-        overflow-x:auto;
-        padding:1em;
-    }
-    
-    code.hljs {
-        padding:3px 5px;
-    }
-
     .hljs, pre code {
         color:#24292e;
-        background:#eee;
+        background: var(--palette-light-background-darken);
     }
     
     code:not(.hljs) {
-        padding: 1px;
-        border-radius: 4px;
-        background: #eee;
-        color: crimson;
+        background: var(--palette-light-background-darken);
+        color: var(--palette-light-text-highlight);
     }
 }
 
@@ -86,6 +62,26 @@ html.theme-dark {
 
 html.theme-light {
     @include code-light;
+}
+
+html {
+    pre code, pre code.hljs {
+        display:block;
+        overflow-x:auto;
+        padding:1em;
+    }
+
+    code.hljs {
+        padding:3px 5px;
+    }
+
+    code {
+        border-radius: 4px;
+    }
+
+    code:not(.hljs) {
+        padding: 1px;
+    }
 }
 
 .layout-container {
