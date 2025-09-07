@@ -16,6 +16,10 @@ const connect = require('gulp-connect');
 const rev = require('gulp-rev');
 const revDel = require('gulp-rev-delete-original');
 const revRewrite = require('gulp-rev-rewrite');
+const { marked } = require('marked');
+const { glob } = require('glob');
+const replace = require('gulp-replace');
+const modRewrite = require('connect-modrewrite');
 var gulpif = require('gulp-if');
 var processhtml = require('gulp-processhtml');
 
@@ -34,6 +38,119 @@ gulp.task('copysrc', function() {
 gulp.task('copycontent', function() {
     return gulp.src('./content/**/*')
     .pipe(gulp.dest('./dist/content'));
+});
+
+gulp.task('buildimages', function (cb) {
+  return gulp.series(
+    runCWebP('dist/img/**/*.{png,jpg}', { q: 75 }),
+    runCWebP('dist/content/**/*.{png,jpg}', { resize: [1280, 0], q: 75 }, '-large'),
+    runCWebP('dist/content/**/*.{png,jpg}', { resize: [640, 0], q: 75 }),
+    runCWebP('dist/content/**/*.{png,jpg}', { resize: [480, 0], q: 75 }, '-medium'),
+    runCWebP('dist/content/**/*.{png,jpg}', { resize: [320, 0], q: 75 }, '-small'),
+    function(cb2) {
+      cb2();
+      cb();
+    }
+  )();
+});
+
+function runCWebP(path, params, suffix) {
+  return function(cb){
+    return gulp.src(path)
+    .pipe(cwebp(params))
+    .pipe(gulpif(suffix != undefined, rename({
+      suffix: suffix
+    })))
+    .pipe(gulp.dest((f) => f.base));
+  };
+}
+
+gulp.task('putimagesize', function(cb) {
+  return gulp.src(['dist/content/**/*.md'])
+    .pipe(through.obj((chunk, _, cb) => {
+      if (chunk.isNull()) {
+        callback(null, file);
+        return;
+      }
+    
+      let contents = chunk.contents.toString();
+      contents = contents.replace(/\[\[(.*?)\]\]/gi, function (_, linkText) {
+        let split = linkText.split('|');
+        return split.length > 1 ? split[1] : split[0];
+      });
+
+      chunk.contents = Buffer.from(contents.replace(/\!\[(.*?)\]\((.*?)\.(png|jpg)\)/gi, (_, alt, path, type) => {
+        let size = imageSize(`dist/content${path}.webp`);
+        return `![${alt}](${path}[${size.width}x${size.height}])`
+      }));
+
+      cb(null, chunk);
+    }))
+    .pipe(gulp.dest((f) => f.base));
+});
+
+gulp.task('renderpages', function() {
+    const contentFiles = glob('./dist/content/**/*.md');
+    const imgRegex = new RegExp(/(<img .*?)src="\/(.*?)\%5B([0-9]+)x([0-9]+)\%5D"( .*?>)/, "gi");
+    const imgOnlyChild = new RegExp(/<p>(\w*<img [^>]+?>\w*)<\/p>/, "gi");
+    const imgOnlyChildFirst = new RegExp(/<p class="img-container">(\w*<img [^>]*?src="([^"]+)"[^>]*?\/?>\w*)<\/p>/, "i");
+    const aRegex = new RegExp(/(<a [^>]*?)(href="[^\/].*?>)/, "gi");
+    const titleRegex = new RegExp(/<(h1|h2)[^>]*>\w*([^<]+)\w*<\/(h1|h2)>/, "i");
+
+    return contentFiles.then(vals => vals.map(v => {
+      const markdown = fs.readFileSync(v, 'utf8').replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
+      let parsedDom = marked.parse(markdown, { breaks: true });
+
+      let first = true;
+      parsedDom = parsedDom.replace(imgRegex, function(_, pre, name, width, height, post) {
+        if(first)
+            post = ' fetchpriority="high" loading="eager"' + post;
+        else
+            post = ' loading="lazy"' + post;
+        first = false;
+        return pre + `width="${width}" height="${height}" src="/content/${name}.webp" srcset="/content/${name}-small.webp 320w, /content/${name}-medium.webp 480w, /content/${name}.webp 640w, /content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
+      });
+
+      parsedDom = parsedDom.replace(imgOnlyChild, function(_, img) {
+        return `<p class="img-container">${img}</p>`;
+      });
+
+      parsedDom = parsedDom.replace(aRegex, function(_, pre, post) {
+        return `${pre}target="_blank" ${post}`;
+      });
+
+      let basePipe = gulp.src('./src/index.html')
+        .pipe(replace('<!-- Content Render Injection -->', parsedDom))
+        .pipe(replace(`<meta property="og:url" id="url-tag" content="https://dotdo.es/">`, 
+          `<meta property="og:url" id="url-tag" content="https://dotdo.es/${v.slice('dist/content/'.length, v.length - (v.endsWith("index.md") ? 8 : 3))}">`));
+
+      let titleMatch = parsedDom.match(titleRegex);
+      if(titleMatch != null) {
+        basePipe = basePipe
+        .pipe(replace(`<title>Dot Does Stuff</title>`, `<title>${titleMatch[2]} - Dot Does Stuff</title>`))
+        .pipe(replace(
+          `<meta name="description" content="The personal website of Chelsea Pritchard (aka DotEfekts)." id="description-tag">`,
+          `<meta name="description" content="${titleMatch[2]} on Dot Does Stuff (dotdo.es)" id="description-tag">`
+        ))
+        .pipe(replace(
+          `<meta property="og:title" id="title-tag" content="Dot Does Stuff">`,
+          `<meta property="og:title" id="title-tag" content="${titleMatch[2]} - Dot Does Stuff">`
+        ));
+      }
+
+      let firstImageMatch = parsedDom.match(imgOnlyChildFirst);
+      if(firstImageMatch != null) {
+        basePipe = basePipe
+        .pipe(replace(
+          `<meta property="og:image" id="img-tag" content="https://dotdo.es/img/coolyori.png">`,
+          `<meta property="og:image" id="img-tag" content="https://dotdo.es${firstImageMatch[2]}">`
+        ));
+      }
+
+      return basePipe
+        .pipe(rename(v.slice('dist/content/'.length, v.length - 2) + "html"))
+        .pipe(gulp.dest('./dist/'));
+    }));
 });
 
 gulp.task('removekb', function(cb) {
@@ -97,62 +214,14 @@ gulp.task('minifyjs-sourcemap', function() {
     .pipe(gulp.dest((f) => f.base));
 });
 
-gulp.task('buildimages', function (cb) {
-  return gulp.series(
-    runCWebP('dist/img/**/*.{png,jpg}', { q: 75 }),
-    runCWebP('dist/content/**/*.{png,jpg}', { resize: [1280, 0], q: 75 }, '-large'),
-    runCWebP('dist/content/**/*.{png,jpg}', { resize: [640, 0], q: 75 }),
-    runCWebP('dist/content/**/*.{png,jpg}', { resize: [480, 0], q: 75 }, '-medium'),
-    runCWebP('dist/content/**/*.{png,jpg}', { resize: [320, 0], q: 75 }, '-small'),
-    function(cb2) {
-      cb2();
-      cb();
-    }
-  )();
-});
-
-function runCWebP(path, params, suffix) {
-  return function(cb){
-    return gulp.src(path)
-    .pipe(cwebp(params))
-    .pipe(gulpif(suffix != undefined, rename({
-      suffix: suffix
-    })))
-    .pipe(gulp.dest((f) => f.base));
-  };
-}
-
-
-gulp.task('putimagesize', function(cb) {
-  return gulp.src(['dist/content/**/*.md'])
-    .pipe(through.obj((chunk, _, cb) => {
-      if (chunk.isNull()) {
-        callback(null, file);
-        return;
-      }
-    
-      let contents = chunk.contents.toString();
-      contents = contents.replace(/\[\[(.*?)\]\]/gi, function (_, linkText) {
-        let split = linkText.split('|');
-        return split.length > 1 ? split[1] : split[0];
-      });
-
-      chunk.contents = Buffer.from(contents.replace(/\!\[(.*?)\]\((.*?)\.(png|jpg)\)/gi, (_, alt, path, type) => {
-        let size = imageSize(`dist/content${path}.webp`);
-        return `![${alt}](${path}[${size.width}x${size.height}])`
-      }));
-
-      cb(null, chunk);
-    }))
-    .pipe(gulp.dest((f) => f.base));
-});
-
 gulp.task(
   'processhtml', 
   function () {
   return gulp
     .src(['dist/**/*.html'])
-    .pipe(processhtml())
+    .pipe(processhtml({
+      includeBase: './dist'
+    }))
     .pipe(gulp.dest((f) => f.base));
 });
 
@@ -188,12 +257,12 @@ gulp.task('cleanupdev', function(cb) {
 
 gulp.task(
   'build',
-  gulp.series('removedist', 'copysrc', 'copycontent', 'removekb', 'sass', 'minifycss', 'minifyjs', 'buildimages', 'putimagesize', 'processhtml', 'generaterev', 'cleanup')
+  gulp.series('removedist', 'copysrc', 'copycontent', 'buildimages', 'putimagesize', 'renderpages', 'removekb', 'sass', 'minifycss', 'minifyjs', 'processhtml', 'generaterev', 'cleanup')
 );
 
 gulp.task(
   'builddev',
-  gulp.series('removedist', 'copysrc', 'copycontent', 'removekb', 'sass', 'minifycss-sourcemap', 'minifyjs-sourcemap', 'buildimages', 'putimagesize', 'processhtml', 'cleanup')
+  gulp.series('removedist', 'copysrc', 'copycontent', 'buildimages', 'putimagesize', 'renderpages', 'removekb', 'sass', 'minifycss-sourcemap', 'minifyjs-sourcemap', 'processhtml', 'cleanup')
 );
 
 gulp.task(
@@ -202,7 +271,7 @@ gulp.task(
     connect.server({
       root: 'dist',
       port: 8000,
-      fallback: 'dist/index.html',
+      //fallback: 'dist/index.html',
       livereload: true
     });
     cb();

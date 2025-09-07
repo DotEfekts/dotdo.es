@@ -70,6 +70,10 @@ function parseMarkdown(markdown, container) {
     });
 
     container.innerHTML = parsedDom;
+    processContent(container);
+}
+
+function processContent(container) {
     const aTags = container.getElementsByTagName("A");
     for (let i = 0; i < aTags.length; i++) {
         if(!aTags[i].href.startsWith(currentUrl.origin))
@@ -77,10 +81,19 @@ function parseMarkdown(markdown, container) {
     }
 
     const children = container.children;
+    let firstImage = true;
     for (let i = 0; i < children.length; i++) {
-        if(children[i].children.length == 1 && children[i].children[0].tagName == "IMG")
+        if(children[i].children.length == 1 && children[i].children[0].tagName == "IMG") {
             children[i].classList.add("img-container");
+            if(firstImage) {
+                document.getElementById('img-tag').setAttribute('content', `https://dotdo.es${children[i].children[0].attributes.src.value}`);
+                firstImage = false;
+            }
+        }
     }
+
+    if(firstImage)
+        document.getElementById('img-tag').setAttribute('content', `https://dotdo.es/img/coolyori.png`);
 
     const codeBlocks = container.getElementsByTagName("CODE");
     for (let i = 0; i < codeBlocks.length; i++) {
@@ -110,6 +123,8 @@ function parseMarkdown(markdown, container) {
         document.getElementById('title-tag').setAttribute('content', 'Dot Does Stuff');
         document.getElementById('description-tag').setAttribute('content', 'The personal website of Chelsea Pritchard (aka DotEfekts).');
     }
+
+    document.getElementById('url-tag').setAttribute('content', document.URL);
 }
 
 function highlightBlock(language, block) {
@@ -176,9 +191,13 @@ function setTimeoutLoader() {
         }, 200);
 }
 
-if(firstLoadMarkdown) {
+if(typeof firstLoadMarkdown !== 'undefined' && firstLoadMarkdown) {
     parseMarkdown(firstLoadMarkdown, markdownContainer);
     contentContainer.classList.remove("first-load");
+}
+
+if(typeof pendingProcessing !== 'undefined' && pendingProcessing) {
+    processContent(markdownContainer);
 }
 
 if(typeof CopyButtonPlugin !== 'undefined' && typeof hljs !== 'undefined')

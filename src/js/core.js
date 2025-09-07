@@ -1,3 +1,5 @@
+const currentUrl = new URL(document.URL);
+
 function setTheme(theme) {
     document.documentElement.classList.remove('theme-auto');
     document.documentElement.classList.remove('theme-dark');
@@ -72,17 +74,25 @@ async function getMarkdown(url, preserveExisting) {
 
 history.replaceState({ url: document.URL }, null, document.URL);
 
-var firstLoadMarkdown;
-const currentUrl = new URL(document.URL);
+//var firstLoadMarkdown;
+
+// async function firstLoad() {
+//     let markdown = await loadPageMarkdown(currentUrl);
+//     if(typeof parseMarkdown !== 'undefined') {
+//         parseMarkdown(markdown, document.getElementById("markdown-container"));
+//         document.getElementById("content-container").classList.remove("first-load");
+//     } else {
+//         firstLoadMarkdown = markdown;
+//     }
+// }
+
+var pendingProcessing;
 
 async function firstLoad() {
-    let markdown = await loadPageMarkdown(currentUrl);
-    if(typeof parseMarkdown !== 'undefined') {
-        parseMarkdown(markdown, document.getElementById("markdown-container"));
-        document.getElementById("content-container").classList.remove("first-load");
-    } else {
-        firstLoadMarkdown = markdown;
-    }
+    if(typeof processContent !== 'undefined')
+        processContent(document.getElementById("markdown-container"));
+    else
+        pendingProcessing = true;
 }
 
 function loadHljs() {

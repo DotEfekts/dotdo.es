@@ -23,7 +23,7 @@
 }
 
 @mixin code-dark {
-    .hljs, pre code, blockquote {
+    .hljs, pre code, pre code:not(.hljs), blockquote {
         color: var(--palette-dark-text);
         background: var(--palette-dark-background-lighten);
     }
@@ -35,7 +35,7 @@
 }
 
 @mixin code-light {
-    .hljs, pre code, blockquote {
+    .hljs, pre code, pre code:not(.hljs), blockquote {
         color: var(--palette-light-text);
         background: var(--palette-light-background-darken);
     }
@@ -65,7 +65,7 @@ html.theme-light {
 }
 
 html {
-    pre code, pre code.hljs, blockquote {
+    pre code, pre code:not(.hljs), pre code.hljs, blockquote {
         display:block;
         overflow-x:auto;
         padding:1em;
