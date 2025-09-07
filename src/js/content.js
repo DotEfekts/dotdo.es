@@ -36,9 +36,8 @@ markdownContainer.addEventListener('touchstart', function(event) {
 }, { passive: true });
 
 window.addEventListener("click", async function(event) {
-    if(event.target.tagName === "A" && 
-       event.target.href.startsWith(currentUrl.origin) && 
-       !event.target.target){
+    if(event.target.tagName === "A" && (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) && 
+       event.target.href.startsWith(currentUrl.origin) && !event.target.target) {
         event.preventDefault();
         history.pushState({ url: event.target.href }, null, event.target.href);
         loadPage(new URL(event.target.href));
