@@ -72,7 +72,25 @@ function parseMarkdown(markdown, container) {
     processContent(container);
 }
 
-function processContent(container) {
+function processContent(container, firstLoad = false) {
+    
+    const codeBlocks = container.getElementsByTagName("CODE");
+    for (let i = 0; i < codeBlocks.length; i++) {
+        if(codeBlocks[i].parentElement.tagName == "PRE")
+            if(codeBlocks[i].classList.length > 0) {
+                for (let c = 0; c < codeBlocks[i].classList.length; c++)
+                    if(codeBlocks[i].classList[c].startsWith('language-')){
+                        let language = codeBlocks[i].classList[c].replace('language-', '');
+                        highlightBlock(language, codeBlocks[i]);
+                    }
+            } else {
+                codeBlocks[i].classList.add('language-bash');
+                highlightBlock('bash', codeBlocks[i]);
+            }
+    }
+
+    if(firstLoad) return;
+
     const aTags = container.getElementsByTagName("A");
     for (let i = 0; i < aTags.length; i++) {
         if(!aTags[i].href.startsWith(currentUrl.origin))
@@ -93,21 +111,6 @@ function processContent(container) {
 
     if(firstImage)
         document.getElementById('img-tag').setAttribute('content', `https://dotdo.es/img/coolyori.png`);
-
-    const codeBlocks = container.getElementsByTagName("CODE");
-    for (let i = 0; i < codeBlocks.length; i++) {
-        if(codeBlocks[i].parentElement.tagName == "PRE")
-            if(codeBlocks[i].classList.length > 0) {
-                for (let c = 0; c < codeBlocks[i].classList.length; c++)
-                    if(codeBlocks[i].classList[c].startsWith('language-')){
-                        let language = codeBlocks[i].classList[c].replace('language-', '');
-                        highlightBlock(language, codeBlocks[i]);
-                    }
-            } else {
-                codeBlocks[i].classList.add('language-bash');
-                highlightBlock('bash', codeBlocks[i]);
-            }
-    }
 
     var titles = container.getElementsByTagName("H1");
     if(titles.length = 0)
@@ -196,7 +199,7 @@ if(typeof firstLoadMarkdown !== 'undefined' && firstLoadMarkdown) {
 }
 
 if(typeof pendingProcessing !== 'undefined' && pendingProcessing) {
-    processContent(markdownContainer);
+    processContent(markdownContainer, true);
 }
 
 if(typeof CopyButtonPlugin !== 'undefined' && typeof hljs !== 'undefined')
