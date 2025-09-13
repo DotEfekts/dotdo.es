@@ -65,7 +65,7 @@ function parseMarkdown(markdown, container) {
         else
             post = ' loading="lazy"' + post;
         first = false;
-        return pre + `width="${width}" height="${height}" src="/content/${name}.webp" srcset="/content/${name}-small.webp 320w, /content/${name}-medium.webp 480w, /content/${name}.webp 640w, /content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
+        return pre + `width="${width}" height="${height}" src="/img/content/${name}.webp" srcset="/img/content/${name}-small.webp 320w, /img/content/${name}-medium.webp 480w, /img/content/${name}.webp 640w, /img/content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
     });
 
     container.innerHTML = parsedDom;
@@ -95,6 +95,8 @@ function processContent(container, firstLoad = false) {
     for (let i = 0; i < aTags.length; i++) {
         if(!aTags[i].href.startsWith(currentUrl.origin))
             aTags[i].target = "_blank";
+        else if(!aTags[i].attributes["href"].value.startsWith("/"))
+            aTags[i].href = "/blog/" + aTags[i].attributes["href"].value;
     }
 
     const children = container.children;

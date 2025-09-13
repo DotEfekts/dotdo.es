@@ -32,21 +32,28 @@ gulp.task('removedist', function(cb) {
 
 gulp.task('copysrc', function() {
     return gulp.src('./src/**/*')
-    .pipe(gulp.dest('./dist'));
+      .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('copycontent', function() {
-    return gulp.src('./content/**/*')
-    .pipe(gulp.dest('./dist/content'));
+    return gulp.src('./content/**/*.md')
+      .pipe(rename(path => path.dirname = path.dirname.startsWith("blog") ? "blog" : ""))
+      .pipe(gulp.dest('./dist/content'));
+});
+
+gulp.task('copyimages', function() {
+    return gulp.src(['./content/**/*.png', './content/**/*.jpg'])
+      .pipe(rename(path => path.dirname = ""))
+      .pipe(gulp.dest('./dist/img/content'));
 });
 
 gulp.task('buildimages', function (cb) {
   return gulp.series(
-    runCWebP('dist/img/**/*.{png,jpg}', { q: 75 }),
-    runCWebP('dist/content/**/*.{png,jpg}', { resize: [1280, 0], q: 75 }, '-large'),
-    runCWebP('dist/content/**/*.{png,jpg}', { resize: [640, 0], q: 75 }),
-    runCWebP('dist/content/**/*.{png,jpg}', { resize: [480, 0], q: 75 }, '-medium'),
-    runCWebP('dist/content/**/*.{png,jpg}', { resize: [320, 0], q: 75 }, '-small'),
+    runCWebP('dist/img/*.{png,jpg}', { q: 75 }),
+    runCWebP('dist/img/content/**/*.{png,jpg}', { resize: [1280, 0], q: 75 }, '-large'),
+    runCWebP('dist/img/content/**/*.{png,jpg}', { resize: [640, 0], q: 75 }),
+    runCWebP('dist/img/content/**/*.{png,jpg}', { resize: [480, 0], q: 75 }, '-medium'),
+    runCWebP('dist/img/content/**/*.{png,jpg}', { resize: [320, 0], q: 75 }, '-small'),
     function(cb2) {
       cb2();
       cb();
@@ -79,9 +86,10 @@ gulp.task('putimagesize', function(cb) {
         return split.length > 1 ? split[1] : split[0];
       });
 
-      chunk.contents = Buffer.from(contents.replace(/\!\[(.*?)\]\((.*?)\.(png|jpg)\)/gi, (_, alt, path, type) => {
-        let size = imageSize(`dist/content${path}.webp`);
-        return `![${alt}](${path}[${size.width}x${size.height}])`
+      chunk.contents = Buffer.from(contents.replace(/\!\[(.*?)\]\((.*?)\.(png|jpg)\)/gi, (_, alt, name, type) => {
+        name = name.lastIndexOf("/") < 0 ? name : name.substring(name.lastIndexOf("/"));
+        let size = imageSize(`dist/img/content/${name}.webp`);
+        return `![${alt}](${name}[${size.width}x${size.height}])`
       }));
 
       cb(null, chunk);
@@ -94,7 +102,8 @@ gulp.task('renderpages', function() {
     const imgRegex = new RegExp(/(<img .*?)src="\/(.*?)\%5B([0-9]+)x([0-9]+)\%5D"( .*?>)/, "gi");
     const imgOnlyChild = new RegExp(/<p>(\w*<img [^>]+?>\w*)<\/p>/, "gi");
     const imgOnlyChildFirst = new RegExp(/<p class="img-container">(\w*<img [^>]*?src="([^"]+)"[^>]*?\/?>\w*)<\/p>/, "i");
-    const aRegex = new RegExp(/(<a [^>]*?)(href="[^\/].*?>)/, "gi");
+    const aExternalRegex = new RegExp(/(<a [^>]*?)(href="[^\:]+\:\/\/.*?>)/, "gi");
+    const aInternalRegex = new RegExp(/(<a [^>]*?)href="([^\/][^\:"]*?".*?>)/, "gi");
     const titleRegex = new RegExp(/<(h1|h2)[^>]*>\w*([^<]+)\w*<\/(h1|h2)>/, "i");
 
     return contentFiles.then(vals => vals.map(v => {
@@ -108,15 +117,19 @@ gulp.task('renderpages', function() {
         else
             post = ' loading="lazy"' + post;
         first = false;
-        return pre + `width="${width}" height="${height}" src="/content/${name}.webp" srcset="/content/${name}-small.webp 320w, /content/${name}-medium.webp 480w, /content/${name}.webp 640w, /content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
+        return pre + `width="${width}" height="${height}" src="/img/content/${name}.webp" srcset="/img/content/${name}-small.webp 320w, /img/content/${name}-medium.webp 480w, /img/content/${name}.webp 640w, /img/content/${name}-large.webp 1280w" sizes="(max-width: 920px) 80vw, 640px"` + post;
       });
 
       parsedDom = parsedDom.replace(imgOnlyChild, function(_, img) {
         return `<p class="img-container">${img}</p>`;
       });
 
-      parsedDom = parsedDom.replace(aRegex, function(_, pre, post) {
+      parsedDom = parsedDom.replace(aExternalRegex, function(_, pre, post) {
         return `${pre}target="_blank" ${post}`;
+      });
+
+      parsedDom = parsedDom.replace(aInternalRegex, function(_, pre, post) {
+        return `${pre}href="/blog/${post}`;
       });
 
       let basePipe = gulp.src('./src/index.html')
@@ -257,12 +270,12 @@ gulp.task('cleanupdev', function(cb) {
 
 gulp.task(
   'build',
-  gulp.series('removedist', 'copysrc', 'copycontent', 'buildimages', 'putimagesize', 'renderpages', 'removekb', 'sass', 'minifycss', 'minifyjs', 'processhtml', 'generaterev', 'cleanup')
+  gulp.series('removedist', 'copysrc', 'copycontent', 'copyimages', 'buildimages', 'putimagesize', 'renderpages', 'removekb', 'sass', 'minifycss', 'minifyjs', 'processhtml', 'generaterev', 'cleanup')
 );
 
 gulp.task(
   'builddev',
-  gulp.series('removedist', 'copysrc', 'copycontent', 'buildimages', 'putimagesize', 'renderpages', 'removekb', 'sass', 'minifycss-sourcemap', 'minifyjs-sourcemap', 'processhtml', 'cleanup')
+  gulp.series('removedist', 'copysrc', 'copycontent', 'copyimages', 'buildimages', 'putimagesize', 'renderpages', 'removekb', 'sass', 'minifycss-sourcemap', 'minifyjs-sourcemap', 'processhtml', 'cleanup')
 );
 
 gulp.task(
@@ -271,8 +284,19 @@ gulp.task(
     connect.server({
       root: 'dist',
       port: 8000,
-      //fallback: 'dist/index.html',
-      livereload: true
+      fallback: 'dist/404.html',
+      livereload: true,
+      middleware: function(connect, opt) {
+      return [
+        function(req, res, next) {
+          // Check if the request is for an HTML file and doesn't already have an extension
+          if (req.url.indexOf('.') === -1 && req.url !== '/') {
+            // Append .html to the URL
+            req.url += '.html';
+          }
+          next(); // Pass control to the next middleware
+        }
+      ]}
     });
     cb();
   }

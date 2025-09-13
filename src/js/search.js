@@ -8,7 +8,7 @@ async function loadSearchData() {
 
     let pageMarkdown;
     try {
-        pageMarkdown = await getMarkdown("/content/writeups/search.md", true);
+        pageMarkdown = await getMarkdown("/content/blog/search.md", true);
     } catch {
         console.log("Error loading search data");
     }
@@ -19,10 +19,12 @@ async function loadSearchData() {
     pageMarkdown = pageMarkdown.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
     searchInfo.innerHTML = marked.parse(pageMarkdown);
 
-    const aTags = markdownContainer.getElementsByTagName("A");
+    const aTags = searchInfo.getElementsByTagName("A");
     for (let i = 0; i < aTags.length; i++) {
         if(!aTags[i].href.startsWith(currentUrl.origin))
             aTags[i].target = "_blank";
+        else if(!aTags[i].attributes["href"].value.startsWith("/"))
+            aTags[i].href = "/blog/" + aTags[i].attributes["href"].value;
     }
 
     searchBox.setAttribute('placeholder', 'Search...');
