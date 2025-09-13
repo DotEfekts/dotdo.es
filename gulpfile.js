@@ -37,6 +37,7 @@ gulp.task('copysrc', function() {
 
 gulp.task('copycontent', function() {
     return gulp.src('./content/**/*.md')
+      .pipe(replace(/\[([^\]]+)\]\(([^:\)]*?).md\)/gi, '[$1]($2)'))
       .pipe(rename(path => path.dirname = path.dirname.startsWith("blog") ? "blog" : ""))
       .pipe(gulp.dest('./dist/content'));
 });
