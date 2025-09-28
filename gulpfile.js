@@ -105,7 +105,7 @@ gulp.task('renderpages', function() {
     const imgOnlyChildFirst = new RegExp(/<p class="img-container">(\w*<img [^>]*?src="([^"]+)"[^>]*?\/?>\w*)<\/p>/, "i");
     const aExternalRegex = new RegExp(/(<a [^>]*?)(href="[^\:]+\:\/\/.*?>)/, "gi");
     const aInternalRegex = new RegExp(/(<a [^>]*?)href="([^\/][^\:"]*?".*?>)/, "gi");
-    const titleRegex = new RegExp(/<(h1|h2)[^>]*>\w*([^<]+)\w*<\/(h1|h2)>/, "i");
+    const titleRegex = new RegExp(/<(h1|h2)[^>]*>\s*([^<]+)\s*<\/(h1|h2)>/, "i");
 
     return contentFiles.then(vals => vals.map(v => {
       const markdown = fs.readFileSync(v, 'utf8').replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/,"");
