@@ -12,7 +12,7 @@ function loadYoutubeFrame() {
         width: '100',
         videoId: 'CwJx3Dbh4e8',
         playerVars: {
-            'origin': 'https://dotdo.es/',
+            'origin': 'https://d07.au/',
             'playsinline': 1,
             'start': 90,
             'end': 135,
