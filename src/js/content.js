@@ -105,14 +105,14 @@ function processContent(container, firstLoad = false) {
         if(children[i].children.length == 1 && children[i].children[0].tagName == "IMG") {
             children[i].classList.add("img-container");
             if(firstImage) {
-                document.getElementById('img-tag').setAttribute('content', `https://dotdo.es${children[i].children[0].attributes.src.value}`);
+                document.getElementById('img-tag').setAttribute('content', `https://d07.au${children[i].children[0].attributes.src.value}`);
                 firstImage = false;
             }
         }
     }
 
     if(firstImage)
-        document.getElementById('img-tag').setAttribute('content', `https://dotdo.es/img/coolyori.png`);
+        document.getElementById('img-tag').setAttribute('content', `https://d07.au/img/coolyori.png`);
 
     var titles = container.getElementsByTagName("H1");
     if(titles.length = 0)
@@ -121,7 +121,7 @@ function processContent(container, firstLoad = false) {
     if(titles.length > 0 && titles[0].innerText != 'Dot Does Stuff') {
         document.title = `${titles[0].innerText} - Dot Does Stuff`;
         document.getElementById('title-tag').setAttribute('content', `${titles[0].innerText} - Dot Does Stuff`);
-        document.getElementById('description-tag').setAttribute('content', `${titles[0].innerText} on Dot Does Stuff (dotdo.es)`);
+        document.getElementById('description-tag').setAttribute('content', `${titles[0].innerText} on Dot Does Stuff (d07.au)`);
     } else {
         document.title = 'Dot Does Stuff';
         document.getElementById('title-tag').setAttribute('content', 'Dot Does Stuff');
