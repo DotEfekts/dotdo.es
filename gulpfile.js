@@ -135,8 +135,8 @@ gulp.task('renderpages', function() {
 
       let basePipe = gulp.src('./src/index.html')
         .pipe(replace('<!-- Content Render Injection -->', parsedDom))
-        .pipe(replace(`<meta property="og:url" id="url-tag" content="https://dotdo.es/">`, 
-          `<meta property="og:url" id="url-tag" content="https://dotdo.es/${v.slice('dist/content/'.length, v.length - (v.endsWith("index.md") ? 8 : 3))}">`));
+        .pipe(replace(`<meta property="og:url" id="url-tag" content="https://d07.au/">`, 
+          `<meta property="og:url" id="url-tag" content="https://d07.au/${v.slice('dist/content/'.length, v.length - (v.endsWith("index.md") ? 8 : 3))}">`));
 
       let titleMatch = parsedDom.match(titleRegex);
       if(titleMatch != null) {
@@ -144,7 +144,7 @@ gulp.task('renderpages', function() {
         .pipe(replace(`<title>Dot Does Stuff</title>`, `<title>${titleMatch[2]} - Dot Does Stuff</title>`))
         .pipe(replace(
           `<meta name="description" content="The personal website of Chelsea Pritchard (aka DotEfekts)." id="description-tag">`,
-          `<meta name="description" content="${titleMatch[2]} on Dot Does Stuff (dotdo.es)" id="description-tag">`
+          `<meta name="description" content="${titleMatch[2]} on Dot Does Stuff (d07.au)" id="description-tag">`
         ))
         .pipe(replace(
           `<meta property="og:title" id="title-tag" content="Dot Does Stuff">`,
@@ -156,8 +156,8 @@ gulp.task('renderpages', function() {
       if(firstImageMatch != null) {
         basePipe = basePipe
         .pipe(replace(
-          `<meta property="og:image" id="img-tag" content="https://dotdo.es/img/coolyori.png">`,
-          `<meta property="og:image" id="img-tag" content="https://dotdo.es${firstImageMatch[2]}">`
+          `<meta property="og:image" id="img-tag" content="https://d07.au/img/coolyori.png">`,
+          `<meta property="og:image" id="img-tag" content="https://d07.au${firstImageMatch[2]}">`
         ));
       }
 
